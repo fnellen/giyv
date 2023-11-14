@@ -1,6 +1,7 @@
 ---
 import BtnLink from "../shared/BtnLink.astro";
 import Container from "../shared/Container.astro";
+import Logo from "../shared/Logo.astro";
 import  Navitem from "../shared/Navitem.astro";
 
 const navItems = [
@@ -13,7 +14,7 @@ const navItems = [
         text:"Contenuti"
     },
     {
-        href:"#chi-siamo",
+        href:"#about-us",
         text:"Chi siamo"
     },
     {
@@ -28,20 +29,15 @@ const navItems = [
         <nav class="w-full flex justify-between gap-6 relative">
             <!-- logo -->
             <div class="min-w-max inline-flex relative">
-                <a href="/" class="relative flex items-center gap-3">
-                    <div class="relative w-7 h-7 overflow-hidden flex rounded-xl">
-                        <span class="absolute w-4 h-4 -top-1 -right-1 bg-green-500 rounded-md rotate-45"></span>
-                        <span class="absolute w-4 h-4 -bottom-1 -right-1 bg-[#FCDC58] rounded-md rotate-45"></span>
-                        <span class="absolute w-4 h-4 -bottom-1 -left-1 bg-primary rounded-md rotate-45"></span>
-                        <span class="absolute w-2 h-2 rounded-full bg-heading-1 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></span>
-                    </div>
+                <a href="/" class="relative flex items-center align-center gap-3">
+                    <Logo className="w-16 h-auto"/>
                     <div class="inline-flex text-lg font-semibold text-heading-1">
-                        German-Italian Young Voices
+                        German-Italian <br/>Young Voices
                     </div>
                 </a>
             </div>
 
-            <div data-nav-overlay aria-hidden="true" class="fixed hidden inset-0 lg:!hidden bg-box-bg bg-opacity-50 backdrop-filter backdrop-blur-xl"></div>
+            <div data-nav-overlay aria-hidden="true" class="fixed hidden inset-0 lg:!hidden bg-box-bg bg-opacity-10 backdrop-filter backdrop-blur-xl"></div>
             <div data-navbar class="flex h-0 overflow-hidden lg:!h-auto lg:scale-y-100 duration-300 ease-linear flex-col gap-y-6 gap-x-4 lg:flex-row w-full lg:justify-between lg:items-center absolute lg:relative top-full lg:top-0 bg-body lg:bg-transparent border-x border-x-box-border lg:border-x-0">
                 <ul class="border-t border-box-border lg:border-t-0 px-6 lg:px-0 pt-6 lg:pt-0 flex flex-col lg:flex-row gap-y-4 gap-x-3 text-lg text-heading-2 w-full lg:justify-center lg:items-center">
                     {navItems.map(item=>{
@@ -57,7 +53,7 @@ const navItems = [
 
 
             <div class="min-w-max flex items-center gap-x-3">
-                <!-- <button data-switch-theme class="outline-none flex relative text-heading-2 rounded-full p-2 lg:p-3 border border-box-border ">
+                <button data-switch-theme class="outline-none flex relative text-heading-2 rounded-full p-2 lg:p-3 border border-box-border ">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 dark:flex hidden">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
                       </svg>
@@ -66,7 +62,7 @@ const navItems = [
                       </svg>
                                     
                     <span class="sr-only">switch theme</span> 
-                </button> -->
+                </button>
                 
                 <button data-toggle-nav data-open-nav="false" class="lg:hidden lg:invisible outline-none w-7 h-auto flex flex-col relative">
                     <span id="line1" class="w-6 h-0.5 rounded-full bg-heading-2 transition-all duration-300 ease-linear"></span> 
