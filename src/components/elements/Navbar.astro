@@ -6,27 +6,31 @@ import  Navitem from "../shared/Navitem.astro";
 
 const navItems = [
     {
-        href:"#",
+        href:"/",
         text:"Home"
     },
     {
-        href:"#contenuti",
+        href:"/#contenuti",
         text:"Contenuti"
     },
     {
-        href:"#about-us",
+        href:"/#about-us",
         text:"Chi siamo"
     },
     {
-        href:"#la-tua-voce",
+        href:"/#la-tua-voce",
         text:"La tua voce"
+    },
+    {
+        href:"/blog",
+        text:"Blog"
     },
 ]
 ---
 
-<header class="absolute inset-x-0 top-0 z-50 py-6">
+<header class="absolute inset-x-0 top-0 z-50 py-6 ">
     <Container>
-        <nav class="w-full flex justify-between gap-6 relative">
+        <nav class="w-full flex justify-between gap-6 relative ">
             <!-- logo -->
             <div class="min-w-max inline-flex relative">
                 <a href="/" class="relative flex items-center align-center gap-3">
