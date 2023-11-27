@@ -1,0 +1,43 @@
+---
+import { Image } from "astro:assets";
+import type Article from "../../interfaces/article";
+import { l } from "astro-i18n";
+
+// set the props to type article
+export type Props = {
+  article: Article;
+};
+
+const { article } = Astro.props;
+---
+<div
+  class="rounded-lg bg-base-100 hover:shadow-xl transition ease-in-out hover:scale-[102%]"
+>
+  <a href={`${l("blog", undefined, {
+    targetLocale: article.attributes.locale,
+  })}/${article.attributes.slug}`}
+  target={"_self"}>
+    <div class="hero-content flex-col md:flex-row">
+      {
+        <Image
+            src={article.attributes.featuredImage.data.attributes.url}
+            alt={article.attributes.featuredImage.data.attributes.alternativeText || "No alt text"}
+            width={article.attributes.featuredImage.data.attributes.width}
+            height={article.attributes.featuredImage.data.attributes.height}
+            class="max-w-full md:max-w-[13rem] rounded-lg"
+            transition:name={"blogImg" + article.id}
+          /> 
+      }
+      <div class="grow w-full">
+        <h1
+          class="text-xl font-bold"
+          transition:name={"blogTitle" + article.id}
+          transition:animate="fade"
+        >
+          {article.attributes.title}
+        </h1>
+        <p class="py-1 text-1xl">{article.attributes.excerpt}</p>
+      </div>
+    </div>
+  </a>
+</div>
