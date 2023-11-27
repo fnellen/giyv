@@ -1,0 +1,88 @@
+---
+import fetchApi from "../../lib/strapi";
+import qs from "qs";
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+import type Article from "../../interfaces/article";
+import { astroI18n } from "astro-i18n";
+import Layout from "../../layouts/Layout.astro";
+import Container from "../../components/shared/Container.astro";
+import { Image } from "astro:assets";
+import FormattedDate from "../../components/shared/FormattedDate.astro";
+import Title from "../../components/shared/Title.astro";
+
+const { slug } = Astro.params;
+
+const query = qs.stringify({
+  populate: {
+    featuredImage: {
+      fields: ["name", "width", "height", "url", "alternativeText"],
+    },
+    localizations: true,
+  },
+  filters: {
+    slug: {
+      $eq: slug,
+    },
+  },
+});
+
+const articles = await fetchApi<Article[]>({
+  endpoint: `articles?locale=${astroI18n.locale}&`,
+  wrappedByKey: "data",
+  query: query,
+});
+console.log("article", articles.length);
+const article = articles[0];
+console.log("article", article);
+---
+
+<Layout
+  title={article.attributes.title}
+  description={article.attributes.excerpt}
+>
+  <main class="flex flex-col gap-y-20 md:gap-y-32 overflow-hidden">
+    <section class="relative pt-32 lg:pt-36">
+      <Container className={"flex flex-col lg:flex-row gap-10 lg:gap-12"}>
+        <article class='min-w-full md:py-4 sm:max-w-none md:max-w-none'>
+            <header class='mb-3 flex flex-col justify-center items-center gap-6'>
+                <div class='flex flex-col gap-2'>
+                    <div class='flex items-center justify-center gap-x-1'>
+                        <p class='text-center text-sm text-opacity-50'>
+                            Published <FormattedDate date={new Date(article.attributes.publishedAt)} />
+                        </p>
+                        <!-- <p class='text-center text-sm text-opacity-50 font-bold'>
+                            - {readTime}
+                        </p> -->
+                    </div>
+                    <Title>
+                        {article.attributes.title}
+                    </Title>
+                </div>
+    
+                <!-- <div class='flex flex-wrap justify-center items-center gap-2 gap-y-4 md:gap-5'>
+                    {tags.map((tag) => <Tag tag={tag} />)}
+                </div> -->
+            </header>
+                                     <Image
+            src={article.attributes.featuredImage.data.attributes.url}
+            alt={article.attributes.featuredImage.data.attributes
+              .alternativeText || "No alt text"}
+            width={1000}
+            height={500}
+            quality={100}
+                            format='jpg'
+                            loading='eager'
+                            class='rounded-md w-full max-h-[300px]  md:max-h-[500px] my-8 object-cover'
+            transition:name={"blogImg" + article.id}
+          />
+    
+            <hr />
+    
+            <div>
+                <BlocksRenderer content={article.attributes.content} />;
+            </div>
+        </article>
+      </Container>
+    </section>
+  </main>
+</Layout>
