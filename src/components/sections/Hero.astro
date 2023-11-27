@@ -1,11 +1,28 @@
 ---
+import qs from "qs";
 import Button from "../shared/Button.astro";
 import Container from "../shared/Container.astro";
 import Paragraph from "../shared/Paragraph.astro";
 import ByNumber from "./ByNumber.astro";
 
 import { Image } from 'astro:assets';
-import heroImg from "../../assets/young_people.jpg";
+import fetchApi from "../../lib/strapi";
+import type HeroSection from "../../interfaces/heroSection";
+import { astroI18n } from "astro-i18n";
+
+const query = qs.stringify({
+    populate: {
+    heroImage: {
+      fields: ["name", "width", "height", "url"],
+    },
+  },
+});
+
+const heroSection = await fetchApi<HeroSection>({
+    endpoint: "hero-section?locale=" + astroI18n.locale + "&",
+    wrappedByKey: "data",
+    query: query,
+});
 ---
 
 <section class="relative pt-32 lg:pt-36">
@@ -20,10 +37,10 @@ import heroImg from "../../assets/young_people.jpg";
             
             <h1 class="text-3xl/tight sm:text-4xl/tight md:text-5xl/tight xl:text-6xl/tight
              font-bold text-heading-1">
-             <span class="text-transparent bg-clip-text bg-gradient-to-br from-blue-600 from-20% via-primary via-30% to-yellow-300">EUROPA</span>: Il Nostro Palcoscenico per il Futuro
+             <span class="text-transparent bg-clip-text bg-gradient-to-br from-blue-600 from-20% via-primary via-30% to-yellow-300">EUROPA</span>: {heroSection.attributes.heroTitle}
             </h1>
             <Paragraph className="mt-8">
-                Siamo giovani italiani e tedeschi tra i 18 e i 30 anni e siamo qui per condividere un'opportunità emozionante con te. Siamo parte del progetto <em>German-Italian Young Voices</em>, e vogliamo spiegarti di cosa si tratta e perché dovresti essere interessato.
+                {heroSection.attributes.heroDescription}
             </Paragraph>
             <div class="mt-10  w-full flex max-w-md mx-auto lg:mx-0">
                 <div class="flex sm:flex-row flex-col gap-5 w-full">
@@ -51,8 +68,11 @@ import heroImg from "../../assets/young_people.jpg";
         </div>
 
         <div class="flex flex-1 lg:w-1/2 lg:h-auto relative lg:max-w-none lg:mx-0 mx-auto max-w-3xl">
-            <Image src={heroImg} alt="Hero image" width="2000" height="2000" class={"lg:absolute lg:w-full lg:h-full rounded-3xl object-cover lg:max-h-none max-h-96"}/>
-            <!-- <img src="/images/image1.jpeg" alt="Hero image" width="2350" height="2359" class="lg:absolute lg:w-full lg:h-full rounded-3xl object-cover lg:max-h-none max-h-96"> -->
+            <Image src={heroSection.attributes.heroImage.data.attributes.url} 
+            alt={heroSection.attributes.heroImage.data.attributes.alternativeText || "No alt provided"} 
+            width={heroSection.attributes.heroImage.data.attributes.width} 
+            height={heroSection.attributes.heroImage.data.attributes.height} 
+            class={"lg:absolute lg:w-full lg:h-full rounded-3xl object-cover lg:max-h-none max-h-96"}/>
         </div>
     </Container>
     
