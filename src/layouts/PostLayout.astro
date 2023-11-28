@@ -1,0 +1,56 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "../components/shared/FormattedDate.astro";
+import Title from "../components/shared/Title.astro";
+import type Article from "../interfaces/article";
+import BaseLayout from "./BaseLayout.astro";
+import Container from "../components/shared/Container.astro";
+
+export interface Props extends Article {}
+
+const article = Astro.props;
+---
+
+<BaseLayout
+  title={article.attributes.title}
+  description={article.attributes.excerpt}
+  image={article.attributes.featuredImage.data.attributes.url}
+  language={article.attributes.locale}
+>
+  <section class="relative pt-32 lg:pt-36">
+    <Container className={"flex flex-col lg:flex-row gap-10 lg:gap-12"}>
+      <article class="min-w-full md:py-4 sm:max-w-none md:max-w-none">
+        <header class="mb-3 flex flex-col justify-center items-center gap-6">
+          <div class="flex flex-col gap-2">
+            <div class="flex items-center justify-center gap-x-1">
+              <p class="text-center text-sm">
+                Published <FormattedDate
+                  date={new Date(article.attributes.publishedAt)}
+                />
+              </p>
+              <p class="text-center text-sm font-bold">
+                - {"5min"}
+              </p>
+            </div>
+            <Title>
+              {article.attributes.title}
+            </Title>
+          </div>
+        </header>
+        <Image
+          src={article.attributes.featuredImage.data.attributes.url}
+          alt={article.attributes.featuredImage.data.attributes
+            .alternativeText || "No alt text"}
+          width={1000}
+          height={500}
+          quality={100}
+          format="jpg"
+          loading="eager"
+          class="rounded-md w-full max-h-[300px] md:max-h-[500px] my-8 object-cover"
+          transition:name={"blogImg" + article.id}
+        />
+        <slot />
+      </article>
+    </Container>
+  </section>
+</BaseLayout>
