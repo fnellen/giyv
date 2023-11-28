@@ -1,81 +1,81 @@
 ---
 import qs from "qs";
-import Button from "../../components/shared/Button.astro";
 import Container from "../../components/shared/Container.astro";
 import Paragraph from "../../components/shared/Paragraph.astro";
 import Title from "../../components/shared/Title.astro";
 import type Category from "../../interfaces/category";
-import Layout from "../../layouts/Layout.astro";
 import fetchApi from "../../lib/strapi";
 import { astroI18n } from "astro-i18n";
 import type Article from "../../interfaces/article";
 import BlogCard from "../../components/cards/BlogCard.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const categories = await fetchApi<Category[]>({
-    endpoint: "categories?locale=" + astroI18n.locale + "&",
-    wrappedByKey: "data",
+  endpoint: "categories?locale=" + astroI18n.locale + "&",
+  wrappedByKey: "data",
 });
-//articles?populate[featuredImage][fields][0]=name&populate[featuredImage][fields][1]=width&populate[featuredImage][fields][2]=height&populate[featuredImage][fields][3]=url&populate[featuredImage][fields][4]=alternativeText&populate[instagramPost][populate][images][fields][0]=url&populate[instagramPost][populate][images][fields][1]=name&populate[instagramPost][populate][images][fields][2]=width&populate[instagramPost][populate][images][fields][3]=height&populate[instagramPost][populate][images][fields][4]=alternativeText&populate[category]=*&populate[group][populate][authors][populate][bioImage][fields][0]=url&populate[group][populate][authors][populate][bioImage][fields][1]=name&populate[group][populate][authors][populate][bioImage][fields][2]=width&populate[group][populate][authors][populate][bioImage][fields][3]=height&populate[group][populate][authors][populate][bioImage][fields][4]=alternativeText
+
 const query = qs.stringify({
-    populate:{
-        featuredImage:{
-            fields: ["name", "width", "height", "url", "alternativeText"],
+  populate: {
+    featuredImage: {
+      fields: ["name", "width", "height", "url", "alternativeText"],
+    },
+    instagramPost: {
+      populate: {
+        images: {
+          fields: ["url", "name", "width", "height", "alternativeText"],
         },
-        instagramPost:{
-            populate:{
-                images:{
-                    fields: ["url", "name", "width", "height", "alternativeText"],
-                },
+      },
+    },
+    category: "*",
+    group: {
+      populate: {
+        authors: {
+          populate: {
+            bioImage: {
+              fields: ["url", "name", "width", "height", "alternativeText"],
             },
+          },
         },
-        category: "*",
-        group:{
-            populate:{
-                authors:{
-                    populate:{
-                        bioImage:{
-                            fields: ["url", "name", "width", "height", "alternativeText"],
-                        },
-                    },
-                },
-            },
-        },
-    }
+      },
+    },
+  },
 });
 
 const articles = await fetchApi<Article[]>({
-    endpoint: "articles",
-    wrappedByKey: "data",
-    query: query,
+  endpoint: "articles",
+  wrappedByKey: "data",
+  query: query,
 });
-console.log(articles);
 ---
 
-<Layout
+<BaseLayout
   title="Blog"
   description="Blog posts about european union, politics, and more."
 >
   <main class="flex flex-col gap-y-20 md:gap-y-32 overflow-hidden">
     <section class="relative pt-32 lg:pt-36">
-        <Container>
-            <Title>Blog</Title>
-            <Paragraph className="md:w-1/2">
-                Here we discuss the European Union, politics, and more. We also share our thoughts on the latest news and events. You can find all of our blog posts below.
-            </Paragraph>
-            <div class="flex flex-row gap-4">
-                <Paragraph className="text-2xl font-bold">View all</h2>
-            {
-                categories.map((category) => (
-                    <Paragraph className="text-2xl font-bold underline">{category.attributes.Name}</Paragraph>
-                ))
-            }
-            </div>
-        </Container>
-        <Container>
-            { articles.map((article) => (
-                <BlogCard article={article}/>
-            ))}
-        </Container>
+      <Container>
+        <Title>Blog</Title>
+        <Paragraph className="md:w-1/2">
+          Here we discuss the European Union, politics, and more. We also share
+          our thoughts on the latest news and events. You can find all of our
+          blog posts below.
+        </Paragraph>
+        <div class="flex flex-row gap-4">
+          <Paragraph className="text-2xl font-bold">View all</Paragraph>
+          {
+            categories.map((category) => (
+              <Paragraph className="text-2xl font-bold underline">
+                {category.attributes.Name}
+              </Paragraph>
+            ))
+          }
+        </div>
+      </Container>
+      <Container>
+        {articles.map((article) => <BlogCard article={article} />)}
+      </Container>
     </section>
   </main>
-</Layout>
+</BaseLayout>
