@@ -13,7 +13,25 @@ const query = qs.stringify({
     featuredImage: {
       fields: ["name", "width", "height", "url", "alternativeText"],
     },
-    localizations: true,
+    instagramPost: {
+      populate: {
+        images: {
+          fields: ["url", "name", "width", "height", "alternativeText"],
+        },
+      },
+    },
+    category: "*",
+    group: {
+      populate: {
+        authors: {
+          populate: {
+            bioImage: {
+              fields: ["url", "name", "width", "height", "alternativeText"],
+            },
+          },
+        },
+      },
+    },
   },
   filters: {
     slug: {
@@ -28,6 +46,7 @@ const articles = await fetchApi<Article[]>({
   query: query,
 });
 const article = articles[0];
+console.log(article.attributes.instagramPost);
 ---
 
 <PostLayout {...article}>
