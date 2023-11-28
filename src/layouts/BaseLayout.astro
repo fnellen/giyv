@@ -1,0 +1,32 @@
+---
+import BaseHead from "../layouts/BaseHead.astro";
+import { ViewTransitions } from "astro:transitions";
+
+import { SITE_TITLE, SITE_DESCRIPTION } from "../config";
+import Footer from "../components/elements/Footer.astro";
+import Navbar from "../components/elements/Navbar.astro";
+import Scripts from "./Scripts.astro";
+
+const {
+  image,
+  title = SITE_TITLE,
+  description = SITE_DESCRIPTION,
+  language,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={language}>
+  <head>
+    <BaseHead title={title} description={description} image={image} />
+    <ViewTransitions />
+  </head>
+  <body class="overflow-hidden overflow-y-auto bg-body">
+    <Scripts />
+    <Navbar />
+    <main transition:persist>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
