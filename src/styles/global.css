@@ -42,3 +42,7 @@ body {
   visibility: visible;
   display: flex;
 }
+
+.hidden {
+  display: none;
+}
