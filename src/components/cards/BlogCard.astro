@@ -10,24 +10,26 @@ export type Props = {
 
 const { article } = Astro.props;
 ---
+
 <div
-  class="rounded-lg bg-base-100 hover:shadow-xl transition ease-in-out hover:scale-[102%]"
+  class="rounded-lg bg-white-100 dark:bg-base-100 hover:shadow-xl transition ease-in-out hover:scale-[102%]"
 >
-  <a href={`${l("blog", undefined, {
-    targetLocale: article.attributes.locale,
-  })}/${article.attributes.slug}`}
-  target={"_self"}>
+  <a
+    href={`${l("blog", undefined, {
+      targetLocale: article.attributes.locale,
+    })}/${article.attributes.slug}`}
+    target={"_self"}
+  >
     <div class="hero-content flex-col md:flex-row">
-      {
-        <Image
-            src={article.attributes.featuredImage.data.attributes.url}
-            alt={article.attributes.featuredImage.data.attributes.alternativeText || "No alt text"}
-            width={article.attributes.featuredImage.data.attributes.width}
-            height={article.attributes.featuredImage.data.attributes.height}
-            class="max-w-full md:max-w-[13rem] rounded-lg"
-            transition:name={"blogImg" + article.id}
-          /> 
-      }
+      <Image
+        src={article.attributes.featuredImage.data.attributes.url}
+        alt={article.attributes.featuredImage.data.attributes.alternativeText ||
+          "No alt text"}
+        width={article.attributes.featuredImage.data.attributes.width}
+        height={article.attributes.featuredImage.data.attributes.height}
+        class="max-w-full md:max-w-[13rem] rounded-lg"
+        transition:name={"blogImg" + article.id}
+      />
       <div class="grow w-full">
         <h1
           class="text-xl font-bold"
