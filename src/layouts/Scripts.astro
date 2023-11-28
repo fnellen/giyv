@@ -1,0 +1,26 @@
+---
+
+---
+
+<script>
+  const userLanguage = navigator.language.toLowerCase();
+
+  if (
+    userLanguage === "en" &&
+    !document.cookie.includes("language=en") &&
+    window.location.pathname === "/"
+  ) {
+    // The user prefers German and hasn't been redirected before
+    document.cookie = "language=en";
+    window.location.href = "/en";
+  }
+  if (
+    userLanguage === "it" &&
+    !document.cookie.includes("language=it") &&
+    window.location.pathname === "/"
+  ) {
+    // The user prefers German and hasn't been redirected before
+    document.cookie = "language=it";
+    window.location.href = "/it";
+  }
+</script>
