@@ -1,0 +1,62 @@
+---
+
+---
+
+<button
+  data-toggle-nav
+  data-open-nav="false"
+  class="lg:hidden lg:invisible outline-none w-7 h-auto flex flex-col relative"
+>
+  <span
+    id="line1"
+    class="w-6 h-0.5 rounded-full bg-heading-2 transition-all duration-300 ease-linear"
+  ></span>
+  <span
+    id="line2"
+    class="w-6 origin-center mt-1 h-0.5 rounded-ful bg-heading-2 transition-all duration-300 ease-linear"
+  ></span>
+  <span
+    id="line3"
+    class="w-6 mt-1 h-0.5 rounded-ful bg-heading-2 transition-all duration-300 ease-linear"
+  ></span>
+  <span class="sr-only">togglenav</span>
+</button>
+<script>
+  const toggleMenu = document.querySelector(
+    "[data-toggle-nav]",
+  ) as HTMLButtonElement;
+  const navbar = document.querySelector("[data-navbar]") as HTMLDivElement;
+  const overlayNav = document.querySelector(
+    "[data-nav-overlay]",
+  ) as HTMLDivElement;
+  if (toggleMenu) {
+    toggleMenu.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (toggleMenu.getAttribute("data-open-nav") === "false") {
+        toggleMenu.setAttribute("data-open-nav", "true");
+        overlayNav.setAttribute("data-is-visible", "true");
+        document.body.classList.add("!overflow-y-hidden");
+        navbar.style.height = `${navbar.scrollHeight}px`;
+      } else {
+        toggleMenu.setAttribute("data-open-nav", "false");
+        overlayNav.setAttribute("data-is-visible", "false");
+        document.body.classList.remove("!overflow-y-hidden");
+        navbar.style.height = "0px";
+      }
+    });
+
+    navbar.addEventListener("click", () => {
+      toggleMenu.setAttribute("data-open-nav", "false");
+      overlayNav.setAttribute("data-is-visible", "false");
+      document.body.classList.remove("!overflow-y-hidden");
+      navbar.style.height = "0px";
+    });
+
+    overlayNav.addEventListener("click", () => {
+      toggleMenu.setAttribute("data-open-nav", "false");
+      overlayNav.setAttribute("data-is-visible", "false");
+      document.body.classList.remove("!overflow-y-hidden");
+      navbar.style.height = "0px";
+    });
+  }
+</script>
