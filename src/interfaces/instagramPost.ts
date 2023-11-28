@@ -1,5 +1,5 @@
 import type Image from './image';
-export default interface Author {
+export default interface InstagramPost {
     id: number;
     url: string;
     caption: [

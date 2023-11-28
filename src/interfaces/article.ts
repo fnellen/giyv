@@ -1,6 +1,8 @@
 import type Category from "./category";
+import type Group from "./group";
 import type Image from "./image";
 import type Node from "@strapi/blocks-react-renderer";
+import type InstagramPost from "./instagramPost";
 
 export default interface Article {
     id: number;
@@ -14,6 +16,8 @@ export default interface Article {
         excerpt: string;
         slug: string;
         contentId: string;
+        readingTime: string;
+        instagramPost: InstagramPost[];
         featuredImage: {
             data: Image;
         },
@@ -24,7 +28,7 @@ export default interface Article {
             data: Category;
         };
         group: {
-
-        };
+            data: Group;
+        }
     };
 };

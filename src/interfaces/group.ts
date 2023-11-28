@@ -10,6 +10,8 @@ export default interface Group {
         publishedAt: string;
         locale: string;
         slug: string;
-        authors: Author[];
+        authors: {
+            data: Author[];
+        };
     }
 }
