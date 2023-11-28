@@ -20,13 +20,11 @@ const {
   <head>
     <BaseHead title={title} description={description} image={image} />
     <ViewTransitions />
-  </head>
-  <body class="overflow-hidden overflow-y-auto bg-body">
     <Scripts />
+  </head>
+  <body class="bg-body">
     <Navbar />
-    <main transition:persist>
-      <slot />
-    </main>
+    <slot />
     <Footer />
   </body>
 </html>
