@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import type Article from "../../interfaces/article";
 import { l } from "astro-i18n";
+import FormattedDate from "../shared/FormattedDate.astro";
 
 // set the props to type article
 export type Props = {
@@ -20,7 +21,7 @@ const { article } = Astro.props;
     })}/${article.attributes.slug}`}
     target={"_self"}
   >
-    <div class="hero-content flex-col md:flex-row">
+    <div class="flex-row">
       <Image
         src={article.attributes.featuredImage.data.attributes.url}
         alt={article.attributes.featuredImage.data.attributes.alternativeText ||
@@ -30,7 +31,7 @@ const { article } = Astro.props;
         class="max-w-full md:max-w-[13rem] rounded-lg"
         transition:name={"blogImg" + article.id}
       />
-      <div class="grow w-full">
+      <div class="">
         <h1
           class="text-xl font-bold"
           transition:name={"blogTitle" + article.id}
@@ -39,6 +40,19 @@ const { article } = Astro.props;
           {article.attributes.title}
         </h1>
         <p class="py-1 text-1xl">{article.attributes.excerpt}</p>
+        <div class="flex flex-row">
+          <p class="text-sm text-gray-500 dark:text-gray-400">
+            <FormattedDate date={new Date(article.attributes.publishedAt)} />
+          </p>
+          <p class="text-sm text-gray-500 dark:text-gray-400">
+            {" "}
+             &middot; {article.attributes.readingTime} read
+          </p>
+          <p class="text-sm text-gray-500 dark:text-gray-400">
+            {" "}
+             &middot; # {article.attributes.group.data.attributes.Name}
+          </p>
+        </div>
       </div>
     </div>
   </a>
