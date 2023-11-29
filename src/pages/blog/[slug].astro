@@ -51,7 +51,7 @@ console.log(article.attributes.instagramPost);
 
 <PostLayout {...article}>
   <div
-    class="prose prose-stone md:prose-lg lg:prose-xl prose-a:text-blue-600"
+    class="prose md:prose-lg lg:prose-xl prose-a:text-blue-600"
     set:html={marked.parse(article.attributes.content)}
   />
 </PostLayout>
