@@ -13,7 +13,4 @@ export default interface InstagramPost {
             ];
         }
     ];
-    images: {
-        data: Image[];
-    };
 }
