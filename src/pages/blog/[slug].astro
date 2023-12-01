@@ -50,7 +50,7 @@ const article = articles[0];
 
 <PostLayout {...article}>
   <div
-    class="prose md:prose-lg lg:prose-xl prose-a:text-blue-600 mb-16 text-gray-400"
+    class="prose md:prose-lg lg:prose-xl prose-a:text-blue-600 mb-16 dark:prose-invert"
     set:html={marked.parse(article.attributes.content)}
   />
 </PostLayout>
