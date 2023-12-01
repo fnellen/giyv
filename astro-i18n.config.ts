@@ -14,10 +14,14 @@ export default defineAstroI18nConfig({
 		en: {
 			about: "about",
 			home: "en",
+			impressum: "impressum",
+			"privacy-policy": "privacy-policy",
 		},
 		it: {
 			about: "su-di-noi",
 			home: "it",
+			impressum: "impressum",
+			"privacy-policy": "privacy-policy",
 		},
 	}, // { [secondary_locale1]: { about: "about-translated", ... } }
 })
