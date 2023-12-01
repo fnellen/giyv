@@ -43,10 +43,6 @@ body {
   display: flex;
 }
 
-.hidden {
-  display: none;
-}
-
 .progress {
   background: #0e68ea;
   position: fixed;
