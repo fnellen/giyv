@@ -1,25 +1,30 @@
 /// <reference types="astro/client" />
 
 
+interface ImportMetaEnv {
+	readonly STRAPI_URL: string;
+	readonly STRAPI_TOKEN: string;
+}
+
 // ###> astro-i18n/type-generation ###
 type PrimaryLocale = "de"
-type SecondaryLocale = "it"|"en"
+type SecondaryLocale = "it" | "en"
 type Locale = PrimaryLocale | SecondaryLocale
-type RouteParameters = {"/impressum":undefined;"/":undefined;"/privacy-policy":undefined;"/blog/[...page]":{"page":unknown;};"/blog/[slug]":{"slug":unknown;};}
+type RouteParameters = { "/impressum": undefined; "/": undefined; "/privacy-policy": undefined; "/blog/[...page]": { "page": unknown; }; "/blog/[slug]": { "slug": unknown; }; }
 type Route = keyof RouteParameters
 type TranslationVariables = object
 type Translation = keyof TranslationVariables
-type Environment = "none"|"node"|"browser"
+type Environment = "none" | "node" | "browser"
 declare module "astro-i18n" {
-	type GetStaticPathsProps = {paginate:Function;rss:Function}
-	type GetStaticPathsItem = {params:Record<string,number|string|undefined>;props?:Record<string,unknown>}
-	type DeepStringRecord = {[key: string]:string|DeepStringRecord}
-	type TranslationDirectory = {i18n?:string;pages?: string}
-	export type Translations = {[group: string]:{[locale: string]: DeepStringRecord}}
-	export type TranslationFormatters = {[formatterName: string]:(value:unknown,...args:unknown[])=>unknown}
-	export type TranslationLoadingRules = {groups:string[];routes: string[]}[]
-	export type SegmentTranslations = {[secondaryLocale: string]:{[segment: string]:string}}
-	export interface AstroI18nConfig {primaryLocale:string;secondaryLocales:string[];fallbackLocale:string;showPrimaryLocale:boolean;trailingSlash:"always"|"never";run:"server"|"client+server";translations:Translations;translationLoadingRules:TranslationLoadingRules;translationDirectory:TranslationDirectory;routes:SegmentTranslations;}
+	type GetStaticPathsProps = { paginate: Function; rss: Function }
+	type GetStaticPathsItem = { params: Record<string, number | string | undefined>; props?: Record<string, unknown> }
+	type DeepStringRecord = { [key: string]: string | DeepStringRecord }
+	type TranslationDirectory = { i18n?: string; pages?: string }
+	export type Translations = { [group: string]: { [locale: string]: DeepStringRecord } }
+	export type TranslationFormatters = { [formatterName: string]: (value: unknown, ...args: unknown[]) => unknown }
+	export type TranslationLoadingRules = { groups: string[]; routes: string[] }[]
+	export type SegmentTranslations = { [secondaryLocale: string]: { [segment: string]: string } }
+	export interface AstroI18nConfig { primaryLocale: string; secondaryLocales: string[]; fallbackLocale: string; showPrimaryLocale: boolean; trailingSlash: "always" | "never"; run: "server" | "client+server"; translations: Translations; translationLoadingRules: TranslationLoadingRules; translationDirectory: TranslationDirectory; routes: SegmentTranslations; }
 	/** Typed astro-i18n config definition. */
 	export function defineAstroI18nConfig(config: Partial<AstroI18nConfig>): Partial<AstroI18nConfig>
 	/** The `astro-i18n` middleware. */
@@ -46,9 +51,9 @@ declare module "astro-i18n" {
 		key: T | string & {},
 		...args: undefined extends TranslationVariables[T]
 			? [
-				properties?: keyof TranslationVariables extends T 
-					? Record<string, unknown> 
-					: TranslationVariables[T], 
+				properties?: keyof TranslationVariables extends T
+				? Record<string, unknown>
+				: TranslationVariables[T],
 				options?: {
 					route?: Route | string & {}
 					locale?: Locale | string & {}
@@ -56,7 +61,7 @@ declare module "astro-i18n" {
 				}
 			]
 			: [
-				properties: TranslationVariables[T], 
+				properties: TranslationVariables[T],
 				options?: {
 					route?: Route | string & {}
 					locale?: Locale | string & {}
@@ -73,28 +78,28 @@ declare module "astro-i18n" {
 		route: T | string & {},
 		...args: T extends keyof RouteParameters
 			? undefined extends RouteParameters[T]
-				? [
-					parameters?: Record<string, string>, 
-					options?: { 
-						targetLocale?: string, 
-						routeLocale?: string,
-						showPrimaryLocale?: string,
-						query?: Record<string, unknown>
-					}
-				]
-				: [
-					parameters: RouteParameters[T], 
-					options?: { 
-						targetLocale?: string, 
-						routeLocale?: string,
-						showPrimaryLocale?: string,
-						query?: Record<string, unknown>
-					}
-				]
+			? [
+				parameters?: Record<string, string>,
+				options?: {
+					targetLocale?: string,
+					routeLocale?: string,
+					showPrimaryLocale?: string,
+					query?: Record<string, unknown>
+				}
+			]
 			: [
-				parameters?: Record<string, string>, 
-				options?: { 
-					targetLocale?: string, 
+				parameters: RouteParameters[T],
+				options?: {
+					targetLocale?: string,
+					routeLocale?: string,
+					showPrimaryLocale?: string,
+					query?: Record<string, unknown>
+				}
+			]
+			: [
+				parameters?: Record<string, string>,
+				options?: {
+					targetLocale?: string,
 					routeLocale?: string,
 					showPrimaryLocale?: string,
 					query?: Record<string, unknown>
@@ -131,9 +136,9 @@ declare module "astro-i18n" {
 			key: T | string & {},
 			...args: undefined extends TranslationVariables[T]
 				? [
-					properties?: keyof TranslationVariables extends T 
-						? Record<string, unknown> 
-						: TranslationVariables[T], 
+					properties?: keyof TranslationVariables extends T
+					? Record<string, unknown>
+					: TranslationVariables[T],
 					options?: {
 						route?: Route | string & {}
 						locale?: Locale | string & {}
@@ -141,7 +146,7 @@ declare module "astro-i18n" {
 					}
 				]
 				: [
-					properties: TranslationVariables[T], 
+					properties: TranslationVariables[T],
 					options?: {
 						route?: Route | string & {}
 						locale?: Locale | string & {}
@@ -158,28 +163,28 @@ declare module "astro-i18n" {
 			route: T | string & {},
 			...args: T extends keyof RouteParameters
 				? undefined extends RouteParameters[T]
-					? [
-						parameters?: Record<string, string>, 
-						options?: { 
-							targetLocale?: string, 
-							routeLocale?: string,
-							showPrimaryLocale?: string,
-							query?: Record<string, unknown>
-						}
-					]
-					: [
-						parameters: RouteParameters[T], 
-						options?: { 
-							targetLocale?: string, 
-							routeLocale?: string,
-							showPrimaryLocale?: string,
-							query?: Record<string, unknown>
-						}
-					]
+				? [
+					parameters?: Record<string, string>,
+					options?: {
+						targetLocale?: string,
+						routeLocale?: string,
+						showPrimaryLocale?: string,
+						query?: Record<string, unknown>
+					}
+				]
 				: [
-					parameters?: Record<string, string>, 
-					options?: { 
-						targetLocale?: string, 
+					parameters: RouteParameters[T],
+					options?: {
+						targetLocale?: string,
+						routeLocale?: string,
+						showPrimaryLocale?: string,
+						query?: Record<string, unknown>
+					}
+				]
+				: [
+					parameters?: Record<string, string>,
+					options?: {
+						targetLocale?: string,
 						routeLocale?: string,
 						showPrimaryLocale?: string,
 						query?: Record<string, unknown>
@@ -195,7 +200,7 @@ declare module "astro-i18n" {
 		/** Adds new route segment translations at runtime. */
 		addRoutes(routes: SegmentTranslations): this
 		/** Tries to parse one of the configured locales out of the given route. If no configured locale is found it will return `null`. */
-		extractRouteLocale(route: string): string|null
+		extractRouteLocale(route: string): string | null
 		/** Initializes astro-i18n on the server-side. */
 		initialize(config?: Partial<AstroI18nConfig> | string, formatters?: TranslationFormatters = {}): Promise<void>
 		/** Redirects the user to the given destination. */
