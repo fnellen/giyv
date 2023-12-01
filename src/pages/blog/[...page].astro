@@ -2,7 +2,6 @@
 import qs from "qs";
 import Container from "../../components/shared/Container.astro";
 import Paragraph from "../../components/shared/Paragraph.astro";
-import Title from "../../components/shared/Title.astro";
 import type Category from "../../interfaces/category";
 import fetchApi from "../../lib/strapi";
 import { astroI18n } from "astro-i18n";
@@ -53,27 +52,23 @@ const articles = await fetchApi<Article[]>({
   title="Blog"
   description="Blog posts about european union, politics, and more."
 >
-  <main class="flex flex-col gap-y-20 md:gap-y-32 overflow-hidden">
-    <section class="relative pt-12 lg:pt-16">
-      <Container>
-        <Title>Blog</Title>
-        <Paragraph className="md:w-1/2">
-          Here we discuss the European Union, politics, and more. We also share
-          our thoughts on the latest news and events. You can find all of our
-          blog posts below.
-        </Paragraph>
-        <div class="flex flex-row gap-4">
-          <Paragraph className="text-2xl font-bold">View all</Paragraph>
-          {
-            categories.map((category) => (
-              <Paragraph className="text-2xl font-bold underline">
-                {category.attributes.Name}
-              </Paragraph>
-            ))
-          }
+  <main class="flex flex-col gap-20 md:gap-32 overflow-hidden">
+    <section class="pt-12 lg:pt-16">
+      <Container className="flex flex-col gap-12">
+        <div class="flex flex-col gap-4">
+          <h1
+            class="text-3xl/tight sm:text-4xl/tight md:text-5xl/tight xl:text-6xl/tight
+             font-bold text-heading-1"
+          >
+            Young Voices Blog
+          </h1>
+          <Paragraph className="md:w-1/2">
+            Here we discuss the European Union, politics, and more. We also
+            share our thoughts on the latest news and events. You can find all
+            of our blog posts below.
+          </Paragraph>
         </div>
-      </Container>
-      <Container>
+        <hr class="border-gray-200 dark:border-gray-800" />
         {articles.map((article) => <BlogCard article={article} />)}
       </Container>
     </section>

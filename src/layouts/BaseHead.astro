@@ -47,3 +47,30 @@ const {
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+<!-- Cookie Consent -->
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0-rc.17/dist/cookieconsent.css"
+/>
+
+<!-- Google tag (gtag.js) -->
+<script
+  type="text/plain"
+  data-category="analytics"
+  data-service="Google Analytics"
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-GMNBBQMNLC"></script>
+<script
+  type="text/plain"
+  data-category="analytics"
+  data-service="Google Analytics"
+>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+
+  gtag("config", "G-GMNBBQMNLC");
+</script>

@@ -3,8 +3,10 @@ import { Image } from "astro:assets";
 import type Article from "../../interfaces/article";
 import { l } from "astro-i18n";
 import FormattedDate from "../shared/FormattedDate.astro";
+import Icon from "astro-icon";
+import Title from "../shared/Title.astro";
+import Paragraph from "../shared/Paragraph.astro";
 
-// set the props to type article
 export type Props = {
   article: Article;
 };
@@ -21,37 +23,40 @@ const { article } = Astro.props;
     })}/${article.attributes.slug}`}
     target={"_self"}
   >
-    <div class="flex-row">
+    <div class="flex flex-col items-center gap-12 md:flex-row">
       <Image
         src={article.attributes.featuredImage.data.attributes.url}
         alt={article.attributes.featuredImage.data.attributes.alternativeText ||
           "No alt text"}
         width={article.attributes.featuredImage.data.attributes.width}
         height={article.attributes.featuredImage.data.attributes.height}
-        class="max-w-full md:max-w-[13rem] rounded-lg"
+        class="max-w-full md:max-w-[13rem] rounded-lg dark:text-gray-400"
         transition:name={"blogImg" + article.id}
       />
       <div class="">
-        <h1
+        <Title
           class="text-xl font-bold"
           transition:name={"blogTitle" + article.id}
           transition:animate="fade"
         >
           {article.attributes.title}
-        </h1>
-        <p class="py-1 text-1xl">{article.attributes.excerpt}</p>
-        <div class="flex flex-row">
-          <p class="text-sm text-gray-500 dark:text-gray-400">
+        </Title>
+        <Paragraph className="py-1">{article.attributes.excerpt}</Paragraph>
+        <div
+          class="flex flex-row justify-between w-full md:justify-start gap-4"
+        >
+          <Paragraph className="text-sm">
+            <Icon name="mdi:calendar" class="inline-block w-4 h-4 mr-1" />
             <FormattedDate date={new Date(article.attributes.publishedAt)} />
-          </p>
-          <p class="text-sm text-gray-500 dark:text-gray-400">
-            {" "}
-             &middot; {article.attributes.readingTime} read
-          </p>
-          <p class="text-sm text-gray-500 dark:text-gray-400">
-            {" "}
-             &middot; # {article.attributes.group.data.attributes.Name}
-          </p>
+          </Paragraph>
+          <Paragraph className="text-sm ">
+            <Icon name="mdi:clock" class="inline-block w-4 h-4 mr-1" />
+            {article.attributes.readingTime}
+          </Paragraph>
+          <Paragraph className="text-sm ">
+            <Icon name="mdi:theme" class="inline-block w-4 h-4 mr-1" />
+            {article.attributes.group.data.attributes.Name}
+          </Paragraph>
         </div>
       </div>
     </div>

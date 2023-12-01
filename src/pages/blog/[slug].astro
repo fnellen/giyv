@@ -46,12 +46,11 @@ const articles = await fetchApi<Article[]>({
   query: query,
 });
 const article = articles[0];
-console.log(article.attributes.instagramPost);
 ---
 
 <PostLayout {...article}>
   <div
-    class="prose md:prose-lg lg:prose-xl prose-a:text-blue-600"
+    class="prose md:prose-lg lg:prose-xl prose-a:text-blue-600 mb-16 text-gray-400"
     set:html={marked.parse(article.attributes.content)}
   />
 </PostLayout>

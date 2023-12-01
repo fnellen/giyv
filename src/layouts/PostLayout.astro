@@ -13,7 +13,6 @@ import { SITE_URL } from "../config";
 export interface Props extends Article {}
 
 const article = Astro.props;
-console.log(article.attributes.group);
 const articleUrl =
   SITE_URL +
   l("/blog/", undefined, { targetLocale: article.attributes.locale }) +
@@ -53,50 +52,145 @@ const socials = [
   image={article.attributes.featuredImage.data.attributes.url}
   language={article.attributes.locale}
 >
-  <section class="relative pt-8 lg:pt-8">
-    <Container className={"flex flex-col lg:flex-row gap-10 lg:gap-12"}>
-      <article
-        class="min-w-full md:py-4 sm:max-w-none md:max-w-none mb-3 flex flex-col justify-center items-center gap-12"
-      >
-        <header>
-          <div class="flex items-center text-sm gap-2 mb-8">
-            <a href={l("/blog")} class="underline"> BLOG</a>
-            <Icon name="ant-design:right-outlined" class="w-3 h-3" />
+  <script>
+    let prog = document.getElementById("progress");
+
+    let body = document.body,
+      html = document.documentElement;
+
+    let height = Math.max(
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight,
+    );
+
+    const setProgress = () => {
+      let scrollFromTop =
+        (document.documentElement.scrollTop || body.scrollTop) +
+        html.clientHeight;
+      let width = (scrollFromTop / height) * 100 + "%";
+
+      prog.style.width = width;
+    };
+
+    window.addEventListener("scroll", setProgress);
+
+    setProgress();
+  </script>
+
+  <section class="relative pt-8 lg:pt-8"></section>
+  <Container className={"flex flex-col lg:flex-row gap-10 lg:gap-12"}>
+    <article
+      class="min-w-full md:py-4 sm:max-w-none md:max-w-none mb-3 flex flex-col justify-center items-center gap-12"
+    >
+      <header>
+        <div class="flex items-center text-sm gap-2 mb-8">
+          <a href={l("/blog")} class="underline">
+            <Paragraph className="text-sm">BLOG</Paragraph></a
+          >
+          <Icon name="ant-design:right-outlined " class="w-3 h-3" />
+          <Paragraph>
             {article.attributes.title.substring(0, 40) + "..."}
-          </div>
-          <div class="flex flex-col gap-8 items-start lg:flex-row">
-            <div class="flex flex-col gap-8">
-              <div class="flex flex-col gap-2">
-                <p class="text-sm">
-                  Published <FormattedDate
-                    date={new Date(article.attributes.publishedAt)}
-                  />
-                   - {article.attributes.readingTime}
-                </p>
-                <Title>
-                  {article.attributes.title}
-                </Title>
-              </div>
-              <p class="text-medium">
-                {article.attributes.excerpt}
-              </p>
+          </Paragraph>
+        </div>
+        <div class="flex flex-col gap-8 items-start lg:flex-row">
+          <div class="flex flex-col gap-8">
+            <div class="flex flex-col gap-2">
+              <Paragraph className="text-sm ">
+                Published <FormattedDate
+                  date={new Date(article.attributes.publishedAt)}
+                />
+                 - {article.attributes.readingTime}
+              </Paragraph>
+              <h1
+                class="text-3xl/tight sm:text-4xl/tight md:text-5xl/tight xl:text-6xl/tight
+             font-bold text-heading-1"
+              >
+                {article.attributes.title}
+              </h1>
             </div>
-            <Image
-              src={article.attributes.featuredImage.data.attributes.url}
-              alt={article.attributes.featuredImage.data.attributes
-                .alternativeText || "No alt text"}
-              width={article.attributes.featuredImage.data.attributes.width}
-              height={article.attributes.featuredImage.data.attributes.height}
-              quality={100}
-              format="jpg"
-              loading="eager"
-              class="rounded-md w-full max-h-[300px] lg:max-h-[500px]"
-              transition:name={"blogImg" + article.id}
-            />
-            <div
-              class="flex flex-row gap-2 lg:hidden justify-center items-center align-center"
+            <p class="text-lg">
+              {article.attributes.excerpt}
+            </p>
+          </div>
+          <Image
+            src={article.attributes.featuredImage.data.attributes.url}
+            alt={article.attributes.featuredImage.data.attributes
+              .alternativeText || "No alt text"}
+            width={article.attributes.featuredImage.data.attributes.width}
+            height={article.attributes.featuredImage.data.attributes.height}
+            quality={100}
+            format="jpg"
+            loading="eager"
+            class="rounded-md w-full max-h-[300px] lg:max-h-[500px]"
+            transition:name={"blogImg" + article.id}
+          />
+          <div
+            class="flex flex-row gap-2 lg:hidden justify-center items-center align-center"
+          >
+            <p class="font-bold">SHARE THIS</p>
+            {
+              socials.map((social) => {
+                return (
+                  <a
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center gap-2 hover:text-blue-600"
+                  >
+                    <Icon
+                      name={social.icon}
+                      class="w-6 h-6 fill-gray-600 hover:fill-blue-600"
+                      aria-hidden="true"
+                    />
+                  </a>
+                );
+              })
+            }
+          </div>
+        </div>
+      </header>
+      <hr class="w-full border-gray-300 dark:border-gray-700" />
+      <div class="lg:grid lg:grid-cols-3 lg:gap-32 sm:grid-cols-1 sm:gap-16">
+        <div class="col-span-2">
+          <slot />
+        </div>
+        <div class="col-span-1 order-first">
+          <div class="flex flex-col gap-4">
+            <Paragraph className="font-bold ">CHECK OUT OUR POST</Paragraph>
+            {
+              article.attributes.instagramPost.map((post) => {
+                return (
+                  <>
+                    <blockquote
+                      class="instagram-media"
+                      data-instgrm-version="14"
+                    >
+                      <a href={post.url} />
+                    </blockquote>
+                    <script
+                      type="text/plain"
+                      data-category="social"
+                      data-service="Instagram"
+                      src="//www.instagram.com/embed.js"
+                    />
+                  </>
+                );
+              })
+            }
+            <Paragraph className="font-bold ">FOLLOW US</Paragraph>
+            <a
+              href="https://www.instagram.com/giyv_eu/"
+              target="_blank"
+              class="text-gray-600"
             >
-              <p class="font-bold">SHARE THIS</p>
+              <Icon
+                name="mdi:instagram"
+                class="w-6 h-6 fill-gray-600 hover:text-blue-600"
+              />
+            </a>
+            <Paragraph className="font-bold ">SHARE THIS</Paragraph>
+            <div class="flex flex-row gap-2">
               {
                 socials.map((social) => {
                   return (
@@ -104,7 +198,7 @@ const socials = [
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      class="flex items-center gap-2 hover:text-blue-600"
+                      class="flex items-center gap-2 text-gray-600 hover:text-blue-600"
                     >
                       <Icon
                         name={social.icon}
@@ -116,78 +210,29 @@ const socials = [
                 })
               }
             </div>
-          </div>
-        </header>
-        <hr class="w-full border-gray-300 dark:border-gray-700" />
-        <div class="lg:grid lg:grid-cols-3 lg:gap-32 sm:grid-cols-1 sm:gap-16">
-          <div class="col-span-2">
-            <slot />
-          </div>
-          <div class="col-span-1 order-first">
-            <div class="flex flex-col gap-4">
-              <p class="font-bold">CHECK OUT OUR POST</p>
-              {
-                article.attributes.instagramPost.map((post) => {
-                  return (
-                    <>
-                      <blockquote
-                        class="instagram-media"
-                        data-instgrm-version="14"
-                      >
-                        <a href={post.url} />
-                      </blockquote>
-                      <script src="//www.instagram.com/embed.js" />
-                    </>
-                  );
-                })
-              }
-              <p class="font-bold">FOLLOW US</p>
-              <a href="https://www.instagram.com/giyv_eu/" target="_blank">
-                <Icon name="mdi:instagram" class="w-6 h-6 fill-gray-600" />
-              </a>
-              <p class="font-bold">SHARE THIS</p>
-              <div class="flex flex-row gap-2">
-                {
-                  socials.map((social) => {
-                    return (
-                      <a
-                        href={social.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="flex items-center gap-2 hover:text-blue-600"
-                      >
-                        <Icon
-                          name={social.icon}
-                          class="w-6 h-6 fill-gray-600 hover:fill-blue-600"
-                          aria-hidden="true"
-                        />
-                      </a>
-                    );
-                  })
-                }
-              </div>
-              <p class="font-bold">WRITTEN BY</p>
+            <Paragraph className="font-bold">WRITTEN BY</Paragraph>
+            <Paragraph>
               {article.attributes.group.data.attributes.Name}
               <br />
               {article.attributes.group.data.attributes.Description}
-              <p class="font-bold">AUTHORS</p>
-              {
-                article.attributes.group.data.attributes.authors.data
-                  .sort((a, b) =>
-                    a.attributes.name.localeCompare(b.attributes.name),
-                  )
-                  .map((author) => {
-                    return (
-                      <>
-                        <p>{author.attributes.name}</p>
-                      </>
-                    );
-                  })
-              }
-            </div>
+            </Paragraph>
+            <Paragraph className="font-bold">AUTHORS</Paragraph>
+            {
+              article.attributes.group.data.attributes.authors.data
+                .sort((a, b) =>
+                  a.attributes.name.localeCompare(b.attributes.name),
+                )
+                .map((author) => {
+                  return (
+                    <>
+                      <Paragraph>{author.attributes.name}</Paragraph>
+                    </>
+                  );
+                })
+            }
           </div>
         </div>
-      </article>
-    </Container>
-  </section>
+      </div>
+    </article>
+  </Container>
 </BaseLayout>
