@@ -12,4 +12,8 @@ export default defineConfig({
   adapter: node({
     mode: "standalone",
   }),
+  image: {
+    domains: ["cms.giyv.eu", "storage.googleapis.com"],
+    remotePatterns: [{ protocol: "https" }],
+  },
 });
