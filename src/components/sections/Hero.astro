@@ -12,7 +12,7 @@ import BtnLink from "../shared/BtnLink.astro";
 const query = qs.stringify({
   populate: {
     heroImage: {
-      fields: ["name", "width", "height", "url"],
+      fields: ["name", "width", "height", "url", "alternativeText"],
     },
   },
 });
