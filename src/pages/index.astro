@@ -5,9 +5,15 @@ import AboutUs from "../components/sections/AboutUs.astro";
 import CTA from "../components/sections/CTA.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ByNumber from "../components/sections/ByNumber.astro";
+import { astroI18n } from "astro-i18n";
 ---
 
-<BaseLayout>
+<BaseLayout
+  title="Home"
+  description="We are a team of passionate people whose goal is to improve everyone's life through disruptive products. We build great products to solve your business problems."
+  image="/images/og-image.png"
+  language={astroI18n.locale}
+>
   <div class="flex flex-col gap-y-20 md:gap-y-32 overflow-hidden">
     <Hero />
     <ByNumber />
