@@ -12,12 +12,20 @@ import { SITE_URL } from "../config";
 
 export interface Props extends Article {}
 
+function fixedEncodeURIComponent(str) {
+  return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
+    return "%" + c.charCodeAt(0).toString(16);
+  });
+}
+
 const article = Astro.props;
 const articleUrl =
   SITE_URL +
-  l("/blog/", undefined, { targetLocale: article.attributes.locale }) +
+  l("blog", undefined, { targetLocale: article.attributes.locale }) +
+  "/" +
   article.attributes.slug;
-const socials = [
+
+let socials = [
   {
     name: "Facebook",
     icon: "ic:baseline-facebook",
@@ -31,12 +39,17 @@ const socials = [
   {
     name: "LinkedIn",
     icon: "mdi:linkedin",
-    url: `https://www.linkedin.com/shareArticle?url=${articleUrl}&title=${article.attributes.title}&summary=${article.attributes.excerpt}`,
+    url: `https://www.linkedin.com/sharing/share-offsite/?url=${fixedEncodeURIComponent(
+      articleUrl,
+    )}`,
   },
   {
     name: "WhatsApp",
     icon: "ic:baseline-whatsapp",
-    url: `https://wa.me/?text=${articleUrl}`,
+    url: `https://wa.me/?text=${fixedEncodeURIComponent(
+      "Check this German-Italian Young Voices article out: " +
+        article.attributes.title,
+    )}%20${articleUrl}`,
   },
   {
     name: "Email",
