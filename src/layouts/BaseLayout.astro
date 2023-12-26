@@ -6,19 +6,16 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../config";
 import Footer from "../components/elements/Footer.astro";
 import Navbar from "../components/elements/Navbar.astro";
 import Scripts from "./Scripts.astro";
+import type SEOProps from "../interfaces/seoProps";
 
-const {
-  image,
-  title = SITE_TITLE,
-  description = SITE_DESCRIPTION,
-  language,
-} = Astro.props;
+export interface Props extends SEOProps {}
+const seo = Astro.props;
 ---
 
 <!doctype html>
-<html lang={language}>
+<html lang={seo?.ogOptional?.locale || "en"}>
   <head>
-    <BaseHead title={title} description={description} image={image} />
+    <BaseHead {...seo} />
     <ViewTransitions />
     <Scripts />
   </head>

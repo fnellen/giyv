@@ -4,10 +4,13 @@ import Container from "../../components/shared/Container.astro";
 import Paragraph from "../../components/shared/Paragraph.astro";
 import type Category from "../../interfaces/category";
 import fetchApi from "../../lib/strapi";
-import { astroI18n } from "astro-i18n";
+import { astroI18n, l } from "astro-i18n";
 import type Article from "../../interfaces/article";
 import BlogCard from "../../components/cards/BlogCard.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import type SEOProps from "../../interfaces/seoProps";
+import type { Code } from "astro:components";
+import { SITE_URL } from "../../config";
 
 const categories = await fetchApi<Category[]>({
   endpoint: "categories?locale=" + astroI18n.locale + "&",
@@ -46,12 +49,39 @@ const articles = await fetchApi<Article[]>({
   wrappedByKey: "data",
   query: query,
 });
+
+const seo: SEOProps = {
+  title: "Blog",
+  description: "Blog posts about european union, politics, and more.",
+  image:
+    "https://storage.googleapis.com/bucket.giyv.eu/German_Italian_Young_Voices_b79e2c9a55/German_Italian_Young_Voices_b79e2c9a55.png",
+  nofollow: false,
+  noindex: false,
+  ogBasic: {
+    title: "Blog",
+    image:
+      "https://storage.googleapis.com/bucket.giyv.eu/German_Italian_Young_Voices_b79e2c9a55/German_Italian_Young_Voices_b79e2c9a55.png",
+    url: SITE_URL + "/" + l("blog"),
+    type: "website",
+  },
+  ogOptional: {
+    description: "Blog posts about european union, politics, and more.",
+    locale: astroI18n.locale,
+    localeAlternate: astroI18n.locales,
+  },
+  ogArticle: {},
+  twitter: {
+    title: "Blog",
+    description: "Blog posts about european union, politics, and more.",
+    image:
+      "https://storage.googleapis.com/bucket.giyv.eu/German_Italian_Young_Voices_b79e2c9a55/German_Italian_Young_Voices_b79e2c9a55.png",
+    card: "summary_large_image",
+    site: "@giyv_eu",
+  },
+};
 ---
 
-<BaseLayout
-  title="Blog"
-  description="Blog posts about european union, politics, and more."
->
+<BaseLayout {...seo}>
   <main class="flex flex-col gap-20 md:gap-32 overflow-hidden">
     <section class="pt-12 lg:pt-16">
       <Container className="flex flex-col gap-12">
