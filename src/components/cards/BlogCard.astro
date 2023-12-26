@@ -34,13 +34,13 @@ const { article } = Astro.props;
         transition:name={"blogImg" + article.id}
       />
       <div class="">
-        <Title
-          class="text-xl font-bold"
+        <h2
+          class="text-heading-1 font-semibold text-2xl sm:text-3xl md:text-4xl"
           transition:name={"blogTitle" + article.id}
           transition:animate="fade"
         >
           {article.attributes.title}
-        </Title>
+        </h2>
         <Paragraph className="py-1">{article.attributes.excerpt}</Paragraph>
         <div
           class="flex flex-row justify-between w-full md:justify-start gap-4"
