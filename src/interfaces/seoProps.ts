@@ -41,6 +41,6 @@ export default interface SEOProps {
     };
     extend?: {
         link?: Array<{ prefetch: boolean } & HTMLLinkElement>;
-        meta?: Array<{ property: string } & HTMLMetaElement>;
+        meta?: Array<{ name: string, content: string }>;
     };
 }

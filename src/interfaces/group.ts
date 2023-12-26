@@ -4,7 +4,7 @@ export default interface Group {
     id: number;
     attributes: {
         Name: string;
-        Description: number;
+        Description: string;
         createdAt: string;
         updatedAt: string;
         publishedAt: string;

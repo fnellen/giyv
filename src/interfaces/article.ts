@@ -1,8 +1,8 @@
 import type Category from "./category";
 import type Group from "./group";
 import type Image from "./image";
-import type Node from "@strapi/blocks-react-renderer";
 import type InstagramPost from "./instagramPost";
+import type Seo from "./seo";
 
 export default interface Article {
     id: number;
@@ -17,7 +17,9 @@ export default interface Article {
         slug: string;
         contentId: string;
         readingTime: string;
+        tags: string;
         instagramPost: InstagramPost[];
+        seo: Seo;
         featuredImage: {
             data: Image;
         },
