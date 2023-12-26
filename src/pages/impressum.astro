@@ -1,9 +1,27 @@
 ---
 import Container from "../components/shared/Container.astro";
+import { SITE_URL } from "../config";
+import type SEOProps from "../interfaces/seoProps";
 import BaseLayout from "../layouts/BaseLayout.astro";
+const seo: SEOProps = {
+  title: "Impressum",
+  description: "Impressum",
+  image: "/images/og_image.png",
+  nofollow: true,
+  noindex: true,
+  ogBasic: {
+    title: "Impressum",
+    image: "/images/og_image.png",
+    type: "website",
+    url: SITE_URL + "/impressum",
+  },
+  ogOptional: {},
+  ogArticle: {},
+  twitter: {},
+};
 ---
 
-<BaseLayout title="Impressum" description="Impressum">
+<BaseLayout {...seo}>
   <Container className="grid grid-col cols-1 gap-4 mt-12">
     <div class="impressum">
       <h1

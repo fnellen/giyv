@@ -2,20 +2,14 @@
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
 import "../styles/global.css";
+import { SEO } from "astro-seo";
 
-import { SITE_TITLE, SITE_DESCRIPTION } from "../config";
+import { SITE_TITLE } from "../config";
+import type SEOProps from "../interfaces/seoProps";
 
-export interface Props {
-  title: string;
-  description: string;
-  image?: string;
-}
+export interface Props extends SEOProps {}
 
-const {
-  title = SITE_TITLE,
-  description,
-  image = "/social_img.png",
-} = Astro.props;
+const seo = Astro.props;
 ---
 
 <link
@@ -32,23 +26,57 @@ const {
 <meta name="generator" content={Astro.generator} />
 
 <!-- Primary Meta Tags -->
-<title>{title + " 🇪🇺 " + SITE_TITLE}</title>
-<meta name="title" content={title} />
-<meta name="description" content={description} />
+<title>{seo.title + " 🇪🇺 " + SITE_TITLE}</title>
 
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url} />
-<meta property="og:title" content={title} />
-<meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image, Astro.url)} />
-
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(image, Astro.url)} />
+<SEO
+  title={seo.title}
+  description={seo.description}
+  languageAlternates={seo.localizations}
+  titleTemplate={"%s 🇪🇺 " + SITE_TITLE}
+  titleDefault={SITE_TITLE}
+  noindex={seo.noindex}
+  nofollow={seo.nofollow}
+  openGraph={{
+    basic: {
+      title: seo.ogBasic.title || seo.title,
+      type: seo.ogBasic.type || "website",
+      image: new URL(seo.ogBasic.image, Astro.url).toString(),
+      url: Astro.url.href as string,
+    },
+    optional: {
+      audio: seo.ogOptional.audio,
+      description: seo.ogOptional.description,
+      determiner: seo.ogOptional.determiner,
+      locale: seo.ogOptional.locale,
+      localeAlternate: seo.ogOptional.localeAlternate,
+      siteName: seo.ogOptional.siteName,
+      video: seo.ogOptional.video,
+    },
+    article: {
+      publishedTime: seo.ogArticle.publishedTime,
+      modifiedTime: seo.ogArticle.modifiedTime,
+      expirationTime: seo.ogArticle.expirationTime,
+      authors: seo.ogArticle.author,
+      section: seo.ogArticle.section,
+      tags: seo.ogArticle.tags,
+    },
+  }}
+  twitter={{
+    title: seo.twitter.title || seo.title,
+    image: new URL(
+      seo.twitter.image || seo.ogBasic.image,
+      Astro.url,
+    ).toString(),
+    imageAlt: seo.twitter.imageAlt,
+    description: seo.twitter.description || seo.description,
+    card: seo.twitter.card,
+    site: seo.twitter.site,
+  }}
+  extend={{
+    link: seo.extend?.link,
+    meta: seo.extend?.meta,
+  }}
+/>
 
 <!-- Cookie Consent -->
 <link
