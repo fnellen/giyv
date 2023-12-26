@@ -1,0 +1,46 @@
+---
+import { SITE_URL } from "../../config";
+import type SEOProps from "../../interfaces/seoProps";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../shared/Container.astro";
+import Paragraph from "../shared/Paragraph.astro";
+const seo: SEOProps = {
+  title: "404",
+  description: "404",
+  image: "/images/og_image.png",
+  nofollow: true,
+  noindex: true,
+  ogBasic: {
+    title: "404",
+    image: "/images/og_image.png",
+    type: "website",
+    url: SITE_URL + "/404",
+  },
+  ogOptional: {},
+  ogArticle: {},
+  twitter: {},
+};
+---
+
+<BaseLayout {...seo}>
+  <Container className={"flex flex-col mt-10 gap-10 lg:gap-12"}>
+    <h1
+      class="text-3xl/tight sm:text-4xl/tight md:text-5xl/tight xl:text-6xl/tight font-bold text-heading-1"
+    >
+      Leider nichts gefunden ... 404
+    </h1>
+    <Paragraph>
+      Die Seite, die du suchst, existiert nicht. Vielleicht hilft dir die
+      Navigation weiter.
+    </Paragraph>
+    <Paragraph>
+      Falls du einen Fehler gefunden hast, kannst du uns gerne eine{" "}
+      <a
+        href=`mailto:German-Italian Young Voices<info@giyv.eu>?subject=Fehler auf der Website&body=Hallo, ich habe einen Fehler auf der Website gefunden. Folgende Seite ist betroffen: ${SITE_URL + encodeURIComponent(
+          new URL(Astro.url).pathname
+        )}`
+        class="underline text-blue-600 after:content-['_↗']">E-Mail</a
+      > schreiben.
+    </Paragraph>
+  </Container>
+</BaseLayout>
