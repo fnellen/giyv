@@ -8,7 +8,7 @@ import fetchApi from "../lib/strapi";
 import type Article from "../interfaces/article";
 const parser = new MarkdownIt();
 
-export const GET: APIRoute = async ({ request }) => {
+export const GET: APIRoute = async () => {
   const articles = await fetchApi<Article[]>({
     endpoint: "articles",
     wrappedByKey: "data",

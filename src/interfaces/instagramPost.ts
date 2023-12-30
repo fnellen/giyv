@@ -1,4 +1,3 @@
-import type Image from './image';
 export default interface InstagramPost {
     id: number;
     url: string;

@@ -27,7 +27,7 @@ export default interface Article {
             data: Article[];
         };
         category: {
-            data: Category;
+            data: Category[];
         };
         group: {
             data: Group;
