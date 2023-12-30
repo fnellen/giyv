@@ -1,7 +1,6 @@
 ---
 import { Image } from "astro:assets";
 import FormattedDate from "../components/shared/FormattedDate.astro";
-import Title from "../components/shared/Title.astro";
 import type Article from "../interfaces/article";
 import BaseLayout from "./BaseLayout.astro";
 import Container from "../components/shared/Container.astro";
@@ -9,10 +8,11 @@ import Paragraph from "../components/shared/Paragraph.astro";
 import Icon from "astro-icon";
 import { l } from "astro-i18n";
 import { SITE_URL } from "../config";
+import type SEOProps from "../interfaces/seoProps";
 
 export interface Props extends Article {}
 
-function fixedEncodeURIComponent(str) {
+function fixedEncodeURIComponent(str: string) {
   return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
     return "%" + c.charCodeAt(0).toString(16);
   });
@@ -57,14 +57,73 @@ let socials = [
     url: `mailto:?subject=Read this article about: s${article.attributes.title}&body=${articleUrl}${article.attributes.excerpt}`,
   },
 ];
+
+const localizations =
+  article.attributes.localizations &&
+  article.attributes.localizations.data.map((loc) => {
+    return {
+      href:
+        SITE_URL +
+        l("blog", undefined, {
+          targetLocale: loc.attributes.locale,
+        }) +
+        "/" +
+        loc.attributes.slug,
+      hrefLang: loc.attributes.locale,
+    };
+  });
+
+const seo: SEOProps = {
+  title: article.attributes.seo.metaTitle
+    ? article.attributes.seo.metaTitle
+    : article.attributes.title,
+  description: article.attributes.seo.metaDescription
+    ? article.attributes.seo.metaDescription
+    : article.attributes.excerpt,
+  image: article.attributes.seo.metaImage
+    ? article.attributes.seo.metaImage.data.attributes.url
+    : article.attributes.featuredImage.data.attributes.url,
+  localizations: localizations,
+  noindex: false,
+  nofollow: false,
+  ogBasic: {
+    type: "article",
+    title: article.attributes.title,
+    image: article.attributes.featuredImage.data.attributes.url,
+    url: articleUrl,
+  },
+  ogOptional: {
+    audio: undefined,
+    description: article.attributes.excerpt,
+    locale: article.attributes.locale,
+  },
+  ogArticle: {
+    publishedTime: article.attributes.publishedAt,
+    modifiedTime: article.attributes.updatedAt,
+    expirationTime: undefined,
+    author: article.attributes.group.data.attributes.authors.data.map(
+      (author) => {
+        return author.attributes.name;
+      },
+    ),
+    section: article.attributes.group.data.attributes.Name,
+    tags: article.attributes.tags
+      ? article.attributes.tags.split(",").map((tag) => tag.trim())
+      : undefined,
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@giyv_eu",
+    title: article.attributes.title,
+    description: article.attributes.excerpt,
+    image: article.attributes.featuredImage.data.attributes.url,
+    imageAlt: article.attributes.featuredImage.data.attributes.alternativeText,
+  },
+  extend: undefined,
+};
 ---
 
-<BaseLayout
-  title={article.attributes.title}
-  description={article.attributes.excerpt}
-  image={article.attributes.featuredImage.data.attributes.url}
-  language={article.attributes.locale}
->
+<BaseLayout {...seo}>
   <script>
     let prog = document.getElementById("progress");
 
@@ -82,7 +141,7 @@ let socials = [
         (document.documentElement.scrollTop || body.scrollTop) +
         html.clientHeight;
       let width = (scrollFromTop / height) * 100 + "%";
-
+      //@ts-ignore
       prog.style.width = width;
     };
 
