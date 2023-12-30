@@ -1,9 +1,12 @@
 ---
+import { t } from "astro-i18n";
 import { SITE_URL } from "../../config";
 import type SEOProps from "../../interfaces/seoProps";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Container from "../shared/Container.astro";
 import Paragraph from "../shared/Paragraph.astro";
+import indexing from "../../lib/indexing";
+indexing();
 const seo: SEOProps = {
   title: "404",
   description: "404",
@@ -30,17 +33,35 @@ const seo: SEOProps = {
       Leider nichts gefunden ... 404
     </h1>
     <Paragraph>
-      Die Seite, die du suchst, existiert nicht. Vielleicht hilft dir die
-      Navigation weiter.
+      {t("not_found.desc_1")}
+    </Paragraph>
+
+    <div id="search"></div>
+    <script>
+      window.addEventListener("DOMContentLoaded", (event) => {
+        // @ts-ignore
+        new PagefindUI({ element: "#search", showSubResults: true });
+      });
+    </script>
+    <Paragraph>
+      {t("not_found.desc_2")}
+      <a
+        href="https://www.instagram.com/giyv_eu/"
+        class="underline text-blue-600 after:content-['_↗']"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Instagram
+      </a>
     </Paragraph>
     <Paragraph>
-      Falls du einen Fehler gefunden hast, kannst du uns gerne eine{" "}
+      {t("not_found.desc_3")}
       <a
         href=`mailto:German-Italian Young Voices<info@giyv.eu>?subject=Fehler auf der Website&body=Hallo, ich habe einen Fehler auf der Website gefunden. Folgende Seite ist betroffen: ${SITE_URL + encodeURIComponent(
           new URL(Astro.url).pathname
         )}`
         class="underline text-blue-600 after:content-['_↗']">E-Mail</a
-      > schreiben.
+      >
     </Paragraph>
   </Container>
 </BaseLayout>
