@@ -5,6 +5,12 @@ import type Article from "../../interfaces/article";
 import { astroI18n } from "astro-i18n";
 import { marked } from "marked";
 import PostLayout from "../../layouts/PostLayout.astro";
+import { remark } from "remark";
+import remarkToc from "remark-toc";
+import { rehype } from "rehype";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeSlug from "rehype-slug";
+import NotFound from "../../components/sections/NotFound.astro";
 
 const { slug } = Astro.params;
 
@@ -20,7 +26,14 @@ const query = qs.stringify({
         },
       },
     },
-    category: "*",
+    category: {
+      populate: {
+        fields: ["Name"],
+      },
+    },
+    seo: {
+      populate: "*",
+    },
     group: {
       populate: {
         authors: {
@@ -45,12 +58,45 @@ const articles = await fetchApi<Article[]>({
   wrappedByKey: "data",
   query: query,
 });
-const article = articles[0];
+
+let article: Article;
+let is404 = false;
+article = articles[0];
+
+if (!article) {
+  article = {
+    // @ts-ignore
+    attributes: {
+      title: "404",
+      content: "Article not found",
+    },
+  };
+  is404 = true;
+}
+
+const toc = await remark()
+  .use(remarkToc, {
+    tight: true,
+    maxDepth: 3,
+  })
+  .process(article.attributes.content);
+
+const content_rehyped = await rehype()
+  .data("settings", { fragment: true })
+  .use(rehypeSlug)
+  .use(rehypeAutolinkHeadings)
+  .process(marked.parse(toc.toString()));
 ---
 
-<PostLayout {...article}>
-  <div
-    class="prose md:prose-lg lg:prose-xl prose-a:text-blue-600 mb-16 dark:prose-invert"
-    set:html={marked.parse(article.attributes.content)}
-  />
-</PostLayout>
+{
+  is404 === false && (
+    <PostLayout {...article}>
+      <div
+        class="prose md:prose-lg lg:prose-xl prose-a:text-blue-600 mb-16 dark:prose-invert"
+        set:html={content_rehyped.toString()}
+      />
+    </PostLayout>
+  )
+}
+
+{is404 && <NotFound customMessage="Article not found" />}
