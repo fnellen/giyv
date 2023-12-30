@@ -9,7 +9,6 @@ import type Article from "../../interfaces/article";
 import BlogCard from "../../components/cards/BlogCard.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import type SEOProps from "../../interfaces/seoProps";
-import type { Code } from "astro:components";
 import { SITE_URL } from "../../config";
 
 const categories = await fetchApi<Category[]>({
@@ -79,6 +78,8 @@ const seo: SEOProps = {
     site: "@giyv_eu",
   },
 };
+import indexing from "../../lib/indexing";
+indexing();
 ---
 
 <BaseLayout {...seo}>
@@ -97,6 +98,13 @@ const seo: SEOProps = {
             share our thoughts on the latest news and events. You can find all
             of our blog posts below.
           </Paragraph>
+          <div id="search"></div>
+          <script>
+            window.addEventListener("DOMContentLoaded", (event) => {
+              // @ts-ignore
+              new PagefindUI({ element: "#search", showSubResults: true });
+            });
+          </script>
         </div>
         <hr class="border-gray-200 dark:border-gray-800" />
         {articles.map((article) => <BlogCard article={article} />)}
