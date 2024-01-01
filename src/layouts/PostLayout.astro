@@ -191,6 +191,7 @@ const seo: SEOProps = {
               .alternativeText || "No alt text"}
             width={1000}
             height={300}
+            loading="eager"
             class="rounded-md w-full max-h-[300px] lg:max-h-[500px]"
             transition:name={"blogImg" + article.id}
           />
@@ -226,6 +227,29 @@ const seo: SEOProps = {
         </div>
         <div class="col-span-1 order-first">
           <div class="flex flex-col gap-4">
+            <Paragraph className="font-bold ">ALSO AVAILABLE IN</Paragraph>
+            <div class="flex flex-row gap-2">
+              {
+                article.attributes.localizations &&
+                  article.attributes.localizations.data.map((loc) => {
+                    return (
+                      <a
+                        href={
+                          SITE_URL +
+                          l("blog", undefined, {
+                            targetLocale: loc.attributes.locale,
+                          }) +
+                          "/" +
+                          loc.attributes.slug
+                        }
+                        class="flex items-center gap-2 text-gray-600 hover:text-blue-600"
+                      >
+                        <Paragraph>{loc.attributes.locale}</Paragraph>
+                      </a>
+                    );
+                  })
+              }
+            </div>
             <Paragraph className="font-bold ">CHECK OUT OUR POST</Paragraph>
             {
               article.attributes.instagramPost.map((post) => {
