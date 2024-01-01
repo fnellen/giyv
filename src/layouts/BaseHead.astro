@@ -10,6 +10,8 @@ import type SEOProps from "../interfaces/seoProps";
 export interface Props extends SEOProps {}
 
 const seo = Astro.props;
+
+Astro.response.headers.set("Cache-Control", "max-age=31536000");
 ---
 
 <link
@@ -25,8 +27,13 @@ const seo = Astro.props;
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="generator" content={Astro.generator} />
 
-<link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
-<script src="/pagefind/pagefind-ui.js" is:inline></script>
+<link
+  href="/pagefind/pagefind-ui.css"
+  rel="stylesheet"
+  media="print"
+  onload="this.media='all'; this.onload = null"
+/>
+<script async src="/pagefind/pagefind-ui.js" is:inline></script>
 
 <!-- Primary Meta Tags -->
 <title>{seo.title + " 🇪🇺 " + SITE_TITLE}</title>
@@ -85,6 +92,8 @@ const seo = Astro.props;
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0-rc.17/dist/cookieconsent.css"
+  media="print"
+  onload="this.media='all'; this.onload = null"
 />
 
 <!-- Google tag (gtag.js) -->

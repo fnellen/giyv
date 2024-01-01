@@ -189,11 +189,8 @@ const seo: SEOProps = {
             src={article.attributes.featuredImage.data.attributes.url}
             alt={article.attributes.featuredImage.data.attributes
               .alternativeText || "No alt text"}
-            width={article.attributes.featuredImage.data.attributes.width}
-            height={article.attributes.featuredImage.data.attributes.height}
-            quality={100}
-            format="jpg"
-            loading="eager"
+            width={1000}
+            height={300}
             class="rounded-md w-full max-h-[300px] lg:max-h-[500px]"
             transition:name={"blogImg" + article.id}
           />
