@@ -56,6 +56,10 @@ const { article } = Astro.props;
             <Icon name="mdi:theme" class="inline-block w-4 h-4 mr-1" />
             {article.attributes.group.data.attributes.Name}
           </Paragraph>
+          <Paragraph className="text-sm ">
+            <Icon name="mdi:globe" class="inline-block w-4 h-4 mr-1" />
+            {article.attributes.locale.toUpperCase()}
+          </Paragraph>
         </div>
       </div>
     </div>

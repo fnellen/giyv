@@ -44,7 +44,7 @@ const query = qs.stringify({
 });
 
 const articles = await fetchApi<Article[]>({
-  endpoint: "articles",
+  endpoint: "articles?locale=all&",
   wrappedByKey: "data",
   query: query,
 });
@@ -79,7 +79,7 @@ const seo: SEOProps = {
   },
 };
 import indexing from "../../lib/indexing";
-indexing();
+await indexing();
 ---
 
 <BaseLayout {...seo}>
