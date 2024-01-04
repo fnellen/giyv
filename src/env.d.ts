@@ -12,7 +12,7 @@ type SecondaryLocale = "it"|"en"
 type Locale = PrimaryLocale | SecondaryLocale
 type RouteParameters = {"/impressum":undefined;"/":undefined;"/privacy-policy":undefined;"/blog/[...page]":{"page":unknown;};"/blog/[slug]":{"slug":unknown;};}
 type Route = keyof RouteParameters
-type TranslationVariables = {"404":object|undefined;"desc_1":{"blog"?:unknown;}|undefined;"desc_2":{"instagram"?:unknown;}|undefined;"desc_3":{"E"?:unknown;}|undefined;}
+type TranslationVariables = {"not_found.404":object|undefined;"not_found.desc_1":object|undefined;"not_found.desc_2":object|undefined;"not_found.desc_3":object|undefined;}
 type Translation = keyof TranslationVariables
 type Environment = "none"|"node"|"browser"
 declare module "astro-i18n" {
