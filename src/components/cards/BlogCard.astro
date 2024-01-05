@@ -35,8 +35,8 @@ if (orientation === "horizontal") {
         src={article.attributes.featuredImage.data.attributes.url}
         alt={article.attributes.featuredImage.data.attributes.alternativeText ||
           "No alt text"}
-        width={article.attributes.featuredImage.data.attributes.width}
-        height={article.attributes.featuredImage.data.attributes.height}
+        width="200"
+        height="150"
         class="max-w-full md:max-w-[13rem] rounded-lg dark:text-gray-400"
         transition:name={"blogImg" + article.id}
       />
