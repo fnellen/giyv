@@ -10,7 +10,6 @@ export default async function index() {
         excludeSelectors: [],
         keepIndexUrl: false,
         verbose: false,
-        logfile: "debug.log"
     });
 
     // Index all HTML files in a directory
