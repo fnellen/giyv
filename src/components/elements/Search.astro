@@ -1,0 +1,13 @@
+---
+import Container from "../shared/Container.astro";
+---
+
+<Container className={"flex flex-col gap-10 lg:gap-12"}>
+  <div id="search"></div>
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      // @ts-ignore
+      new PagefindUI({ element: "#search", showSubResults: true });
+    });
+  </script>
+</Container>
