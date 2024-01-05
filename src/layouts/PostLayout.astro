@@ -150,7 +150,7 @@ const seo: SEOProps = {
     setProgress();
   </script>
 
-  <section class="relative pt-8 lg:pt-8"></section>
+  <!-- <section class="relative pt-8 lg:pt-8"></section> -->
   <Container className={"flex flex-col lg:flex-row gap-10 lg:gap-12"}>
     <article
       class="min-w-full md:py-4 sm:max-w-none md:max-w-none mb-3 flex flex-col justify-center items-center gap-12"
@@ -165,8 +165,8 @@ const seo: SEOProps = {
             {article.attributes.title.substring(0, 40) + "..."}
           </Paragraph>
         </div>
-        <div class="flex flex-col gap-8 items-start lg:flex-row">
-          <div class="flex flex-col gap-8">
+        <div class="flex flex-col gap-8 items-start lg:flex-row lg:gap-32">
+          <div class="flex flex-col gap-8 lg:w-1/2">
             <div class="flex flex-col gap-2">
               <Paragraph className="text-sm ">
                 Published <FormattedDate
@@ -189,10 +189,10 @@ const seo: SEOProps = {
             src={article.attributes.featuredImage.data.attributes.url}
             alt={article.attributes.featuredImage.data.attributes
               .alternativeText || "No alt text"}
-            width={1000}
+            width={500}
             height={300}
             loading="eager"
-            class="rounded-md w-full max-h-[300px] lg:max-h-[500px]"
+            class="rounded-md lg:w-1/2"
             transition:name={"blogImg" + article.id}
           />
           <div
