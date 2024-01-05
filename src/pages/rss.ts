@@ -10,7 +10,7 @@ const parser = new MarkdownIt();
 
 export const GET: APIRoute = async () => {
   const articles = await fetchApi<Article[]>({
-    endpoint: "articles",
+    endpoint: "articles?locale=all&",
     wrappedByKey: "data",
   });
   return rss({
