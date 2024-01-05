@@ -1,84 +1,21 @@
 ---
-import qs from "qs";
 import Container from "../../components/shared/Container.astro";
 import Paragraph from "../../components/shared/Paragraph.astro";
-import type Category from "../../interfaces/category";
-import fetchApi from "../../lib/strapi";
 import { astroI18n, l } from "astro-i18n";
-import type Article from "../../interfaces/article";
 import BlogCard from "../../components/cards/BlogCard.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import type SEOProps from "../../interfaces/seoProps";
-import { SITE_URL } from "../../config";
+import seoBlogPage from "../../lib/seoConstants";
 
-const categories = await fetchApi<Category[]>({
-  endpoint: "categories?locale=" + astroI18n.locale + "&",
-  wrappedByKey: "data",
-});
+const articles = await getI18nBlogArticles(astroI18n.locale);
 
-const query = qs.stringify({
-  populate: {
-    featuredImage: {
-      fields: ["name", "width", "height", "url", "alternativeText"],
-    },
-    instagramPost: {
-      populate: {
-        images: {
-          fields: ["url", "name", "width", "height", "alternativeText"],
-        },
-      },
-    },
-    category: "*",
-    group: {
-      populate: {
-        authors: {
-          populate: {
-            bioImage: {
-              fields: ["url", "name", "width", "height", "alternativeText"],
-            },
-          },
-        },
-      },
-    },
-  },
-});
-
-const articles = await fetchApi<Article[]>({
-  endpoint: "articles?locale=all&",
-  wrappedByKey: "data",
-  query: query,
-});
-
-const seo: SEOProps = {
-  title: "Blog",
-  description: "Blog posts about european union, politics, and more.",
-  image:
-    "https://storage.googleapis.com/bucket.giyv.eu/German_Italian_Young_Voices_b79e2c9a55/German_Italian_Young_Voices_b79e2c9a55.png",
-  nofollow: false,
-  noindex: false,
-  ogBasic: {
-    title: "Blog",
-    image:
-      "https://storage.googleapis.com/bucket.giyv.eu/German_Italian_Young_Voices_b79e2c9a55/German_Italian_Young_Voices_b79e2c9a55.png",
-    url: SITE_URL + "/" + l("blog"),
-    type: "website",
-  },
-  ogOptional: {
-    description: "Blog posts about european union, politics, and more.",
-    locale: astroI18n.locale,
-    localeAlternate: astroI18n.locales,
-  },
-  ogArticle: {},
-  twitter: {
-    title: "Blog",
-    description: "Blog posts about european union, politics, and more.",
-    image:
-      "https://storage.googleapis.com/bucket.giyv.eu/German_Italian_Young_Voices_b79e2c9a55/German_Italian_Young_Voices_b79e2c9a55.png",
-    card: "summary_large_image",
-    site: "@giyv_eu",
-  },
-};
+const seo: SEOProps = seoBlogPage(
+  astroI18n.locale,
+  astroI18n.locales,
+  l("blog"),
+);
 import indexing from "../../lib/indexing";
+import { getI18nBlogArticles } from "../../lib/articleUtils";
 indexing();
 ---
 
@@ -107,7 +44,15 @@ indexing();
           </script>
         </div>
         <hr class="border-gray-200 dark:border-gray-800" />
-        {articles.map((article) => <BlogCard article={article} />)}
+        {
+          articles.map((article) => (
+            <BlogCard
+              article={article}
+              className="w-full"
+              orientation="horizontal"
+            />
+          ))
+        }
       </Container>
     </section>
   </main>
