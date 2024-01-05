@@ -4,7 +4,10 @@ WORKDIR /app
 COPY . .
 
 RUN npm install
+RUN npm run astro telemetry disable
 RUN npm run build
+
+RUN npx pagefind --site dist/client
 
 ENV STRAPI_TOKEN=$STRAPI_TOKEN
 ENV STRAPI_URL=$STRAPI_URL
