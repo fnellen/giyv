@@ -3,6 +3,7 @@ import type { APIRoute } from "astro";
 import { SITE_URL } from "../config";
 import fetchApi from "../lib/strapi";
 import type Article from "../interfaces/article";
+import { l } from "astro-i18n";
 
 export const GET: APIRoute = async () => {
     try {
@@ -61,7 +62,9 @@ export const GET: APIRoute = async () => {
             let xhtml = '';
             if (article.attributes.localizations.data) {
                 article.attributes.localizations.data.forEach((localization) => {
-                    xhtml += `<xhtml:link rel="alternate" hreflang="${localization.attributes.locale}" href="${SITE_URL}/${localization.attributes.slug.replace(/\/$/, '')}"/>`;
+                    xhtml += `<xhtml:link rel="alternate" hreflang="${localization.attributes.locale}" href="${SITE_URL}${l(`/blog/${localization.attributes.slug}/`, undefined, {
+                        targetLocale: localization.attributes.locale,
+                    })}"/>`;
                 });
             }
             // Add the lastmod
@@ -87,7 +90,9 @@ export const GET: APIRoute = async () => {
                 `;
             xhtml += `</news:news>`;
 
-            sitemap += `<url><loc>${SITE_URL}/${article.attributes.slug.replace(/\/$/, '')}</loc>${xhtml}</url>`;
+            sitemap += `<url><loc>${SITE_URL}${l(`/blog/${article.attributes.slug}/`, undefined, {
+                targetLocale: article.attributes.locale,
+            })}</loc>${xhtml}</url>`;
         });
 
         // Close the sitemap XML content
