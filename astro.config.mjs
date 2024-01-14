@@ -14,4 +14,8 @@ export default defineConfig({
     domains: ["cms.giyv.eu", "storage.googleapis.com"],
     remotePatterns: [{ protocol: "https" }],
   },
+  redirects: {
+    "/junges-manifest": "/blog/junges-manifest",
+    "/manifesto-giovani": "/it/blog/manifesto-dei-giovani",
+  },
 });
