@@ -76,11 +76,18 @@ if (!article) {
   };
   is404 = true;
 }
-
+// Wenn der Artikel auf Deutsch ist, dann soll "Inhalte" als Überschrift für das Inhaltsverzeichnis verwendet werden. Auf italienisch "Contenuti" und auf Englisch "Contents"
+const heading =
+  astroI18n.locale === "de"
+    ? "Inhalte"
+    : astroI18n.locale === "it"
+      ? "Contenuti"
+      : "Contents";
 const toc = await remark()
   .use(remarkToc, {
     tight: true,
     maxDepth: 3,
+    heading: heading,
   })
   .process(article.attributes.content);
 
