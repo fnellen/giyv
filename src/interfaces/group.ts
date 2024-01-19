@@ -1,4 +1,5 @@
 import type Author from "./author";
+import type Image from "./image";
 
 export default interface Group {
     id: number;
@@ -10,6 +11,9 @@ export default interface Group {
         publishedAt: string;
         locale: string;
         slug: string;
+        featuredImage: {
+            data: Image;
+        },
         authors: {
             data: Author[];
         };
