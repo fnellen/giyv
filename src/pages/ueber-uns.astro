@@ -1,0 +1,47 @@
+---
+import Container from "../components/shared/Container.astro";
+import type SEOProps from "../interfaces/seoProps";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { astroI18n } from "astro-i18n";
+
+const seo: SEOProps = {
+  title: "Über uns",
+  description: "Über uns",
+  image: "/images/og.png",
+  twitter: {
+    card: "summary_large_image",
+    site: "@giyv_eu",
+  },
+  noindex: false,
+  nofollow: false,
+  ogBasic: {
+    title: "",
+    image: "",
+    type: "",
+    url: "",
+  },
+  ogOptional: {
+    locale: astroI18n.locale,
+    localeAlternate: undefined,
+  },
+  ogArticle: {
+    publishedTime: undefined,
+    modifiedTime: undefined,
+    expirationTime: undefined,
+    author: undefined,
+    section: undefined,
+    tags: undefined,
+  },
+};
+---
+
+<BaseLayout {...seo}>
+  <Container className="grid grid-col cols-1 gap-4 mt-12">
+    <h1
+      class="text-3xl/tight sm:text-4xl/tight md:text-5xl/tight xl:text-6xl/tight
+             font-bold text-heading-1"
+    >
+      Über uns
+    </h1>
+  </Container>
+</BaseLayout>
