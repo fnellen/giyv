@@ -102,7 +102,7 @@ const content_rehyped = await rehype()
   is404 === false && (
     <PostLayout {...article}>
       <div
-        class="prose md:prose-lg lg:prose-xl prose-a:text-blue-600 mb-16 dark:prose-invert"
+        class="prose md:prose-lg lg:prose-xl prose-a:text-blue-600 mb-16 dark:prose-invert prose-img:w-auto prose-img:rounded-xl prose-img:mx-auto"
         set:html={content_rehyped.toString()}
       />
     </PostLayout>
