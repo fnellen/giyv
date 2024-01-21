@@ -68,12 +68,16 @@ export default defineAstroI18nConfig({
 					"description": "Hier findest du unsere Stimme zu verschiedenen Themen, die uns junge Generation am meisten beschäftigen. Finde heraus was wir zu den Themen sagen und teile deine Meinung mit uns! Wir freuen uns auf den Diskurs mit dir!",
 				},
 				"home_cta": {
-					"title": "Deine Stimme zählt!",
+					"title1": "Deine",
+					"title2": "zählt!",
 					"voice": "Stimme",
 					"description": "Nun wollen wir von dir wissen, was du zu den Themen zu sagen hast! Themenvorschläge, Fragen oder Anregungen? Schreib uns!",
 					"action1": "Schreib uns",
 					"action2": "Folge uns",
-				}
+				},
+				"blog": {
+					"description": "Hier findest du alle unsere Beiträge. Wir behandeln Themen, die uns junge Generation am meisten beschäftigen. Finde heraus was wir zu den Themen sagen und teile deine Meinung mit uns! Wir freuen uns auf den Diskurs mit dir!",
+				},
 			},
 			en: {
 				"not_found": {
@@ -130,12 +134,16 @@ export default defineAstroI18nConfig({
 					"description": "Here you can find our voice on different topics that concern us young generation the most. Find out what we say about the topics and share your opinion with us! We are looking forward to the discourse with you!",
 				},
 				"home_cta": {
-					"title": "Your voice counts!",
-					"voice": "Voice",
+					"title1": "Your",
+					"title2": "counts!",
+					"voice": "voice",
 					"description": "Now we want to know what you have to say about the topics! Topic suggestions, questions or suggestions? Write us!",
 					"action1": "Write us",
 					"action2": "Follow us",
-				}
+				},
+				"blog": {
+					"description": "Here you can find all our posts. We address topics that concern us young generation the most. Find out what we say about the topics and share your opinion with us! We are looking forward to the discourse with you!",
+				},
 			},
 			it: {
 				"not_found": {
@@ -194,24 +202,28 @@ export default defineAstroI18nConfig({
 					"description": "Qui puoi trovare la nostra voce su diversi argomenti che interessano noi giovani. Scopri cosa diciamo sugli argomenti e condividi la tua opinione con noi! Non vediamo l'ora di confrontarci con te!",
 				},
 				"home_cta": {
-					"title": "La tua voce conta!",
-					"voice": "Voce",
+					"title1": "La tua",
+					"title2": "conta!",
+					"voice": "voce",
 					"description": "Ora vogliamo sapere cosa hai da dire sugli argomenti! Suggerimenti di argomenti, domande o suggerimenti? Scrivici!",
 					"action1": "Scrivici",
 					"action2": "Seguici",
-				}
+				},
+				"blog": {
+					"description": "Qui puoi trovare tutti i nostri post. Affrontiamo argomenti che interessano noi giovani. Scopri cosa diciamo sugli argomenti e condividi la tua opinione con noi! Non vediamo l'ora di confrontarci con te!",
+				},
 			},
 		},
 	}, // { [translation_group1]: { [locale1]: {}, ... } }
 	routes: {
 		en: {
-			about: "about",
+			"ueber-uns": "about",
 			home: "en",
 			impressum: "impressum",
 			"privacy-policy": "privacy-policy",
 		},
 		it: {
-			about: "su-di-noi",
+			"ueber-uns": "su-di-noi",
 			home: "it",
 			impressum: "impressum",
 			"privacy-policy": "privacy-policy",
