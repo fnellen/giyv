@@ -1,6 +1,6 @@
 ---
 import Hero from "../components/sections/Hero.astro";
-import Content from "../components/sections/Services.astro";
+import Categories from "../components/sections/Categories.astro";
 import AboutUs from "../components/sections/AboutUs.astro";
 import CTA from "../components/sections/CTA.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
@@ -8,7 +8,6 @@ import ByNumber from "../components/sections/ByNumber.astro";
 import { astroI18n } from "astro-i18n";
 import type SEOProps from "../interfaces/seoProps";
 import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "../config";
-import Search from "../components/elements/Search.astro";
 const seo: SEOProps = {
   title: SITE_TITLE,
   description: SITE_DESCRIPTION,
@@ -46,7 +45,7 @@ index();
     <Hero />
     <LatestArticles />
     <ByNumber />
-    <Content />
+    <Categories />
     <AboutUs />
     <CTA />
   </div>
