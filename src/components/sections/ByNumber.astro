@@ -1,63 +1,93 @@
 ---
+import { Image } from "astro:assets";
 import Container from "../shared/Container.astro";
+import Paragraph from "../shared/Paragraph.astro";
 import Title from "../shared/Title.astro";
+import { l, t } from "astro-i18n";
 ---
 
 <section>
-  <Container>
-    <div class="text-center max-w-3xl mx-auto m-12">
-      <Title>Ultimi dati sulle elezioni europee</Title>
+  <Container className="space-y-10 md:sapce-y-12">
+    <div class="text-center max-w-3xl mx-auto space-y-4">
+      <h2 class="text-heading-1 font-semibold text-2xl sm:text-3xl md:text-4xl">
+        {t("data_vote.title")}
+      </h2>
+      <Paragraph>
+        {t("data_vote.description")}
+      </Paragraph>
+      <Image
+        src="https://storage.googleapis.com/bucket.giyv.eu/eu_flags_fa8d0c5328/eu_flags_fa8d0c5328.jpg"
+        alt={t("data_vote.image_alt")}
+        class="mx-auto"
+        width={800}
+        height={600}
+        loading={"lazy"}
+        class={"lg:w-full lg:h-full rounded-3xl object-cover lg:max-h-none max-h-96"}
+      />
     </div>
     <div
-      class="mx-auto lg:mx-0 p-5 sm:p-6 py-6 sm:py-8 max-w-full rounded-3xl bg-box-bg border border-box-border shadow-lg shadow-box-shadow md:divide divide-box-border grid grid-cols-2 md:grid-cols-5 gap-4 sm:gap-8 md:gap-6 lg:gap-12 justify-center justify-items-center content-center items-center self-center"
+      class="mx-auto lg:mx-0 p-5 sm:p-6 py-6 sm:py-8 max-w-full rounded-3xl bg-box-bg border border-box-border shadow-lg shadow-box-shadow md:divide divide-box-border grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 md:gap-6 lg:gap-12 justify-center justify-items-center content-center items-center self-center"
     >
       <div class="text-center">
-        <h2
-          class="font-semibold text-xl sm:text-2xl md:text-4xl text-heading-1"
-        >
-          06 - 09 giugno 2024
-        </h2>
-        <p class="mt-2 text-heading-3">Elezioni Europee</p>
-      </div>
-
-      <div class="text-center">
-        <h2
-          class="font-semibold text-xl sm:text-2xl md:text-4xl text-heading-1"
-        >
-          64 / 36
-        </h2>
+        <p class="font-semibold text-xl sm:text-2xl md:text-4xl text-heading-1">
+          👩🏼 36 / 64 👨🏼
+        </p>
         <p class="mt-2 text-heading-3">
-          Uomini / Donne <br />Equilibrio di genere 🇩🇪
+          <a
+            href={t("data_vote.gender_balance_source_de")}
+            target="_blank"
+            class="underline after:content-['_↗']"
+          >
+            {t("data_vote.genders")}<br />
+            {t("data_vote.gender_balance_de")}
+          </a>
         </p>
       </div>
 
       <div class="text-center">
-        <h2
-          class="font-semibold text-xl sm:text-2xl md:text-4xl text-heading-1"
-        >
-          59 / 41
-        </h2>
+        <p class="font-semibold text-xl sm:text-2xl md:text-4xl text-heading-1">
+          👩🏼 41 / 59 👨🏼
+        </p>
         <p class="mt-2 text-heading-3">
-          Uomini / Donne <br />Equilibrio di genere 🇮🇹
+          <a
+            href={t("data_vote.gender_balance_source_it")}
+            target="_blank"
+            class="underline after:content-['_↗']"
+          >
+            {t("data_vote.genders")}<br />
+            {t("data_vote.gender_balance_it")}
+          </a>
         </p>
       </div>
 
       <div class="text-center">
-        <h2
-          class="font-semibold text-xl sm:text-2xl md:text-4xl text-heading-1"
-        >
-          61,38 %
-        </h2>
-        <p class="mt-2 text-heading-3">Affluenza 🇩🇪<br />(16/18-24 anni)</p>
+        <p class="font-semibold text-xl sm:text-2xl md:text-4xl text-heading-1">
+          📬 61,38 %
+        </p>
+        <p class="mt-2 text-heading-3">
+          <a
+            href={t("data_vote.turnout_source_de")}
+            target="_blank"
+            class="underline after:content-['_↗']"
+          >
+            {t("data_vote.turnout_de")}
+          </a>
+        </p>
       </div>
 
       <div class="text-center">
-        <h2
-          class="font-semibold text-xl sm:text-2xl md:text-4xl text-heading-1"
-        >
-          54,5 %
-        </h2>
-        <p class="mt-2 text-heading-3">Affluenza 🇮🇹<br />(16/18-24 anni)</p>
+        <p class="font-semibold text-xl sm:text-2xl md:text-4xl text-heading-1">
+          📬 54,5 %
+        </p>
+        <p class="mt-2 text-heading-3">
+          <a
+            href={t("data_vote.turnout_source_it")}
+            target="_blank"
+            class="underline after:content-['_↗']"
+          >
+            {t("data_vote.turnout_it")}
+          </a>
+        </p>
       </div>
     </div>
   </Container>

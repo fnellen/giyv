@@ -6,15 +6,15 @@ import FooterNav from "../shared/FooterNav.astro";
 import Logo from "../shared/Logo.astro";
 import Paragraph from "../shared/Paragraph.astro";
 
-import { l } from "astro-i18n";
+import { l, t } from "astro-i18n";
 
 const localizations = [
   {
-    itemText: "German",
+    itemText: "Deutsch",
     itemLink: l(Astro.url.pathname, undefined, { targetLocale: "de" }),
   },
   {
-    itemText: "Italian",
+    itemText: "Italiano",
     itemLink: l(Astro.url.pathname, undefined, { targetLocale: "it" }),
   },
   {
@@ -115,14 +115,14 @@ const footerLegal = [
       </div>
 
       <GroupFooterNav>
-        <FooterNav title={"Site"} navItems={footerCompany} />
-        <FooterNav title={"Languages"} navItems={localizations} />
+        <FooterNav title={t("footer.site")} navItems={footerCompany} />
+        <FooterNav title={t("footer.languages")} navItems={localizations} />
       </GroupFooterNav>
 
       <GroupFooterNav>
-        <FooterNav title={"Ressources"} navItems={footerLegal}>
+        <FooterNav title={t("footer.resources")} navItems={footerLegal}>
           <button data-cc="show-preferencesModal" type="button">
-            Cookie Preferences
+            {t("footer.cookie_preferences")}
           </button>
         </FooterNav>
       </GroupFooterNav>
@@ -134,8 +134,9 @@ const footerLegal = [
         class="flex justify-between items-center gap-6 md:text-lg text-heading-3"
       >
         <div>
-          &copy; <span id="year"></span> German-Italian Young Voices. All right
-          reserved
+          &copy; <span id="year"></span> German-Italian Young Voices. {
+            t("footer.all_rights_reserved")
+          }
         </div>
         <div>
           Made with ❤️ by <a
