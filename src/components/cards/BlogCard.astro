@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import type Article from "../../interfaces/article";
-import { l } from "astro-i18n";
+import { astroI18n, l } from "astro-i18n";
 import FormattedDate from "../shared/FormattedDate.astro";
 import Icon from "astro-icon";
 import Paragraph from "../shared/Paragraph.astro";
@@ -22,7 +22,7 @@ if (orientation === "horizontal") {
 ---
 
 <div
-  class=`p-4 rounded-lg bg-white-100 dark:bg-base-100 hover:shadow-xl transition ease-in-out hover:scale-[102%] ${className}`
+  class=`p-4 rounded-lg bg-white-100 dark:bg-base-100 hover:shadow-xl transition ease-in-out hover:scale-[102%] ${className} border border-box-border bg-box-bg shadow-lg shadow-box-shadow`
 >
   <a
     href={`${l("blog", undefined, {
@@ -54,7 +54,10 @@ if (orientation === "horizontal") {
         >
           <Paragraph className="text-sm">
             <Icon name="mdi:calendar" class="inline-block w-4 h-4 mr-1" />
-            <FormattedDate date={new Date(article.attributes.publishedAt)} />
+            <FormattedDate
+              date={new Date(article.attributes.publishedAt)}
+              locale={astroI18n.locale}
+            />
           </Paragraph>
           <Paragraph className="text-sm ">
             <Icon name="mdi:clock" class="inline-block w-4 h-4 mr-1" />
