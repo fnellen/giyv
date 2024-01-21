@@ -16,7 +16,7 @@ const seo: SEOProps = seoBlogPage(
   astroI18n.locales,
   l("blog"),
 );
-await indexing();
+indexing();
 ---
 
 <BaseLayout {...seo}>
@@ -39,7 +39,11 @@ await indexing();
           <script>
             window.addEventListener("DOMContentLoaded", (event) => {
               // @ts-ignore
-              new PagefindUI({ element: "#search", showSubResults: true });
+              new PagefindUI({
+                element: "#search",
+                showSubResults: true,
+                highlightParam: "highlight",
+              });
             });
           </script>
         </div>
