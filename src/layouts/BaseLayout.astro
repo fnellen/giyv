@@ -1,6 +1,5 @@
 ---
 import BaseHead from "../layouts/BaseHead.astro";
-import { ViewTransitions } from "astro:transitions";
 
 import Footer from "../components/elements/Footer.astro";
 import Navbar from "../components/elements/Navbar.astro";
@@ -15,7 +14,6 @@ const seo = Astro.props;
 <html lang={seo?.ogOptional?.locale || "en"}>
   <head>
     <BaseHead {...seo} />
-    <ViewTransitions />
     <Scripts />
   </head>
   <body class="bg-body">
