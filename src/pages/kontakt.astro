@@ -1,0 +1,109 @@
+---
+import Container from "../components/shared/Container.astro";
+import type SEOProps from "../interfaces/seoProps";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+import { z } from "zod";
+
+const contact_form = z.object({
+  name: z.string().optional(),
+  email: z.string().email(),
+  message: z.string().max(500),
+});
+
+const seo: SEOProps = {
+  title: "Kontakt",
+  description: "Kontakt",
+  image: "",
+  noindex: false,
+  nofollow: false,
+  ogBasic: {
+    title: "",
+    image: "",
+    type: "",
+    url: "",
+  },
+  ogOptional: {
+    audio: undefined,
+    description: undefined,
+    determiner: undefined,
+    locale: undefined,
+    localeAlternate: undefined,
+    siteName: undefined,
+    video: undefined,
+  },
+  ogArticle: {
+    publishedTime: undefined,
+    modifiedTime: undefined,
+    expirationTime: undefined,
+    author: undefined,
+    section: undefined,
+    tags: undefined,
+  },
+  twitter: {
+    card: undefined,
+    site: undefined,
+    creator: undefined,
+    title: undefined,
+    image: undefined,
+    imageAlt: undefined,
+    description: undefined,
+  },
+};
+
+// if (Astro.request.method === "POST") {
+//   try {
+//     const data = await Astro.request.formData();
+//     const form = contact_form.parse(Object.fromEntries(data.entries()));
+//     console.log(form);
+//   } catch (error) {
+//     if (error instanceof Error) {
+//       console.error(error.message);
+//     }
+//   }
+// }
+---
+
+<BaseLayout {...seo}>
+  <Container className="grid grid-col cols-1 gap-4 mt-12">
+    <h1
+      class="text-3xl/tight sm:text-4xl/tight md:text-5xl/tight xl:text-6xl/tight
+             font-bold text-heading-1"
+    >
+      Kontakt
+    </h1>
+    <!-- <form
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      data-netlify-honeypot="bot-field"
+      class="grid grid-col cols-1 gap-4"
+    >
+      <input type="hidden" name="form-name" value="contact" />
+      <label class="flex flex-col">
+        <span class="text-heading-2 font-bold">Name</span>
+        <input
+          type="text"
+          name="name"
+          class="border border-gray-300 rounded-md p-2"
+        />
+      </label>
+      <label class="flex flex-col">
+        <span class="text-heading-2 font-bold">Email</span>
+        <input
+          type="email"
+          name="email"
+          class="border border-gray-300 rounded-md p-2"
+        />
+      </label>
+      <label class="flex flex-col">
+        <span class="text-heading-2 font-bold">Nachricht</span>
+        <textarea name="message" class="border border-gray-300 rounded-md p-2"
+        ></textarea>
+      </label>
+      <button type="submit" class="bg-primary text-white rounded-md p-2"
+        >Senden</button
+      >
+    </form> -->
+  </Container>
+</BaseLayout>
