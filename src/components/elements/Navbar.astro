@@ -3,29 +3,25 @@ import BtnLink from "../shared/BtnLink.astro";
 import Container from "../shared/Container.astro";
 import Logo from "../shared/Logo.astro";
 import ThemeSwitch from "./ThemeSwitch.astro";
-import { l } from "astro-i18n";
+import { l, t } from "astro-i18n";
 import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
 
 const navItems = [
   {
     href: l("/"),
-    text: "Home",
-  },
-  {
-    href: "/#contenuti",
-    text: "Contenuti",
-  },
-  {
-    href: "/#about-us",
-    text: "Chi siamo",
-  },
-  {
-    href: "/#la-tua-voce",
-    text: "La tua voce",
+    text: t("nav.home"),
   },
   {
     href: l("/blog"),
-    text: "Blog",
+    text: t("nav.blog"),
+  },
+  {
+    href: l("/about"),
+    text: t("nav.about"),
+  },
+  {
+    href: l("/contact"),
+    text: t("nav.contact"),
   },
 ];
 ---
