@@ -31,7 +31,10 @@ const navItems = [
     <div class="flex flex-col lg:flex-row justify-between items-center">
       <Astronav closeOnClick>
         <div class="flex w-full lg:w-auto items-center justify-between">
-          <a href="/" class="relative flex items-center align-center gap-3">
+          <a
+            href={l("/")}
+            class="relative flex items-center align-center gap-3"
+          >
             <Logo className="w-16 h-auto" />
             <div class="inline-flex text-lg font-semibold text-heading-1">
               German-Italian<br />Young Voices
