@@ -58,7 +58,7 @@ let socials = [
   },
 ];
 
-const localizations =
+let localizations =
   article.attributes.localizations &&
   article.attributes.localizations.data.map((loc) => {
     return {
@@ -72,6 +72,17 @@ const localizations =
       hrefLang: loc.attributes.locale,
     };
   });
+
+localizations.push({
+  href:
+    SITE_URL +
+    l("blog", undefined, {
+      targetLocale: article.attributes.locale,
+    }) +
+    "/" +
+    article.attributes.slug,
+  hrefLang: article.attributes.locale,
+});
 
 const seo: SEOProps = {
   title: article.attributes.seo.metaTitle
