@@ -3,13 +3,13 @@ import Container from "../components/shared/Container.astro";
 import type SEOProps from "../interfaces/seoProps";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-import { z } from "zod";
+//import { z } from "zod";
 
-const contact_form = z.object({
-  name: z.string().optional(),
-  email: z.string().email(),
-  message: z.string().max(500),
-});
+// const contact_form = z.object({
+//   name: z.string().optional(),
+//   email: z.string().email(),
+//   message: z.string().max(500),
+// });
 
 const seo: SEOProps = {
   title: "Kontakt",

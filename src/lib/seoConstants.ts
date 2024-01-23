@@ -1,6 +1,5 @@
 import type SEOProps from "../interfaces/seoProps";
 import { SITE_URL } from "../config";
-import { astroI18n, l } from "astro-i18n";
 
 export default function seoBlogPage(locale: string, locales: string[], url: string): SEOProps {
     return ({
