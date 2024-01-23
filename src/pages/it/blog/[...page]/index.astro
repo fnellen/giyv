@@ -1,6 +1,10 @@
 ---
-import Page from "../../../blog/[...page].astro"
-export const prerender = false
-const { props } = Astro
+//@ts-nocheck
+import Page from "../../../blog/[...page].astro";
+import { getStaticPathsWithI18n } from "../../../blog/[...page].astro";
+export const getStaticPaths = getStaticPathsWithI18n("it");
+export const prerender = false;
+const { props } = Astro;
 ---
+
 <Page {...props} />

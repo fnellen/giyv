@@ -13,7 +13,7 @@ export type Props = {
 };
 
 const { article, className, orientation } = Astro.props;
-let flex;
+let flex: string;
 if (orientation === "horizontal") {
   flex = "flex flex-col items-center gap-12 md:flex-row";
 } else {

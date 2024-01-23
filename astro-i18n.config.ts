@@ -77,6 +77,8 @@ export default defineAstroI18nConfig({
 				},
 				"blog": {
 					"description": "Hier findest du alle unsere Beiträge. Wir behandeln Themen, die uns junge Generation am meisten beschäftigen. Finde heraus was wir zu den Themen sagen und teile deine Meinung mit uns! Wir freuen uns auf den Diskurs mit dir!",
+					"older_posts": "Ältere Beiträge",
+					"recent_posts": "Neueste Beiträge",
 				},
 			},
 			en: {
@@ -143,6 +145,8 @@ export default defineAstroI18nConfig({
 				},
 				"blog": {
 					"description": "Here you can find all our posts. We address topics that concern us young generation the most. Find out what we say about the topics and share your opinion with us! We are looking forward to the discourse with you!",
+					"older_posts": "Older posts",
+					"recent_posts": "Recent posts",
 				},
 			},
 			it: {
@@ -211,6 +215,8 @@ export default defineAstroI18nConfig({
 				},
 				"blog": {
 					"description": "Qui puoi trovare tutti i nostri post. Affrontiamo argomenti che interessano noi giovani. Scopri cosa diciamo sugli argomenti e condividi la tua opinione con noi! Non vediamo l'ora di confrontarci con te!",
+					"older_posts": "Post precedenti",
+					"recent_posts": "Post recenti",
 				},
 			},
 		},
