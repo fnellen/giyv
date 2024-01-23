@@ -2,7 +2,7 @@
 import fetchApi from "../../lib/strapi";
 import qs from "qs";
 import type Article from "../../interfaces/article";
-import { astroI18n } from "astro-i18n";
+import { createGetStaticPaths } from "astro-i18n";
 import { marked } from "marked";
 import PostLayout from "../../layouts/PostLayout.astro";
 import { remark } from "remark";
@@ -10,103 +10,105 @@ import remarkToc from "remark-toc";
 import { rehype } from "rehype";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
-import NotFound from "../../components/sections/NotFound.astro";
 
-const { slug } = Astro.params;
+export async function rehypetoc(
+  article: Article,
+  locale: string,
+): Promise<string> {
+  const heading =
+    {
+      de: "Inhalte",
+      it: "Contenuti",
+      default: "Contents",
+    }[locale] || "Contents";
+  const toc = await remark()
+    .use(remarkToc, {
+      tight: true,
+      maxDepth: 3,
+      heading: heading,
+    })
+    .process(article.attributes.content);
 
-const query = qs.stringify({
-  populate: {
-    featuredImage: {
-      fields: ["name", "width", "height", "url", "alternativeText"],
-    },
-    instagramPost: {
+  const rehypedContent = await rehype()
+    .data("settings", { fragment: true })
+    .use(rehypeSlug)
+    .use(rehypeAutolinkHeadings)
+    .process(marked.parse(toc.toString()));
+
+  return rehypedContent.toString();
+}
+
+export function getStaticPathsWithI18n(locale: string) {
+  return createGetStaticPaths(async ({}) => {
+    const query = qs.stringify({
       populate: {
-        images: {
-          fields: ["url", "name", "width", "height", "alternativeText"],
+        featuredImage: {
+          fields: ["name", "width", "height", "url", "alternativeText"],
         },
-      },
-    },
-    category: {
-      populate: {
-        fields: ["Name"],
-      },
-    },
-    seo: {
-      populate: "*",
-    },
-    localizations: {
-      populate: "*",
-    },
-    group: {
-      populate: {
-        authors: {
+        instagramPost: {
           populate: {
-            bioImage: {
+            images: {
               fields: ["url", "name", "width", "height", "alternativeText"],
             },
           },
         },
+        category: {
+          populate: {
+            fields: ["Name"],
+          },
+        },
+        seo: {
+          populate: "*",
+        },
+        localizations: {
+          populate: "*",
+        },
+        group: {
+          populate: {
+            authors: {
+              populate: {
+                bioImage: {
+                  fields: ["url", "name", "width", "height", "alternativeText"],
+                },
+              },
+            },
+          },
+        },
       },
-    },
-  },
-  filters: {
-    slug: {
-      $eq: slug,
-    },
-  },
-});
+    });
+    const data = await fetchApi<Article[]>({
+      endpoint: `articles?locale=${locale}&`,
+      wrappedByKey: "data",
+      query: query,
+    });
 
-const articles = await fetchApi<Article[]>({
-  endpoint: `articles?locale=${astroI18n.locale}&`,
-  wrappedByKey: "data",
-  query: query,
-});
+    const posts = await Promise.all(
+      data.map(async (post) => {
+        post.attributes.content = await rehypetoc(post, locale);
+        return post;
+      }),
+    );
 
-let article: Article;
-let is404 = false;
-article = articles[0];
+    const mappedPosts = posts.map((post) => ({
+      params: { slug: post.attributes.slug },
+      props: { post, content_rehyped: post.attributes.content },
+    }));
 
-if (!article) {
-  article = {
-    // @ts-ignore
-    attributes: {
-      title: "404",
-      content: "Article not found",
-    },
-  };
-  is404 = true;
+    return mappedPosts;
+  });
 }
-// Wenn der Artikel auf Deutsch ist, dann soll "Inhalte" als Überschrift für das Inhaltsverzeichnis verwendet werden. Auf italienisch "Contenuti" und auf Englisch "Contents"
-const heading =
-  astroI18n.locale === "de"
-    ? "Inhalte"
-    : astroI18n.locale === "it"
-      ? "Contenuti"
-      : "Contents";
-const toc = await remark()
-  .use(remarkToc, {
-    tight: true,
-    maxDepth: 3,
-    heading: heading,
-  })
-  .process(article.attributes.content);
 
-const content_rehyped = await rehype()
-  .data("settings", { fragment: true })
-  .use(rehypeSlug)
-  .use(rehypeAutolinkHeadings)
-  .process(marked.parse(toc.toString()));
+export const getStaticPaths = getStaticPathsWithI18n("de");
+type Props = {
+  post: Article;
+  content_rehyped: string;
+};
+const { post, content_rehyped } = Astro.props;
 ---
 
-{
-  is404 === false && (
-    <PostLayout {...article}>
-      <div
-        class="prose md:prose-lg lg:prose-xl prose-a:text-blue-600 mb-16 dark:prose-invert prose-img:w-auto prose-img:rounded-xl prose-img:mx-auto"
-        set:html={content_rehyped.toString()}
-      />
-    </PostLayout>
-  )
-}
-
-{is404 && <NotFound customMessage="Article not found" />}
+<PostLayout {...post}>
+  <div
+    class="prose md:prose-lg lg:prose-xl prose-a:text-blue-600 mb-16 dark:prose-invert prose-img:w-auto prose-img:rounded-xl prose-img:mx-auto"
+    set:html={content_rehyped}
+  />
+</PostLayout>

@@ -15,6 +15,7 @@ export default async function index() {
     });
 
     // Index all HTML files in a directory
+    //@ts-ignore
     await index.addDirectory({
         path: "dist",
     });
@@ -77,10 +78,12 @@ export default async function index() {
 
     const data = await processedRecords();
     data.forEach((record) => {
+        //@ts-ignore
         index.addCustomRecord(record);
     });
 
     // Or, write the index to disk
+    //@ts-ignore
     await index.writeFiles({
         outputPath: "dist/client/pagefind",
     });
