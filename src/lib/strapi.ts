@@ -22,8 +22,8 @@ export default async function fetchApi<T>({
     if (endpoint.startsWith('/')) {
         endpoint = endpoint.slice(1);
     }
-    let bearer = "Bearer " + import.meta.env.STRAPI_TOKEN;
-    const url = new URL(`${import.meta.env.STRAPI_URL}/api/${endpoint}`);
+    let bearer = "Bearer " + import.meta.env.PUBLIC_STRAPI_TOKEN;
+    const url = new URL(`${import.meta.env.PUBLIC_STRAPI_URL}/api/${endpoint}`);
 
     const res = await fetch(url.toString() + (query ? `?${query}` : ""), {
         method: "GET",
