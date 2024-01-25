@@ -2,8 +2,12 @@
 
 
 interface ImportMetaEnv {
-	readonly PUBLIC_STRAPI_URL: string;
-	readonly PUBLIC_STRAPI_TOKEN: string;
+	readonly STRAPI_URL: string;
+	readonly STRAPI_TOKEN: string;
+}
+
+interface ImportMeta {
+	readonly env: ImportMetaEnv;
 }
 
 // ###> astro-i18n/type-generation ###
