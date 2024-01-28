@@ -70,6 +70,9 @@ export function getStaticPathsWithI18n(locale: string) {
                 bioImage: {
                   fields: ["url", "name", "width", "height", "alternativeText"],
                 },
+                socials: {
+                  populate:"*"
+                },
               },
             },
           },

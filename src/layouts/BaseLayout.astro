@@ -6,14 +6,18 @@ import Navbar from "../components/elements/Navbar.astro";
 import Scripts from "./Scripts.astro";
 import type SEOProps from "../interfaces/seoProps";
 
-export interface Props extends SEOProps {}
-const seo = Astro.props;
+export interface Props {
+  seo: SEOProps;
+  structured_data?: object;
+}
+
+const {seo, structured_data} = Astro.props;
 ---
 
 <!doctype html>
 <html lang={seo?.ogOptional?.locale || "en"}>
   <head>
-    <BaseHead {...seo} />
+    <BaseHead seo={seo} structured_data={structured_data}/>
     <Scripts />
   </head>
   <body class="bg-body">

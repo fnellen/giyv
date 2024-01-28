@@ -7,9 +7,12 @@ import { SEO } from "astro-seo";
 import { SITE_TITLE } from "../config";
 import type SEOProps from "../interfaces/seoProps";
 
-export interface Props extends SEOProps {}
+export interface Props {
+  seo: SEOProps;
+  structured_data?: object;
+}
 
-const seo = Astro.props;
+const {seo, structured_data} = Astro.props;
 
 Astro.response.headers.set("Cache-Control", "max-age=31536000");
 ---
@@ -34,6 +37,9 @@ Astro.response.headers.set("Cache-Control", "max-age=31536000");
   onload="this.media='all'; this.onload = null"
 />
 <script async src="/pagefind/pagefind-ui.js" is:inline></script>
+
+<!-- Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify(structured_data)} />
 
 <SEO
   title={seo.title}

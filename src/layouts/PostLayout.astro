@@ -83,6 +83,41 @@ localizations.push({
     article.attributes.slug,
   hrefLang: article.attributes.locale,
 });
+console.log(article.attributes.group.data.attributes.authors.data);
+const structured_data = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": articleUrl,
+  },
+  headline: article.attributes.title,
+  description: article.attributes.excerpt,
+  keywords: article.attributes.tags
+    ? article.attributes.tags.split(",").map((tag) => tag.trim())
+    : undefined,
+  image: [article.attributes.featuredImage.data.attributes.url],
+  datePublished: article.attributes.publishedAt,
+  dateModified: article.attributes.updatedAt,
+  author: article.attributes.group.data.attributes.authors.data.map((author) => {
+    console.log(author.attributes.socials);
+    return {
+      "@type": "Person",
+      name: author.attributes.name,
+      url: author.attributes.socials[0]?.url,
+    };
+  }),
+  publisher: {
+    "@type": "Organization",
+    name: "German-Italian Young Voices",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://www.giyv.eu/images/logo.png",
+      width: 60,
+      height: 60,
+    },
+  },
+};
 
 const seo: SEOProps = {
   title: article.attributes.seo.metaTitle
@@ -134,7 +169,7 @@ const seo: SEOProps = {
 };
 ---
 
-<BaseLayout {...seo}>
+<BaseLayout seo={seo} structured_data={structured_data}>
   <script type="module">
     await import("/pagefind/pagefind-highlight.js");
     new PagefindHighlight({ highlightParam: "highlight" });

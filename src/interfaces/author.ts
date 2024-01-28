@@ -11,6 +11,13 @@ export default interface Author {
         locale: string;
         bioImage: {
             data: Image;
+        },
+        socials: {
+            data: {
+                id: number;
+                url: string;
+                platform: string;
+            }[]
         }
     };
 }
