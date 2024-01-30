@@ -15,9 +15,9 @@ export type Props = {
 const { article, className, orientation } = Astro.props;
 let flex: string;
 if (orientation === "horizontal") {
-  flex = "flex flex-col items-center gap-12 md:flex-row";
+  flex = "flex flex-col items-center gap-4 md:flex-row";
 } else {
-  flex = "flex flex-col items-center gap-12 md:flex-col";
+  flex = "flex flex-col items-center gap-4 md:flex-col";
 }
 ---
 
@@ -37,10 +37,9 @@ if (orientation === "horizontal") {
           "No alt text"}
         width="200"
         height="150"
-        class="max-w-full md:max-w-[13rem] rounded-lg dark:text-gray-400"
+        class="max-w-full md:max-w-[13rem] rounded-lg "
         transition:name={"blogImg" + article.id}
       />
-      <div>
         <h2
           class="text-heading-1 font-semibold text-2xl sm:text-3xl md:text-4xl"
           transition:name={"blogTitle" + article.id}
@@ -71,7 +70,6 @@ if (orientation === "horizontal") {
             <Icon name="mdi:globe" class="inline-block w-4 h-4 mr-1" />
             {article.attributes.locale.toUpperCase()}
           </Paragraph>
-        </div>
       </div>
     </div>
   </a>
