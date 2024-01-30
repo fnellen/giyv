@@ -27,6 +27,7 @@ export default defineAstroI18nConfig({
 					"your_voice": "Deine Stimme",
 					"blog": "Blog",
 					"contact": "Kontakt",
+					"participate": "Mach mit",
 				},
 				"latest_articles": {
 					"latest_articles": "Neueste Artikel",
@@ -95,6 +96,7 @@ export default defineAstroI18nConfig({
 					"your_voice": "Your voice",
 					"blog": "Blog",
 					"contact": "Contact",
+					"participate": "Participate with us",
 				},
 				"latest_articles": {
 					"latest_articles": "Latest articles",
@@ -165,6 +167,7 @@ export default defineAstroI18nConfig({
 					"your_voice": "La tua voce",
 					"blog": "Blog",
 					"contact": "Contatto",
+					"participate": "Partecipa con noi",
 				},
 				"latest_articles": {
 					"latest_articles": "Ultimi articoli",

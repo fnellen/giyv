@@ -6,7 +6,7 @@ import Paragraph from "../shared/Paragraph.astro";
 import { Image } from "astro:assets";
 import fetchApi from "../../lib/strapi";
 import type HeroSection from "../../interfaces/heroSection";
-import { astroI18n } from "astro-i18n";
+import { astroI18n, t } from "astro-i18n";
 import BtnLink from "../shared/BtnLink.astro";
 
 const query = qs.stringify({
@@ -43,7 +43,7 @@ const heroSection = await fetchApi<HeroSection>({
         {heroSection.attributes.heroDescription}
       </Paragraph>
       <BtnLink
-        text="Partecipa con noi"
+        text={t("nav.participate")}
         href="https://www.instagram.com/giyv_eu/"
         className="flex justify-center w-full sm:w-max mt-10"
         variant="primary"
