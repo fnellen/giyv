@@ -15,14 +15,14 @@ export type Props = {
 const { article, className, orientation } = Astro.props;
 let flex: string;
 if (orientation === "horizontal") {
-  flex = "flex flex-col items-center gap-4 md:flex-row";
+  flex = "flex flex-col items-center gap-12 md:flex-row";
 } else {
-  flex = "flex flex-col items-center gap-4 md:flex-col";
+  flex = "flex flex-col items-center gap-12 md:flex-col";
 }
 ---
 
 <div
-  class=`p-4 rounded-lg bg-white-100 dark:bg-base-100 hover:shadow-xl transition ease-in-out hover:scale-[102%] ${className} border border-box-border bg-box-bg shadow-lg shadow-box-shadow`
+  class=`p-6 rounded-lg bg-white-100 dark:bg-base-100 hover:shadow-xl transition ease-in-out hover:scale-[102%] ${className} border border-box-border bg-box-bg shadow-lg shadow-box-shadow`
 >
   <a
     href={`${l("blog", undefined, {
@@ -40,14 +40,15 @@ if (orientation === "horizontal") {
         class="max-w-full md:max-w-[13rem] rounded-lg "
         transition:name={"blogImg" + article.id}
       />
+      <div class="flex flex-col gap-4">
         <h2
-          class="text-heading-1 font-semibold text-2xl sm:text-3xl md:text-4xl"
+          class="text-heading-1 font-semibold text-2xl sm:text-3xl md:text-4xl lg:w-2/3"
           transition:name={"blogTitle" + article.id}
           transition:animate="fade"
         >
           {article.attributes.title}
         </h2>
-        <Paragraph className="py-1">{article.attributes.excerpt}</Paragraph>
+        <Paragraph className="py-1 lg:w-3/4">{article.attributes.excerpt}</Paragraph>
         <div
           class="flex flex-row justify-between w-full md:justify-start gap-4"
         >
@@ -70,6 +71,7 @@ if (orientation === "horizontal") {
             <Icon name="mdi:globe" class="inline-block w-4 h-4 mr-1" />
             {article.attributes.locale.toUpperCase()}
           </Paragraph>
+        </div>
       </div>
     </div>
   </a>
