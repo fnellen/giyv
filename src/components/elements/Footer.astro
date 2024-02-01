@@ -25,12 +25,16 @@ const localizations = [
 
 const footerCompany = [
   {
-    itemText: "About",
-    itemLink: l("/#about-us"),
+    itemText: t("nav.about"),
+    itemLink: l("/ueber-uns"),
   },
   {
     itemText: "Blog",
     itemLink: l("/blog"),
+  },
+  {
+    itemText: t("nav.contact"),
+    itemLink: l("/kontakt"),
   },
   {
     itemText: "Villa Vigoni",
@@ -39,11 +43,11 @@ const footerCompany = [
 ];
 const footerLegal = [
   {
-    itemText: "Impressum",
+    itemText: t("footer.impressum"),
     itemLink: l("/impressum"),
   },
   {
-    itemText: "Datenschutz",
+    itemText: t("footer.datenschutz"),
     itemLink: l("/privacy-policy"),
   },
 ];

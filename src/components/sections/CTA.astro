@@ -1,5 +1,5 @@
 ---
-import { t } from "astro-i18n";
+import { l, t } from "astro-i18n";
 import Button from "../shared/Button.astro";
 import Container from "../shared/Container.astro";
 import Paragraph from "../shared/Paragraph.astro";
@@ -60,11 +60,13 @@ import Icon from "astro-icon";
         <div
           class="mx-auto max-w-md sm:max-w-xl pt-10 felx felx-row gap-10 items-center"
         >
-          <Button variant={"primary"}>
-            <span class="text-white relative z-[5]"
-              >{t("home_cta.action1")}</span
-            >
-          </Button>
+          <a href={l("/kontakt")}>
+            <Button variant={"primary"}>
+              <span class="text-white relative z-[5]"
+                >{t("home_cta.action1")}</span
+              >
+            </Button>
+          </a>
           <a href="https://www.instagram.com/giyv_eu/" target="_blank">
             <Button variant={"secondary"}>
               <div class="flex flex-row gap-4 items-center">

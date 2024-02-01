@@ -50,6 +50,8 @@ export default defineAstroI18nConfig({
 					"resources": "Ressourcen",
 					"all_rights_reserved": "Alle Rechte vorbehalten",
 					"cookie_preferences": "Cookie Einstellungen",
+					"impressum": "Impressum",
+					"datenschutz": "Datenschutz",
 				},
 				"data_vote": {
 					"title": "Daten zur letzten Europawahl 2019",
@@ -135,6 +137,8 @@ export default defineAstroI18nConfig({
 					"resources": "Resources",
 					"all_rights_reserved": "All rights reserved",
 					"cookie_preferences": "Cookie preferences",
+					"impressum": "Imprint",
+					"datenschutz": "Privacy policy",
 				},
 				"data_vote": {
 					"title": "Data from the last European elections 2019",
@@ -222,6 +226,8 @@ export default defineAstroI18nConfig({
 					"resources": "Risorse",
 					"all_rights_reserved": "Tutti i diritti riservati",
 					"cookie_preferences": "Preferenze sui cookie",
+					"impressum": "Note legali",
+					"datenschutz": "Privacy policy",
 				},
 				"data_vote": {
 					"title": "Dati delle ultime elezioni europee 2019",
