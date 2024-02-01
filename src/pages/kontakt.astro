@@ -3,13 +3,13 @@ import Container from "../components/shared/Container.astro";
 import type SEOProps from "../interfaces/seoProps";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-//import { z } from "zod";
+import { z } from "zod";
 
-// const contact_form = z.object({
-//   name: z.string().optional(),
-//   email: z.string().email(),
-//   message: z.string().max(500),
-// });
+const contact_form = z.object({
+  name: z.string().optional(),
+  email: z.string().email(),
+  message: z.string().max(500),
+});
 
 const seo: SEOProps = {
   title: "Kontakt",
@@ -51,17 +51,8 @@ const seo: SEOProps = {
   },
 };
 
-// if (Astro.request.method === "POST") {
-//   try {
-//     const data = await Astro.request.formData();
-//     const form = contact_form.parse(Object.fromEntries(data.entries()));
-//     console.log(form);
-//   } catch (error) {
-//     if (error instanceof Error) {
-//       console.error(error.message);
-//     }
-//   }
-// }
+const submitUrl = import.meta.env.STRAPI_URL + "/api/ezforms/submit/";
+const recaptchatoken = import.meta.env.RECAPTCHA_SECRET;
 ---
 
 <BaseLayout seo={seo}>
@@ -72,14 +63,12 @@ const seo: SEOProps = {
     >
       Kontakt
     </h1>
-    <!-- <form
+    <script define:vars={{recaptchatoken}} src=`https://www.google.com/recaptcha/api.js?render=${recaptchatoken}`></script>
+    <form
       name="contact"
       method="POST"
-      data-netlify="true"
-      data-netlify-honeypot="bot-field"
       class="grid grid-col cols-1 gap-4"
     >
-      <input type="hidden" name="form-name" value="contact" />
       <label class="flex flex-col">
         <span class="text-heading-2 font-bold">Name</span>
         <input
@@ -101,9 +90,46 @@ const seo: SEOProps = {
         <textarea name="message" class="border border-gray-300 rounded-md p-2"
         ></textarea>
       </label>
-      <button type="submit" class="bg-primary text-white rounded-md p-2"
-        >Senden</button
-      >
-    </form> -->
+      <button class="g-recaptcha bg-primary text-white rounded-md p-2" 
+        data-sitekey="reCAPTCHA_site_key" 
+        data-callback='onSubmit' 
+        data-action='submit'
+        >Senden</button>
+    </form>
+    <script define:vars={{submitUrl, recaptchatoken}}>
+      const form = document.querySelector("form");
+      if (!form) {
+        throw new Error("Form not found!");
+      }
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        grecaptcha.ready(function() {
+          grecaptcha.execute(recaptchatoken, {action: 'submit'}).then(function(token) {
+            const formData = new FormData(form);
+        fetch( submitUrl, {
+          method: "POST",
+          body: JSON.stringify({
+            formData: Object.fromEntries(formData),
+            token: token,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            if (data.success) {
+              form.reset();
+              alert("Nachricht erfolgreich gesendet!");
+            } else {
+              alert("Nachricht konnte nicht gesendet werden!");
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+            alert("Nachricht konnte nicht gesendet werden!");
+          });
+          });
+        });
+      });
+    </script>
   </Container>
 </BaseLayout>
