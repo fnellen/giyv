@@ -33,7 +33,8 @@ const getTextColor = (variant: "primary" | "secondary") => {
                     )} hover:after:opacity-100 hover:after:scale-[2.5] ${className}`}
   target={target}
 >
-  <span class={`relative ${getTextColor(variant)} z-10`}>
+  <span class={`relative ${getTextColor(variant)} z-10 flex flex-row gap-2`}>
+    <slot/>
     {text}
   </span>
 </a>

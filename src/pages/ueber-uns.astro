@@ -1,28 +1,119 @@
 ---
+import qs from "qs";
+import Icon from "astro-icon";
+import InstagramPost from "../components/elements/InstagramPost.astro";
+import LatestArticles from "../components/elements/LatestArticles.astro";
+import BtnLink from "../components/shared/BtnLink.astro";
 import Container from "../components/shared/Container.astro";
 import type SEOProps from "../interfaces/seoProps";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { astroI18n } from "astro-i18n";
+import { astroI18n, l, t } from "astro-i18n";
+import { Image } from "astro:assets";
+import fetchApi from "../lib/strapi";
+import type AboutUs from "../interfaces/about-us";
+import { rehypetoc } from "../lib/articleUtils";
+import { SITE_TITLE, SITE_URL } from "../config";
+
+const query = qs.stringify({
+  populate: {
+    featuredImage: {
+      fields: ["name", "width", "height", "url"],
+    },
+    seo: {
+      populate: "*",
+    },
+  },
+});
+
+const aboutUs = await fetchApi<AboutUs>({
+  endpoint: "about-us?locale=" + astroI18n.locale + "&",
+  wrappedByKey: "data",
+  query: query,
+});
+console.log(aboutUs.attributes.seo);
+const content = await rehypetoc(aboutUs.attributes.content, astroI18n.locale);
+
+const structured_data = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: aboutUs.attributes.title,
+        item: SITE_URL + l("/ueber-uns", undefined, { targetLocale: astroI18n.locale }),
+      },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    dateCreated: "2023-10-01T00:00:00-00:00",
+    dateModified: "2024-02-01T00:00:00-00:00",
+    mainEntity: {
+      "@type": "Organization",
+      name: "German-Italian Young Voices",
+      alternateName: "giyv_eu",
+      interactionStatistic: [
+        {
+          "@type": "InteractionCounter",
+          interactionType: "https://schema.org/FollowAction",
+          userInteractionCount: 138,
+        },
+        {
+          "@type": "InteractionCounter",
+          interactionType: "https://schema.org/LikeAction",
+          userInteractionCount: 107,
+        },
+      ],
+      agentInteractionStatistic: {
+        "@type": "InteractionCounter",
+        interactionType: "https://schema.org/WriteAction",
+        userInteractionCount: 10,
+      },
+      description: aboutUs.attributes.seo.metaDescription,
+      image: "https://www.giyv.eu/images/logo.png",
+    },
+  },
+];
 
 const seo: SEOProps = {
-  title: "Über uns",
-  description: "Über uns",
-  image: "/images/og.png",
+  title: aboutUs.attributes.title,
+  description: aboutUs.attributes.seo.metaDescription,
+  image: aboutUs.attributes.featuredImage.data.attributes.url,
   twitter: {
     card: "summary_large_image",
     site: "@giyv_eu",
   },
   noindex: false,
   nofollow: false,
+  localizations: [
+    {
+      hrefLang: "de-DE",
+      href: l("/ueber-uns"),
+    },
+    {
+      hrefLang: "en-US",
+      href: l("/ueber-uns", undefined, {
+        targetLocale: "en",
+      }),
+    },
+    {
+      hrefLang: "it-IT",
+      href: l("/ueber-uns", undefined, {
+        targetLocale: "it",
+      }),
+    },
+  ],
   ogBasic: {
-    title: "",
-    image: "",
-    type: "",
-    url: "",
+    title: aboutUs.attributes.title,
+    image: aboutUs.attributes.featuredImage.data.attributes.url,
+    type: "website",
+    url: l("/ueber-uns"),
   },
   ogOptional: {
     locale: astroI18n.locale,
-    localeAlternate: undefined,
   },
   ogArticle: {
     publishedTime: undefined,
@@ -35,13 +126,46 @@ const seo: SEOProps = {
 };
 ---
 
-<BaseLayout seo={seo}>
-  <Container className="grid grid-col cols-1 gap-4 mt-12">
+<BaseLayout seo={seo} structured_data={structured_data}>
+  <Container className="grid grid-col cols-1 gap-12 mt-12">
     <h1
       class="text-3xl/tight sm:text-4xl/tight md:text-5xl/tight xl:text-6xl/tight
              font-bold text-heading-1"
     >
-      Über uns
+      {t("about.title")}
     </h1>
+    <Image
+      src="/images/about-us-banner.png"
+      alt="Banner with Information about the project"
+      class="w-full"
+      width="3240"
+      height="1080"
+      class="hidden lg:block"
+    />
+    <div
+      class="flex flex-col lg:flex-row gap-12 lg:align-center lg:justify-center lg:items-center"
+    >
+      <InstagramPost
+        url="https://www.instagram.com/reel/C1r5owloCz7/?utm_source=ig_web_copy_link"
+        className="lg:w-1/2 "
+      />
+      <div class="flex flex-col gap-12 lg:w-1/2">
+        <div
+          class="prose md:prose-lg lg:prose-xl prose-a:text-blue-600 dark:prose-invert prose-img:w-auto prose-img:rounded-xl prose-img:mx-auto w-full text-heading-1"
+          set:html={content}
+        />
+        <BtnLink
+          text={t("article.follow_us")}
+          href="https://www.instagram.com/giyv_eu/"
+          className="flex justify-center w-full sm:w-max"
+          variant="primary"
+        >
+          <Icon name="mdi:instagram" className="w-6 h-6 mr-2" />
+        </BtnLink>
+      </div>
+    </div>
+    <div class="mt-12">
+      <LatestArticles />
+    </div>
   </Container>
 </BaseLayout>

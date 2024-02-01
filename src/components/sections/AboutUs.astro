@@ -10,7 +10,7 @@ import { Image } from "astro:assets";
 
 const query = qs.stringify({
   populate: {
-    image: {
+    featuredImage: {
       fields: ["name", "width", "height", "url"],
     },
   },
@@ -42,11 +42,11 @@ const aboutUs = await fetchApi<AboutUs>({
           class="absolute w-full aspect-[16/5] -skew-x-12 rounded-full bg-gradient-to-tr from-primary to-green-400 opacity-40 blur-2xl left-0 bottom-0"
         ></span>
         <Image
-          src={aboutUs.attributes.image.data.attributes.url}
-          alt={aboutUs.attributes.image.data.attributes.alternativeText ||
+          src={aboutUs.attributes.featuredImage.data.attributes.url}
+          alt={aboutUs.attributes.featuredImage.data.attributes.alternativeText ||
             "No alt text"}
-          width={aboutUs.attributes.image.data.attributes.width}
-          height={aboutUs.attributes.image.data.attributes.height}
+          width={aboutUs.attributes.featuredImage.data.attributes.width}
+          height={aboutUs.attributes.featuredImage.data.attributes.height}
           class="w-auto left-1/2 -translate-x-1/2 absolute bottom-0 max-h-full"
         />
       </div>
@@ -56,7 +56,7 @@ const aboutUs = await fetchApi<AboutUs>({
         {aboutUs.attributes.title}
       </Title>
       <Paragraph className="mt-8">
-        {aboutUs.attributes.description}
+        {aboutUs.attributes.excerpt}
       </Paragraph>
       <div
         class="pt-8 grid grid-cols-2 items-center gap-4 max-w-3xl md:max-w-[none]"

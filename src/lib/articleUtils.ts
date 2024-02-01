@@ -1,6 +1,12 @@
 import qs from "qs";
 import type Article from "../interfaces/article";
 import fetchApi from "../lib/strapi";
+import { remark } from "remark";
+import remarkToc from "remark-toc";
+import { rehype } from "rehype";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeSlug from "rehype-slug";
+import { marked } from "marked";
 
 export function isPreferredArticle(
   article: Article,
@@ -82,4 +88,32 @@ export async function getI18nBlogArticles(locale?: string): Promise<Article[]> {
       return new Date(b.attributes.publishedAt).getTime() - new Date(a.attributes.publishedAt).getTime();
     });
   return newArticles;
+}
+
+
+export async function rehypetoc(
+  content: string,
+  locale: string,
+): Promise<string> {
+  const heading =
+    {
+      de: "Inhalte",
+      it: "Contenuti",
+      default: "Contents",
+    }[locale] || "Contents";
+  const toc = await remark()
+    .use(remarkToc, {
+      tight: true,
+      maxDepth: 3,
+      heading: heading,
+    })
+    .process(content);
+
+  const rehypedContent = await rehype()
+    .data("settings", { fragment: true })
+    .use(rehypeSlug)
+    .use(rehypeAutolinkHeadings)
+    .process(marked.parse(toc.toString()));
+
+  return rehypedContent.toString();
 }

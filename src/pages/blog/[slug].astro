@@ -3,40 +3,8 @@ import fetchApi from "../../lib/strapi";
 import qs from "qs";
 import type Article from "../../interfaces/article";
 import { createGetStaticPaths } from "astro-i18n";
-import { marked } from "marked";
 import PostLayout from "../../layouts/PostLayout.astro";
-import { remark } from "remark";
-import remarkToc from "remark-toc";
-import { rehype } from "rehype";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeSlug from "rehype-slug";
-
-export async function rehypetoc(
-  article: Article,
-  locale: string,
-): Promise<string> {
-  const heading =
-    {
-      de: "Inhalte",
-      it: "Contenuti",
-      default: "Contents",
-    }[locale] || "Contents";
-  const toc = await remark()
-    .use(remarkToc, {
-      tight: true,
-      maxDepth: 3,
-      heading: heading,
-    })
-    .process(article.attributes.content);
-
-  const rehypedContent = await rehype()
-    .data("settings", { fragment: true })
-    .use(rehypeSlug)
-    .use(rehypeAutolinkHeadings)
-    .process(marked.parse(toc.toString()));
-
-  return rehypedContent.toString();
-}
+import { rehypetoc } from "../../lib/articleUtils";
 
 export function getStaticPathsWithI18n(locale: string) {
   return createGetStaticPaths(async ({}) => {
@@ -87,7 +55,7 @@ export function getStaticPathsWithI18n(locale: string) {
 
     const posts = await Promise.all(
       data.map(async (post) => {
-        post.attributes.content = await rehypetoc(post, locale);
+        post.attributes.content = await rehypetoc(post.attributes.content, locale);
         return post;
       }),
     );
