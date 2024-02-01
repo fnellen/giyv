@@ -1,4 +1,5 @@
 import type Image from "./image";
+import type Seo from "./seo";
 
 export default interface AboutUs {
     id: number;
@@ -7,9 +8,11 @@ export default interface AboutUs {
         "updatedAt": string;
         "publishedAt": string;
         "title": string;
-        "description": string;
+        "excerpt": string;
+        "content": string;
         "locale": string;
-        "image": {
+        seo: Seo;
+        "featuredImage": {
             "data": Image;
         }
     };
