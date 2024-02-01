@@ -1,4 +1,5 @@
 ---
+import { fade } from "astro:transitions";
 import Container from "../components/shared/Container.astro";
 import Paragraph from "../components/shared/Paragraph.astro";
 import { SITE_URL } from "../config";
@@ -9,8 +10,8 @@ const seo: SEOProps = {
   title: "Privacy Policy",
   description: "Privacy Policy",
   image: "/images/og_image.png",
-  nofollow: true,
-  noindex: true,
+  nofollow: false,
+  noindex: false,
   ogBasic: {
     title: "Privacy Policy",
     image: "/images/og_image.png",
