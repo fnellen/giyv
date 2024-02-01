@@ -84,7 +84,17 @@ export default defineAstroI18nConfig({
 				"about": {
 					"title": "Über uns ",
 					"description": "Das Projekt zielt darauf ab, das Vertrauen junger Menschen in die europäische Zusammenarbeit, die Solidarität und den sozialen Frieden zu stärken.",
-				}
+				},
+				"contact": {
+					"title": "Kontakt",
+					"description": "Du hast Fragen, Anregungen oder möchtest uns einfach etwas mitteilen? Schreib uns!",
+					"form": {
+						"name": "Name",
+						"email": "Email",
+						"message": "Nachricht",
+						"submit": "Abschicken",
+					},
+				},
 			},
 			en: {
 				"not_found": {
@@ -157,7 +167,17 @@ export default defineAstroI18nConfig({
 				"about": {
 					"title": "About us",
 					"description": "The project aims to strengthen young people's confidence in European cooperation, solidarity and social peace.",
-				}
+				},
+				"contact": {
+					"title": "Contact",
+					"description": "You have questions, suggestions or just want to tell us something? Write us!",
+					"form": {
+						"name": "Name",
+						"email": "Email",
+						"message": "Message",
+						"submit": "Submit",
+					},
+				},
 			},
 			it: {
 				"not_found": {
@@ -232,7 +252,17 @@ export default defineAstroI18nConfig({
 				"about": {
 					"title": "Su di noi",
 					"description": "Il progetto mira a rafforzare la fiducia dei giovani nella cooperazione europea, nella solidarietà e nella pace sociale.",
-				}
+				},
+				"contact": {
+					"title": "Contatto",
+					"description": "Hai domande, suggerimenti o semplicemente vuoi dirci qualcosa? Scrivici!",
+					"form": {
+						"name": "Nome",
+						"email": "Email",
+						"message": "Messaggio",
+						"submit": "Invia",
+					},
+				},
 			},
 		},
 	}, // { [translation_group1]: { [locale1]: {}, ... } }

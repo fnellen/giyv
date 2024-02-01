@@ -1,27 +1,21 @@
 ---
+import { l, t } from "astro-i18n";
 import Container from "../components/shared/Container.astro";
 import type SEOProps from "../interfaces/seoProps";
 import BaseLayout from "../layouts/BaseLayout.astro";
-
-import { z } from "zod";
-
-const contact_form = z.object({
-  name: z.string().optional(),
-  email: z.string().email(),
-  message: z.string().max(500),
-});
+import Paragraph from "../components/shared/Paragraph.astro";
 
 const seo: SEOProps = {
-  title: "Kontakt",
-  description: "Kontakt",
-  image: "",
+  title: t("contact.title"),
+  description: t("contact.description"),
+  image: "/images/og-image.png",
   noindex: false,
   nofollow: false,
   ogBasic: {
-    title: "",
-    image: "",
-    type: "",
-    url: "",
+    title: t("contact.title"),
+    image: "/images/og-image.png",
+    type: "website",
+    url: l("/kontakt"),
   },
   ogOptional: {
     audio: undefined,
@@ -41,13 +35,12 @@ const seo: SEOProps = {
     tags: undefined,
   },
   twitter: {
-    card: undefined,
-    site: undefined,
-    creator: undefined,
-    title: undefined,
-    image: undefined,
-    imageAlt: undefined,
-    description: undefined,
+    card: "summary_large_image",
+    site: "www.giyv.eu",
+    creator: "@giyv_eu",
+    title: t("contact.title"),
+    image: "/images/og-image.png",
+    description: t("contact.description"),
   },
 };
 
@@ -61,16 +54,18 @@ const recaptchatoken = import.meta.env.RECAPTCHA_SECRET;
       class="text-3xl/tight sm:text-4xl/tight md:text-5xl/tight xl:text-6xl/tight
              font-bold text-heading-1"
     >
-      Kontakt
+      { t("contact.title") }
     </h1>
-    <script define:vars={{recaptchatoken}} src=`https://www.google.com/recaptcha/api.js?render=${recaptchatoken}`></script>
-    <form
-      name="contact"
-      method="POST"
-      class="grid grid-col cols-1 gap-4"
-    >
+    <Paragraph>
+      { t("contact.description") }
+    </Paragraph>
+    <script
+      define:vars={{ recaptchatoken }}
+      src=`https://www.google.com/recaptcha/api.js?render=${recaptchatoken}`
+    ></script>
+    <form name="contact" method="POST" class="grid grid-col cols-1 gap-4">
       <label class="flex flex-col">
-        <span class="text-heading-2 font-bold">Name</span>
+        <span class="text-heading-2 font-bold">{t("contact.form.name")}</span>
         <input
           type="text"
           name="name"
@@ -78,7 +73,7 @@ const recaptchatoken = import.meta.env.RECAPTCHA_SECRET;
         />
       </label>
       <label class="flex flex-col">
-        <span class="text-heading-2 font-bold">Email</span>
+        <span class="text-heading-2 font-bold">{t("contact.form.email")}</span>
         <input
           type="email"
           name="email"
@@ -86,50 +81,56 @@ const recaptchatoken = import.meta.env.RECAPTCHA_SECRET;
         />
       </label>
       <label class="flex flex-col">
-        <span class="text-heading-2 font-bold">Nachricht</span>
+        <span class="text-heading-2 font-bold">{t("contact.form.message")}</span>
         <textarea name="message" class="border border-gray-300 rounded-md p-2"
         ></textarea>
       </label>
-      <button class="g-recaptcha bg-primary text-white rounded-md p-2" 
-        data-sitekey="reCAPTCHA_site_key" 
-        data-callback='onSubmit' 
-        data-action='submit'
-        >Senden</button>
+      <button
+        class="g-recaptcha bg-primary text-white rounded-md p-2"
+        data-sitekey="reCAPTCHA_site_key"
+        data-callback="onSubmit"
+        data-action="submit">{t("contact.form.submit")}</button
+      >
     </form>
-    <script define:vars={{submitUrl, recaptchatoken}}>
+    <div id="success"></div>
+    <div id="error"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"
+    ></script>
+
+    <script define:vars={{ submitUrl, recaptchatoken }}>
       const form = document.querySelector("form");
-      if (!form) {
-        throw new Error("Form not found!");
-      }
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        grecaptcha.ready(function() {
-          grecaptcha.execute(recaptchatoken, {action: 'submit'}).then(function(token) {
-            const formData = new FormData(form);
-        fetch( submitUrl, {
-          method: "POST",
-          body: JSON.stringify({
-            formData: Object.fromEntries(formData),
-            token: token,
-          }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data);
-            if (data.success) {
-              form.reset();
-              alert("Nachricht erfolgreich gesendet!");
-            } else {
-              alert("Nachricht konnte nicht gesendet werden!");
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-            alert("Nachricht konnte nicht gesendet werden!");
-          });
+      if (form) {
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          grecaptcha.ready(function () {
+            grecaptcha
+              .execute(recaptchatoken, { action: "submit" })
+              .then(function (token) {
+                const formData = new FormData(form);
+                axios
+                  .post(submitUrl, {
+                    token,
+                    formData: Object.fromEntries(formData),
+                  })
+                  .then((res) => {
+                    console.log(res);
+                    if (res.status === 200) {
+                      document.getElementById("success").innerHTML =
+                        "Nachricht erfolgreich gesendet!";
+                    } else {
+                      document.getElementById("error").innerHTML =
+                        "Nachricht konnte nicht gesendet werden! Versuche die Seite neu zu laden.";
+                    }
+                  })
+                  .catch(() => {
+                    document.getElementById("error").innerHTML =
+                      "Etwas ist schief gelaufen!";
+                  });
+              });
           });
         });
-      });
+      }
     </script>
   </Container>
 </BaseLayout>
