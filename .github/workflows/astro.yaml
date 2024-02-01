@@ -78,7 +78,7 @@ jobs:
           STRAPI_TOKEN: ${{ secrets.STRAPI_TOKEN }}
           STRAPI_URL: ${{ secrets.STRAPI_URL }}
       - name: Static Search - Pagefind
-        run: pagefind --site dist
+        run: npx pagefind --site dist
         working-directory: ${{ env.BUILD_PATH }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
