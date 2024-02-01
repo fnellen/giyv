@@ -46,6 +46,8 @@ const seo: SEOProps = {
 
 const submitUrl = import.meta.env.STRAPI_URL + "/api/ezforms/submit/";
 const recaptchatoken = import.meta.env.RECAPTCHA_SECRET;
+const success = t("contact.success");
+const error = t("contact.error");
 ---
 
 <BaseLayout seo={seo}>
@@ -63,7 +65,7 @@ const recaptchatoken = import.meta.env.RECAPTCHA_SECRET;
       define:vars={{ recaptchatoken }}
       src=`https://www.google.com/recaptcha/api.js?render=${recaptchatoken}`
     ></script>
-    <form name="contact" method="POST" class="grid grid-col cols-1 gap-4">
+    <form name="contact" method="POST" class="grid grid-col cols-1 gap-4 w-full">
       <label class="flex flex-col">
         <span class="text-heading-2 font-bold">{t("contact.form.name")}</span>
         <input
@@ -98,7 +100,7 @@ const recaptchatoken = import.meta.env.RECAPTCHA_SECRET;
     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"
     ></script>
 
-    <script define:vars={{ submitUrl, recaptchatoken }}>
+    <script define:vars={{ submitUrl, recaptchatoken, success, error }}>
       const form = document.querySelector("form");
       if (form) {
         form.addEventListener("submit", (e) => {
@@ -116,16 +118,13 @@ const recaptchatoken = import.meta.env.RECAPTCHA_SECRET;
                   .then((res) => {
                     console.log(res);
                     if (res.status === 200) {
-                      document.getElementById("success").innerHTML =
-                        "Nachricht erfolgreich gesendet!";
+                      document.getElementById("success").innerHTML = success;
                     } else {
-                      document.getElementById("error").innerHTML =
-                        "Nachricht konnte nicht gesendet werden! Versuche die Seite neu zu laden.";
+                      document.getElementById("error").innerHTML = error;
                     }
                   })
                   .catch(() => {
-                    document.getElementById("error").innerHTML =
-                      "Etwas ist schief gelaufen!";
+                    document.getElementById("error").innerHTML = error;
                   });
               });
           });

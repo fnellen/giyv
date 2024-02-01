@@ -94,6 +94,8 @@ export default defineAstroI18nConfig({
 						"message": "Nachricht",
 						"submit": "Abschicken",
 					},
+					"success": "Vielen Dank für deine Nachricht! Wir werden uns so schnell wie möglich bei dir melden.",
+					"error": "Ups, da ist etwas schief gelaufen. Bitte versuche es erneut oder schreibe uns eine Email an: youngvoices@villavigoni.eu2",
 				},
 			},
 			en: {
@@ -177,6 +179,8 @@ export default defineAstroI18nConfig({
 						"message": "Message",
 						"submit": "Submit",
 					},
+					"success": "Thank you for your message! We will get back to you as soon as possible.",
+					"error": "Oops, something went wrong. Please try again or write us an email to: youngvoices@villavigoni.eu",
 				},
 			},
 			it: {
@@ -262,6 +266,8 @@ export default defineAstroI18nConfig({
 						"message": "Messaggio",
 						"submit": "Invia",
 					},
+					"success": "Grazie per il tuo messaggio! Ti risponderemo al più presto.",
+					"error": "Oops, qualcosa è andato storto. Riprova o scrivici una email a: youngvoices@villavigoni.eu",
 				},
 			},
 		},
