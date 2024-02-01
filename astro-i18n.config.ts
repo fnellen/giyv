@@ -99,6 +99,12 @@ export default defineAstroI18nConfig({
 					"success": "Vielen Dank für deine Nachricht! Wir werden uns so schnell wie möglich bei dir melden.",
 					"error": "Ups, da ist etwas schief gelaufen. Bitte versuche es erneut oder schreibe uns eine Email an: youngvoices@villavigoni.eu2",
 				},
+				"seo": {
+					"home": {
+						"title": "Home",
+						"description": "Eine Initiative von jungen Menschen für junge Menschen. Wir verwenden unsere Stimme, um uns für die Themen einzusetzen, die uns am meisten beschäftigen.",
+					},
+				}
 			},
 			en: {
 				"not_found": {
@@ -186,6 +192,12 @@ export default defineAstroI18nConfig({
 					"success": "Thank you for your message! We will get back to you as soon as possible.",
 					"error": "Oops, something went wrong. Please try again or write us an email to: youngvoices@villavigoni.eu",
 				},
+				"seo": {
+					"home": {
+						"title": "Home",
+						"description": "An initiative of young people for young people. We use our voice to stand up for the topics that concern us the most.",
+					},
+				}
 			},
 			it: {
 				"not_found": {
@@ -275,6 +287,12 @@ export default defineAstroI18nConfig({
 					"success": "Grazie per il tuo messaggio! Ti risponderemo al più presto.",
 					"error": "Oops, qualcosa è andato storto. Riprova o scrivici una email a: youngvoices@villavigoni.eu",
 				},
+				"seo": {
+					"home": {
+						"title": "Home",
+						"description": "Un'iniziativa di giovani per giovani. Usiamo la nostra voce per sollecitare gli argomenti che ci interessano di più.",
+					},
+				}
 			},
 		},
 	}, // { [translation_group1]: { [locale1]: {}, ... } }
