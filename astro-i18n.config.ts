@@ -81,6 +81,10 @@ export default defineAstroI18nConfig({
 					"older_posts": "Ältere Beiträge",
 					"recent_posts": "Neueste Beiträge",
 				},
+				"about": {
+					"title": "Über uns ",
+					"description": "Das Projekt zielt darauf ab, das Vertrauen junger Menschen in die europäische Zusammenarbeit, die Solidarität und den sozialen Frieden zu stärken.",
+				}
 			},
 			en: {
 				"not_found": {
@@ -150,6 +154,10 @@ export default defineAstroI18nConfig({
 					"older_posts": "Older posts",
 					"recent_posts": "Recent posts",
 				},
+				"about": {
+					"title": "About us",
+					"description": "The project aims to strengthen young people's confidence in European cooperation, solidarity and social peace.",
+				}
 			},
 			it: {
 				"not_found": {
@@ -221,6 +229,10 @@ export default defineAstroI18nConfig({
 					"older_posts": "Post precedenti",
 					"recent_posts": "Post recenti",
 				},
+				"about": {
+					"title": "Su di noi",
+					"description": "Il progetto mira a rafforzare la fiducia dei giovani nella cooperazione europea, nella solidarietà e nella pace sociale.",
+				}
 			},
 		},
 	}, // { [translation_group1]: { [locale1]: {}, ... } }
@@ -230,12 +242,14 @@ export default defineAstroI18nConfig({
 			home: "en",
 			impressum: "impressum",
 			"privacy-policy": "privacy-policy",
+			"kontakt": "contact",
 		},
 		it: {
 			"ueber-uns": "su-di-noi",
 			home: "it",
 			impressum: "impressum",
 			"privacy-policy": "privacy-policy",
+			"kontakt": "contatto",
 		},
 	}, // { [secondary_locale1]: { about: "about-translated", ... } }
 })
