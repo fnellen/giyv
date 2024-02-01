@@ -11,12 +11,24 @@ export default defineConfig({
   output: "static",
   image: {
     domains: ["cms.giyv.eu", "storage.googleapis.com"],
-    remotePatterns: [{
-      protocol: "https"
-    }]
+    remotePatterns: [
+      {
+        protocol: "https",
+      },
+    ],
   },
   redirects: {
-    "/junges-manifest": "/blog/junges-manifest",
-    "/manifesto-giovani": "/it/blog/manifesto-dei-giovani"
-  }
+    "/junges-manifest": {
+      status: 301,
+      destination: "/blog/junges-manifest",
+    },
+    "/manifesto-giovani": {
+      status: 301,
+      destination: "/it/blog/manifesto-dei-giovani",
+    },
+    "/youth-manifesto": {
+      status: 301,
+      destination: "/en/blog/youth-manifesto",
+    },
+  },
 });
