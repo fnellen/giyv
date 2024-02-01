@@ -12,7 +12,7 @@ import { Image } from "astro:assets";
 import fetchApi from "../lib/strapi";
 import type AboutUs from "../interfaces/about-us";
 import { rehypetoc } from "../lib/articleUtils";
-import { SITE_TITLE, SITE_URL } from "../config";
+import { SITE_URL } from "../config";
 
 const query = qs.stringify({
   populate: {
