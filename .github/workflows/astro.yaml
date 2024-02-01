@@ -11,7 +11,7 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-    
+
   # Allows external webhook trigger
   repository_dispatch:
     types: [strapi_update]
@@ -77,6 +77,9 @@ jobs:
         env:
           STRAPI_TOKEN: ${{ secrets.STRAPI_TOKEN }}
           STRAPI_URL: ${{ secrets.STRAPI_URL }}
+      - name: Static Search - Pagefind
+        run: pagefind --site dist
+        working-directory: ${{ env.BUILD_PATH }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
