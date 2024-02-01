@@ -7,20 +7,38 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import ByNumber from "../components/sections/ByNumber.astro";
 import { astroI18n, t } from "astro-i18n";
 import type SEOProps from "../interfaces/seoProps";
-import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "../config";
+import { SITE_TITLE, SITE_URL } from "../config";
 
 const structured_data = [
-  {
+{
     "@context": "https://schema.org",
-    "@type": "Organization",
-    image: "https://www.giyv.eu/images/og_image.png",
-    url: "https://www.giyv.eu",
-    sameAs: ["https://www.instagram.com/giyv_eu", "https://www.villavigoni.eu/event/young-voices/"],
-    logo: "https://www.giyv.eu/images/logo.png",
-    name: "German-Italian Young Voices",
-    alternateName: "GIYV",
-    description: t("seo.home.description"),
-    email: "info@giyv.eu",
+    "@type": "ProfilePage",
+    dateCreated: "2023-10-01T00:00:00-00:00",
+    dateModified: "2024-02-01T00:00:00-00:00",
+    mainEntity: {
+      "@type": "Organization",
+      name: "German-Italian Young Voices",
+      alternateName: "giyv_eu",
+      interactionStatistic: [
+        {
+          "@type": "InteractionCounter",
+          interactionType: "https://schema.org/FollowAction",
+          userInteractionCount: 138,
+        },
+        {
+          "@type": "InteractionCounter",
+          interactionType: "https://schema.org/LikeAction",
+          userInteractionCount: 107,
+        },
+      ],
+      agentInteractionStatistic: {
+        "@type": "InteractionCounter",
+        interactionType: "https://schema.org/WriteAction",
+        userInteractionCount: 10,
+      },
+      description: t("seo.home.description"),
+      image: "https://www.giyv.eu/images/logo.png",
+    },
   },
 ];
 
