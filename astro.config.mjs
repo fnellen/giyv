@@ -17,18 +17,4 @@ export default defineConfig({
       },
     ],
   },
-  redirects: {
-    "/junges-manifest": {
-      status: 301,
-      destination: "/blog/junges-manifest",
-    },
-    "/manifesto-giovani": {
-      status: 301,
-      destination: "/it/blog/manifesto-dei-giovani",
-    },
-    "/youth-manifesto": {
-      status: 301,
-      destination: "/en/blog/youth-manifesto",
-    },
-  },
 });

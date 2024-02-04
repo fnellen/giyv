@@ -5,14 +5,13 @@ import type SEOProps from "../../interfaces/seoProps";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Container from "../shared/Container.astro";
 import Paragraph from "../shared/Paragraph.astro";
-import indexing from "../../lib/indexing";
-indexing();
+
 const seo: SEOProps = {
   title: "404",
   description: "404",
   image: "/images/og_image.png",
-  nofollow: true,
-  noindex: true,
+  nofollow: false,
+  noindex: false,
   ogBasic: {
     title: "404",
     image: "/images/og_image.png",
