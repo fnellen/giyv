@@ -62,9 +62,9 @@ export const GET: APIRoute = async () => {
             let xhtml = '';
             if (article.attributes.localizations.data) {
                 article.attributes.localizations.data.forEach((localization) => {
-                    xhtml += `<xhtml:link rel="alternate" hreflang="${localization.attributes.locale}" href="${SITE_URL}${l(`/blog/${localization.attributes.slug}/`, undefined, {
+                    xhtml += `<xhtml:link rel="alternate" hreflang="${localization.attributes.locale}" href="${SITE_URL}${l(`/blog`, undefined, {
                         targetLocale: localization.attributes.locale,
-                    })}"/>`;
+                    }) + localization.attributes.slug}"/>`;
                 });
             }
             // Add the lastmod
