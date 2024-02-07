@@ -25,9 +25,9 @@ if (orientation === "horizontal") {
   class=`p-6 rounded-lg bg-white-100 dark:bg-base-100 hover:shadow-xl transition ease-in-out hover:scale-[102%] ${className} border border-box-border bg-box-bg shadow-lg shadow-box-shadow`
 >
   <a
-    href={`${l("blog", undefined, {
+    href={`${l(`blog/${article.attributes.slug}`, undefined, {
       targetLocale: article.attributes.locale,
-    })}/${article.attributes.slug}`}
+    })}`}
     target={"_self"}
   >
     <div class=`${flex}`>

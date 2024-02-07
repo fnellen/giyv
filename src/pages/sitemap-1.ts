@@ -64,7 +64,7 @@ export const GET: APIRoute = async () => {
                 article.attributes.localizations.data.forEach((localization) => {
                     xhtml += `<xhtml:link rel="alternate" hreflang="${localization.attributes.locale}" href="${SITE_URL}${l(`/blog`, undefined, {
                         targetLocale: localization.attributes.locale,
-                    }) + localization.attributes.slug}"/>`;
+                    }) + localization.attributes.slug}/"/>`;
                 });
             }
             // Add the lastmod
@@ -90,9 +90,9 @@ export const GET: APIRoute = async () => {
                 `;
             xhtml += `</news:news>`;
 
-            sitemap += `<url><loc>${SITE_URL}${l(`/blog/${article.attributes.slug}/`, undefined, {
+            sitemap += `<url><loc>${SITE_URL}${l(`/blog`, undefined, {
                 targetLocale: article.attributes.locale,
-            })}</loc>${xhtml}</url>`;
+            }) + article.attributes.slug}/</loc>${xhtml}</url>`;
         });
 
         // Close the sitemap XML content
