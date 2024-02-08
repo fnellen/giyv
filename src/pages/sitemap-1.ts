@@ -92,7 +92,7 @@ export const GET: APIRoute = async () => {
 
             sitemap += `<url><loc>${SITE_URL}${l(`/blog/${article.attributes.slug}`, undefined, {
                 targetLocale: article.attributes.locale,
-            })}/</loc>${xhtml}</url>`;
+            })}</loc>${xhtml}</url>`;
         });
 
         // Close the sitemap XML content
