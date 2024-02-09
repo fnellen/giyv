@@ -21,9 +21,7 @@ function fixedEncodeURIComponent(str: string) {
 const article = Astro.props;
 const articleUrl =
   SITE_URL +
-  l("blog", undefined, { targetLocale: article.attributes.locale }) +
-  "/" +
-  article.attributes.slug;
+  l(`blog/${article.attributes.slug}`, undefined, { targetLocale: article.attributes.locale });
 
 let socials = [
   {
@@ -76,11 +74,9 @@ let localizations =
 localizations.push({
   href:
     SITE_URL +
-    l("blog", undefined, {
+    l(`blog/${article.attributes.slug}`, undefined, {
       targetLocale: article.attributes.locale,
-    }) +
-    "/" +
-    article.attributes.slug,
+    }),
   hrefLang: article.attributes.locale,
 });
 
