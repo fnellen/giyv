@@ -30,7 +30,6 @@ const aboutUs = await fetchApi<AboutUs>({
   wrappedByKey: "data",
   query: query,
 });
-console.log(aboutUs.attributes.seo);
 const content = await rehypetoc(aboutUs.attributes.content, astroI18n.locale);
 
 const structured_data = [
@@ -91,7 +90,9 @@ const seo: SEOProps = {
   localizations: [
     {
       hrefLang: "de-DE",
-      href: l("/ueber-uns"),
+      href: l("/ueber-uns", undefined, {
+        targetLocale: "de",
+      }),
     },
     {
       hrefLang: "en-US",
