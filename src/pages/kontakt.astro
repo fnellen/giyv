@@ -56,16 +56,20 @@ const error = t("contact.error");
       class="text-3xl/tight sm:text-4xl/tight md:text-5xl/tight xl:text-6xl/tight
              font-bold text-heading-1"
     >
-      { t("contact.title") }
+      {t("contact.title")}
     </h1>
     <Paragraph>
-      { t("contact.description") }
+      {t("contact.description")}
     </Paragraph>
     <script
       define:vars={{ recaptchatoken }}
       src=`https://www.google.com/recaptcha/api.js?render=${recaptchatoken}`
     ></script>
-    <form name="contact" method="POST" class="grid grid-col cols-1 gap-4 w-full">
+    <form
+      name="contact"
+      method="POST"
+      class="grid grid-col cols-1 gap-4 w-full"
+    >
       <label class="flex flex-col">
         <span class="text-heading-2 font-bold">{t("contact.form.name")}</span>
         <input
@@ -83,7 +87,8 @@ const error = t("contact.error");
         />
       </label>
       <label class="flex flex-col">
-        <span class="text-heading-2 font-bold">{t("contact.form.message")}</span>
+        <span class="text-heading-2 font-bold">{t("contact.form.message")}</span
+        >
         <textarea name="message" class="border border-gray-300 rounded-md p-2"
         ></textarea>
       </label>
@@ -116,7 +121,6 @@ const error = t("contact.error");
                     formData: Object.fromEntries(formData),
                   })
                   .then((res) => {
-                    console.log(res);
                     if (res.status === 200) {
                       document.getElementById("success").innerHTML = success;
                     } else {

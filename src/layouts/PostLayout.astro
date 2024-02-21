@@ -84,57 +84,62 @@ localizations.push({
   hrefLang: article.attributes.locale,
 });
 
-const structured_data = [{
-  "@context": "https://schema.org",
-  "@type": "Article",
-  mainEntityOfPage: {
-    "@type": "WebPage",
-    "@id": articleUrl,
-  },
-  headline: article.attributes.title,
-  description: article.attributes.excerpt,
-  keywords: article.attributes.tags
-    ? article.attributes.tags.split(",").map((tag) => tag.trim())
-    : undefined,
-  image: [article.attributes.featuredImage.data.attributes.url],
-  datePublished: article.attributes.publishedAt,
-  dateModified: article.attributes.updatedAt,
-  author: article.attributes.group.data.attributes.authors.data.map((author) => {
-    return {
-      "@type": "Person",
-      name: author.attributes.name,
-      url: author.attributes.socials[0]?.url,
-    };
-  }),
-  publisher: {
-    "@type": "Organization",
-    name: "German-Italian Young Voices",
-    logo: {
-      "@type": "ImageObject",
-      url: "https://www.giyv.eu/images/logo.png",
-      width: 60,
-      height: 60,
+const structured_data = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": articleUrl,
+    },
+    headline: article.attributes.title,
+    description: article.attributes.excerpt,
+    keywords: article.attributes.tags
+      ? article.attributes.tags.split(",").map((tag) => tag.trim())
+      : undefined,
+    image: [article.attributes.featuredImage.data.attributes.url],
+    datePublished: article.attributes.publishedAt,
+    dateModified: article.attributes.updatedAt,
+    author: article.attributes.group.data.attributes.authors.data.map(
+      (author) => {
+        return {
+          "@type": "Person",
+          name: author.attributes.name,
+          url: author.attributes.socials[0]?.url,
+        };
+      },
+    ),
+    publisher: {
+      "@type": "Organization",
+      name: "German-Italian Young Voices",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://www.giyv.eu/images/logo.png",
+        width: 60,
+        height: 60,
+      },
     },
   },
-},
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Blog",
-      item: SITE_URL + l("blog", undefined, { targetLocale: article.attributes.locale }),
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: article.attributes.title,
-      item: articleUrl,
-    },
-  ],
-}
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Blog",
+        item:
+          SITE_URL +
+          l("blog", undefined, { targetLocale: article.attributes.locale }),
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: article.attributes.title,
+        item: articleUrl,
+      },
+    ],
+  },
 ];
 
 const seo: SEOProps = {
@@ -247,7 +252,7 @@ const seo: SEOProps = {
                   date={new Date(article.attributes.publishedAt)}
                   locale={article.attributes.locale}
                 />
-                 - {article.attributes.readingTime.replace("read", "")}
+                - {article.attributes.readingTime.replace("read", "")}
                 {t("article.read_time")}
               </Paragraph>
               <h1
@@ -302,35 +307,35 @@ const seo: SEOProps = {
       <div class="lg:grid lg:grid-cols-3 lg:gap-32 sm:grid-cols-1 sm:gap-16">
         <div class="col-span-2">
           <div class="lg:hidden items-center justify-center align-center mb-10">
-          {
-            article.attributes.instagramPost.length > 0 && (
-              <>
-                <Paragraph className="font-bold uppercase text-gray-600 dark:text-white">
-                  {t("article.check_out_post")}
-                </Paragraph>
-                <div class="w-full">
-                  {article.attributes.instagramPost.map((post) => {
-                    return (
-                      <>
-                        <blockquote
-                          class="instagram-media"
-                          data-instgrm-version="14"
-                        >
-                          <a href={post.url} />
-                        </blockquote>
-                        <script
-                          type="text/plain"
-                          data-category="social"
-                          data-service="Instagram"
-                          src="//www.instagram.com/embed.js"
-                        />
-                      </>
-                    );
-                  })}
-                </div>
-              </>
-            )
-          }
+            {
+              article.attributes.instagramPost.length > 0 && (
+                <>
+                  <Paragraph className="font-bold uppercase text-gray-600 dark:text-white">
+                    {t("article.check_out_post")}
+                  </Paragraph>
+                  <div class="w-full">
+                    {article.attributes.instagramPost.map((post) => {
+                      return (
+                        <>
+                          <blockquote
+                            class="instagram-media"
+                            data-instgrm-version="14"
+                          >
+                            <a href={post.url} />
+                          </blockquote>
+                          <script
+                            type="text/plain"
+                            data-category="social"
+                            data-service="Instagram"
+                            src="//www.instagram.com/embed.js"
+                          />
+                        </>
+                      );
+                    })}
+                  </div>
+                </>
+              )
+            }
           </div>
           <slot />
         </div>

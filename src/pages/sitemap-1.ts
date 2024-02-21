@@ -105,7 +105,6 @@ export const GET: APIRoute = async () => {
             },
         });
     } catch (error) {
-        console.error("Error generating sitemap:", error);
 
         // Return an error response if there is an issue
         return new Response(JSON.stringify({ error: "Internal Server Error" }), {

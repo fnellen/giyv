@@ -10,7 +10,7 @@ import type SEOProps from "../interfaces/seoProps";
 import { SITE_TITLE, SITE_URL } from "../config";
 
 const structured_data = [
-{
+  {
     "@context": "https://schema.org",
     "@type": "ProfilePage",
     dateCreated: "2023-10-01T00:00:00-00:00",
@@ -23,12 +23,12 @@ const structured_data = [
         {
           "@type": "InteractionCounter",
           interactionType: "https://schema.org/FollowAction",
-          userInteractionCount: 138,
+          userInteractionCount: 154,
         },
         {
           "@type": "InteractionCounter",
           interactionType: "https://schema.org/LikeAction",
-          userInteractionCount: 107,
+          userInteractionCount: 787,
         },
       ],
       agentInteractionStatistic: {
@@ -87,12 +87,12 @@ import LatestArticles from "../components/elements/LatestArticles.astro";
 ---
 
 <BaseLayout seo={seo} structured_data={structured_data}>
-  <div class="flex flex-col gap-y-20 md:gap-y-32 overflow-hidden">
+  <main class="flex flex-col gap-y-20 md:gap-y-32 overflow-hidden">
     <Hero />
     <LatestArticles />
     <ByNumber />
     <Categories />
     <AboutUs />
     <CTA />
-  </div>
+  </main>
 </BaseLayout>
