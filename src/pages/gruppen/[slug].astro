@@ -1,0 +1,328 @@
+---
+import { astroI18n, createGetStaticPaths, l, t } from "astro-i18n";
+import type SEOProps from "../../interfaces/seoProps";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import qs from "qs";
+import fetchApi from "../../lib/strapi";
+import type Group from "../../interfaces/group";
+import Container from "../../components/shared/Container.astro";
+import Paragraph from "../../components/shared/Paragraph.astro";
+import Image from "astro/components/Image.astro";
+import Title from "../../components/shared/Title.astro";
+import Icon from "astro-icon";
+import LatestArticles from "../../components/elements/LatestArticles.astro";
+import { SITE_URL } from "../../config";
+import type Article from "../../interfaces/article";
+import BlogCard from "../../components/cards/BlogCard.astro";
+
+export function getStaticPathsWithI18n(locale: string) {
+  return createGetStaticPaths(async ({}) => {
+    const query = qs.stringify({
+      populate: {
+        featuredImage: {
+          fields: ["name", "width", "height", "url", "alternativeText"],
+        },
+        seo: {
+          populate: "*",
+        },
+        localizations: {
+          populate: "*",
+        },
+        authors: {
+          populate: {
+            bioImage: {
+              fields: ["url", "name", "width", "height", "alternativeText"],
+            },
+            socials: {
+              populate: "*",
+            },
+          },
+        },
+      },
+    });
+    const data = await fetchApi<Group[]>({
+      endpoint: `groups?locale=${locale}&filters[Name][$ne]=Villa Vigoni&`,
+      wrappedByKey: "data",
+      query: query,
+    });
+
+    const seos: SEOProps[] = data.map((group) => {
+      return {
+        title: group.attributes.Name,
+        description: group.attributes.Description
+          ? group.attributes.Description.substring(0, 160)
+          : "",
+        image:
+          group.attributes.featuredImage.data &&
+          group.attributes.featuredImage.data.attributes.url,
+        noindex: false,
+        nofollow: false,
+        ogBasic: {
+          title: group.attributes.Name,
+          image:
+            group.attributes.featuredImage.data &&
+            group.attributes.featuredImage.data.attributes.url,
+          type: "article",
+          url: l(SITE_URL + "/gruppen/" + group.attributes.slug, {
+            targetLocale: locale,
+          }),
+        },
+        ogOptional: {
+          description: group.attributes.Description
+            ? group.attributes.Description.substring(0, 160)
+            : "",
+          locale: group.attributes.locale,
+          siteName: "German Italian Young Voices",
+        },
+        ogArticle: {},
+        twitter: {
+          card: "summary_large_image",
+          site: "@giyv_eu",
+          title: group.attributes.Name,
+          image: group.attributes.featuredImage.data
+            ? group.attributes.featuredImage.data.attributes.url
+            : undefined,
+          imageAlt: group.attributes.featuredImage.data
+            ? group.attributes.featuredImage.data.attributes.alternativeText
+            : undefined,
+          description: group.attributes.Description
+            ? group.attributes.Description.substring(0, 160)
+            : "",
+        },
+      };
+    });
+
+    const mappedPosts = data.map((group) => ({
+      params: { slug: group.attributes.slug },
+      props: {
+        group: group,
+        content_rehyped: group.attributes.Description,
+        seo: seos[data.indexOf(group)],
+      },
+    }));
+
+    return mappedPosts;
+  });
+}
+
+export const getStaticPaths = getStaticPathsWithI18n("de");
+type Props = {
+  group: Group;
+  content_rehyped: string;
+  seo: SEOProps;
+};
+const { group, content_rehyped, seo } = Astro.props;
+let socials = [
+  {
+    name: "Facebook",
+    icon: "ic:baseline-facebook",
+  },
+  {
+    name: "Twitter",
+    icon: "mdi:twitter",
+  },
+  {
+    name: "LinkedIn",
+    icon: "mdi:linkedin",
+  },
+  {
+    name: "WhatsApp",
+    icon: "ic:baseline-whatsapp",
+  },
+  {
+    name: "Email",
+    icon: "ic:outline-email",
+  },
+  {
+    name: "Instagram",
+    icon: "mdi:instagram",
+  },
+];
+group.attributes.authors.data.sort((a, b) => {
+  if (a.attributes.name < b.attributes.name) {
+    return -1;
+  }
+  if (a.attributes.name > b.attributes.name) {
+    return 1;
+  }
+  return 0;
+});
+
+const posts = await fetchApi<Article[]>({
+  endpoint: `articles?locale=${astroI18n.locale}&filters[group][slug][$eq]=${group.attributes.slug}&`,
+  wrappedByKey: "data",
+  query: qs.stringify({
+    populate: {
+      featuredImage: {
+        fields: ["name", "width", "height", "url", "alternativeText"],
+      },
+      seo: {
+        populate: "*",
+      },
+      localizations: {
+        populate: "*",
+      },
+      group: {
+        populate: "*",
+      },
+    },
+  }),
+});
+posts.sort((a, b) => {
+  if (a.attributes.publishedAt < b.attributes.publishedAt) {
+    return 1;
+  }
+  if (a.attributes.publishedAt > b.attributes.publishedAt) {
+    return -1;
+  }
+  return 0;
+});
+---
+
+<BaseLayout seo={seo}>
+  <div class="pt-8 md:pt-16 flex flex-col gap-12">
+    <Container className="flex flex-col gap-12">
+      <ul class="flex flex-row gap-2 text-gray-600">
+        <li class="inline-flex items-center">
+          <a href={l("/")}>{t("nav.home")}</a>
+          <Icon name="mdi:chevron-right" class="w-4 h-4 fill-gray-600" />
+        </li>
+        <li class="inline-flex items-center">
+          <a href={l("/gruppen")}>{t("nav.groups")}</a>
+          <Icon name="mdi:chevron-right" class="w-4 h-4 fill-gray-600" />
+        </li>
+        <li>
+          <a href={l("/gruppen/" + group.attributes.slug)} class="">
+            <p class="font-bold overflow-hidden">
+              {group.attributes.Name.substring(0, 20)} ...
+            </p>
+          </a>
+        </li>
+      </ul>
+      <div class="flex flex-col lg:flex-row gap-10 lg:gap-12">
+        <div
+          class="relative flex flex-col items-center text-center lg:text-left lg:py-7 xl:py-8
+        lg:items-start lg:max-w-none max-w-3xl mx-auto lg:mx-0 lg:flex-1 lg:w-1/2"
+        >
+          <h1
+            class="text-3xl/tight sm:text-4xl/tight md:text-5xl/tight xl:text-6xl/tight
+             font-bold text-heading-1"
+          >
+            {group.attributes.Name}
+          </h1>
+          <Paragraph className="mt-8">
+            {group.attributes.Description}
+          </Paragraph>
+        </div>
+        <div
+          class="flex flex-1 lg:w-1/2 lg:h-auto lg:max-w-none lg:mx-0 mx-auto max-w-3xl"
+        >
+          {
+            group.attributes.featuredImage.data && (
+              <Image
+                src={group.attributes.featuredImage.data.attributes.url}
+                alt={
+                  group.attributes.featuredImage.data.attributes
+                    .alternativeText || "No alt provided"
+                }
+                width={720}
+                height={480}
+                class={
+                  "lg:w-full lg:h-full rounded-3xl object-cover aspect-ratio-3/2"
+                }
+                title={
+                  group.attributes.featuredImage.data.attributes.name ||
+                  "No title provided"
+                }
+              />
+            )
+          }
+        </div>
+      </div>
+
+      <div
+        class="sm:grid lg:grid-cols-3 md:grid-cols-2 sm:gap-16 gap-8 lg:gap-12 justify-center justify-items-center"
+      >
+        <div class="lg:col-span-3 md:col-span-2 sm:col-span-1">
+          <Title>{t("groups.our_authors")}</Title>
+        </div>
+        {
+          group.attributes.authors.data.map((author) => {
+            return (
+              <div class="flex flex-col items-center gap-4">
+                {author.attributes.bioImage.data ? (
+                  <Image
+                    src={author.attributes.bioImage.data.attributes.url}
+                    alt={
+                      author.attributes.bioImage.data.attributes
+                        .alternativeText || "No alt provided"
+                    }
+                    width={200}
+                    height={200}
+                    class={"rounded-full"}
+                    title={
+                      author.attributes.bioImage.data.attributes.name ||
+                      "No title provided"
+                    }
+                  />
+                ) : (
+                  <Icon
+                    name="mdi:person"
+                    class="w-[200px] h-[200px] rounded-full bg-gray-200 p-2"
+                    role="img"
+                    aria-label="Avatar Icon"
+                  />
+                )}
+                <div class="flex flex-col items-center gap-2">
+                  <h3 class="text-2xl font-bold text-heading-1">
+                    {author.attributes.name}
+                  </h3>
+                  <Paragraph className="hyphens-auto text-center">
+                    {author.attributes.bio}
+                  </Paragraph>
+                  <div class="flex flex-row gap-2">
+                    {author.attributes.socials &&
+                      author.attributes.socials.map((social) => {
+                        return (
+                          <a
+                            href={social.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="flex items-center gap-2 text-gray-600 hover:text-blue-600"
+                          >
+                            <Icon
+                              name={
+                                socials.find((s) => s.name === social.platform)
+                                  ?.icon || "mdi:link"
+                              }
+                              class="w-6 h-6 fill-gray-600 hover:fill-blue-600"
+                              aria-hidden="true"
+                            />
+                            <span class="sr-only">{social.platform}</span>
+                          </a>
+                        );
+                      })}
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        }
+      </div>
+      <div class="flex flex-col gap-12 justify-center items-center">
+        <div>
+          <Title>{t("groups.our_posts")}</Title>
+        </div>
+        {
+          posts.map((article: Article) => (
+            <BlogCard
+              article={article}
+              className="w-full"
+              orientation="horizontal"
+            />
+          ))
+        }
+      </div>
+    </Container>
+  </div>
+</BaseLayout>

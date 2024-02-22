@@ -39,21 +39,20 @@ const articles = await getI18nBlogArticles(astroI18n.locale)
         />
       ))
     }
-    
   </div>
   <div class="flex justify-center">
-  <a href={l("/blog")} class="w-min">
-    <div
-      class="p-4 hover:shadow-xl hover:[scale-110] transition-all duration-300 ease-in-out rounded-full bg-gray-100 dark:bg-blue-600 cursor-pointer flex flex-row items-center justify-center space-x-2"
-    >
-      <Paragraph className="text-gray-500">
-        {t("latest_articles.read_more")}
-      </Paragraph>
-      <Icon
-        name="mdi:arrow-right "
-        className="w-6 h-6 text-gray-500 dark:text-gray-300"
-      />
-    </div>
-  </a>
-</div>
+    <a href={l("/blog")} class="w-min">
+      <div
+        class="p-4 hover:shadow-xl hover:[scale-110] transition-all duration-300 ease-in-out rounded-full bg-gray-100 dark:bg-blue-600 cursor-pointer flex flex-row items-center justify-center space-x-2"
+      >
+        <Paragraph className="text-gray-500">
+          {t("latest_articles.read_more")}
+        </Paragraph>
+        <Icon
+          name="mdi:arrow-right "
+          className="w-6 h-6 text-gray-500 dark:text-gray-300"
+        />
+      </div>
+    </a>
+  </div>
 </Container>

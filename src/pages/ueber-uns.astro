@@ -41,7 +41,9 @@ const structured_data = [
         "@type": "ListItem",
         position: 1,
         name: aboutUs.attributes.title,
-        item: SITE_URL + l("/ueber-uns", undefined, { targetLocale: astroI18n.locale }),
+        item:
+          SITE_URL +
+          l("/ueber-uns", undefined, { targetLocale: astroI18n.locale }),
       },
     ],
   },

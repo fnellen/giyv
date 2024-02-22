@@ -1,0 +1,127 @@
+---
+import qs from "qs";
+import { astroI18n, createGetStaticPaths, l, t } from "astro-i18n";
+import Container from "../../components/shared/Container.astro";
+import type SEOProps from "../../interfaces/seoProps";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import type { Page } from "astro";
+import type Group from "../../interfaces/group";
+import fetchApi from "../../lib/strapi";
+import HeadTitle from "../../components/shared/HeadTitle.astro";
+import Paragraph from "../../components/shared/Paragraph.astro";
+import Icon from "astro-icon";
+import { SITE_URL } from "../../config";
+
+const seo: SEOProps = {
+  title: t("groups.seo.title"),
+  description: t("groups.seo.description"),
+  image: SITE_URL + "/images/og_image.png",
+  noindex: false,
+  nofollow: false,
+  ogBasic: {
+    title: t("groups.seo.title"),
+    image: SITE_URL + "/images/og_image.png",
+    type: "website",
+    url: SITE_URL + l("/gruppen"),
+  },
+  ogOptional: {
+    description: t("groups.seo.description"),
+    locale: astroI18n.locale,
+    siteName: "German-Italian Young Voices",
+  },
+  ogArticle: {},
+  twitter: {
+    card: "summary_large_image",
+    site: "@giyv_eu",
+    title: t("groups.seo.title"),
+    image: SITE_URL + "/images/og_image.png",
+    imageAlt: "GIYV Logo",
+    description: t("groups.seo.description"),
+  },
+};
+
+export function getStaticPathsWithI18n(locale: string) {
+  return createGetStaticPaths(async ({ paginate }) => {
+    const query = qs.stringify({
+      populate: {
+        featuredImage: {
+          fields: ["name", "width", "height", "url", "alternativeText"],
+        },
+        instagramPost: {
+          populate: {
+            images: {
+              fields: ["url", "name", "width", "height", "alternativeText"],
+            },
+          },
+        },
+        authors: {
+          populate: {
+            bioImage: {
+              fields: ["url", "name", "width", "height", "alternativeText"],
+            },
+          },
+        },
+        localizations: {
+          populate: "*",
+        },
+      },
+    });
+    const groups: Group[] = await fetchApi({
+      endpoint: "groups?locale=" + locale + "&filters[Name][$ne]=Villa Vigoni&",
+      wrappedByKey: "data",
+      query: query,
+    });
+
+    return paginate(groups);
+  });
+}
+
+export const getStaticPaths = getStaticPathsWithI18n("de");
+type Props = Page & { page: any };
+const { page } = Astro.props;
+---
+
+<BaseLayout seo={seo}>
+  <main
+    class="flex flex-col gap-20 md:gap-32 overflow-hidden"
+    data-pagefind-ignore="all"
+  >
+    <section class="pt-12 lg:pt-16">
+      <Container className="flex flex-col gap-12">
+        <ul class="flex flex-row gap-2 text-gray-600">
+          <li class="inline-flex items-center">
+            <a href={l("/")}>{t("nav.home")}</a>
+            <Icon name="mdi:chevron-right" class="w-4 h-4 fill-gray-600" />
+          </li>
+          <li class="inline-flex items-center">
+            <a href={l("/gruppen")} class="font-bold">{t("nav.groups")}</a>
+          </li>
+        </ul>
+        <HeadTitle>{t("groups.title")}</HeadTitle>
+        <Paragraph>
+          {t("groups.description")}
+        </Paragraph>
+        <div
+          class="grid lg:grid-cols-2 gap-12 grid-cols-1 justify-center justify-items-center mb-4"
+        >
+          {
+            page.data.map((group: Group) => (
+              <a href={l(`/gruppen/${group.attributes.slug}`)} class="w-full">
+                <div
+                  style={`background-image: url(${group.attributes.featuredImage.data && group.attributes.featuredImage.data.attributes.url});`}
+                  class="bg-no-repeat bg-cover bg-center flex justify-center w-full lg:p-36 p-24 rounded-lg bg-white-100 dark:bg-base-100 hover:shadow-xl border border-box-border shadow-lg shadow-box-shadow hover:scale-[102%]"
+                >
+                  <div class="text-center">
+                    <h2 class="text-2xl lg:text-3xl font-bold text-white dark:text-base-100 [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]">
+                      {group.attributes.Name}
+                    </h2>
+                  </div>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </Container>
+    </section>
+  </main>
+</BaseLayout>

@@ -13,11 +13,9 @@ export default interface Author {
             data: Image;
         },
         socials: {
-            data: {
-                id: number;
-                url: string;
-                platform: string;
-            }[]
-        }
-    };
+            id: number;
+            url: string;
+            platform: string;
+        }[]
+    }
 }

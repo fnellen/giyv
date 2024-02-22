@@ -28,6 +28,7 @@ export default defineAstroI18nConfig({
 					"blog": "Blog",
 					"contact": "Kontakt",
 					"participate": "Mach mit",
+					"groups": "Gruppen",
 				},
 				"latest_articles": {
 					"latest_articles": "Neueste Artikel",
@@ -104,6 +105,16 @@ export default defineAstroI18nConfig({
 						"title": "Home",
 						"description": "Eine Initiative von jungen Menschen für junge Menschen. Wir verwenden unsere Stimme, um uns für die Themen einzusetzen, die uns am meisten beschäftigen.",
 					},
+				},
+				"groups": {
+					"title": "Was uns wichtig ist",
+					"description": "Hier findest du unsere Gruppen, die sich mit verschiedenen Themen beschäftigen, die uns junge Generation am meisten beschäftigen. Finde heraus was wir zu den Themen sagen und teile deine Meinung mit uns! Wir freuen uns auf den Diskurs mit dir!",
+					"our_authors": "Unsere Autorinnen und Autoren",
+					"our_posts": "Unsere Beiträge",
+					"seo": {
+						"title": "Was uns wichtig ist",
+						"description": "Die Themen, die uns am meisten beschäftigen. Finde heraus was wir zu den Themen sagen und teile deine Meinung mit uns! Wir freuen uns auf den Diskurs mit dir!",
+					}
 				}
 			},
 			en: {
@@ -121,6 +132,7 @@ export default defineAstroI18nConfig({
 					"blog": "Blog",
 					"contact": "Contact",
 					"participate": "Participate with us",
+					"groups": "Groups",
 				},
 				"latest_articles": {
 					"latest_articles": "Latest articles",
@@ -197,6 +209,16 @@ export default defineAstroI18nConfig({
 						"title": "Home",
 						"description": "An initiative of young people for young people. We use our voice to stand up for the topics that concern us the most.",
 					},
+				},
+				"groups": {
+					"title": "What is important to us",
+					"description": "Here you can find our groups that deal with different topics that concern us young generation the most. Find out what we say about the topics and share your opinion with us! We are looking forward to the discourse with you!",
+					"our_authors": "Our authors",
+					"our_posts": "Our posts",
+					"seo": {
+						"title": "What is important to us",
+						"description": "The topics that concern us the most. Find out what we say about the topics and share your opinion with us! We are looking forward to the discourse with you!",
+					}
 				}
 			},
 			it: {
@@ -216,6 +238,7 @@ export default defineAstroI18nConfig({
 					"blog": "Blog",
 					"contact": "Contatto",
 					"participate": "Partecipa con noi",
+					"groups": "Gruppi",
 				},
 				"latest_articles": {
 					"latest_articles": "Ultimi articoli",
@@ -292,6 +315,16 @@ export default defineAstroI18nConfig({
 						"title": "Home",
 						"description": "Un'iniziativa di giovani per giovani. Usiamo la nostra voce per sollecitare gli argomenti che ci interessano di più.",
 					},
+				},
+				"groups": {
+					"title": "Cosa è importante per noi",
+					"description": "Qui puoi trovare i nostri gruppi che affrontano diversi argomenti che interessano noi giovani. Scopri cosa diciamo sugli argomenti e condividi la tua opinione con noi! Non vediamo l'ora di confrontarci con te!",
+					"our_authors": "Le nostre autrici e autori",
+					"our_posts": "I nostri post",
+					"seo": {
+						"title": "Cosa è importante per noi",
+						"description": "I temi che ci interessano di più. Scopri cosa diciamo sugli argomenti e condividi la tua opinione con noi! Non vediamo l'ora di confrontarci con te!",
+					}
 				}
 			},
 		},
@@ -303,6 +336,7 @@ export default defineAstroI18nConfig({
 			impressum: "impressum",
 			"privacy-policy": "privacy-policy",
 			"kontakt": "contact",
+			gruppen: "groups",
 		},
 		it: {
 			"ueber-uns": "su-di-noi",
@@ -310,6 +344,7 @@ export default defineAstroI18nConfig({
 			impressum: "impressum",
 			"privacy-policy": "privacy-policy",
 			"kontakt": "contatto",
+			gruppen: "gruppi",
 		},
 	}, // { [secondary_locale1]: { about: "about-translated", ... } }
 })
