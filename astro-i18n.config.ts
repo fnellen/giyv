@@ -303,6 +303,7 @@ export default defineAstroI18nConfig({
 			impressum: "impressum",
 			"privacy-policy": "privacy-policy",
 			"kontakt": "contact",
+			gruppen: "groups",
 		},
 		it: {
 			"ueber-uns": "su-di-noi",
@@ -310,6 +311,7 @@ export default defineAstroI18nConfig({
 			impressum: "impressum",
 			"privacy-policy": "privacy-policy",
 			"kontakt": "contatto",
+			gruppen: "gruppi",
 		},
 	}, // { [secondary_locale1]: { about: "about-translated", ... } }
 })

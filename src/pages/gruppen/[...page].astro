@@ -8,7 +8,6 @@ import type { Page } from "astro";
 import type Group from "../../interfaces/group";
 import fetchApi from "../../lib/strapi";
 import HeadTitle from "../../components/shared/HeadTitle.astro";
-import { cn } from "../../lib/utils.ts";
 import Paragraph from "../../components/shared/Paragraph.astro";
 
 const seo: SEOProps = {
@@ -113,7 +112,7 @@ const { page } = Astro.props;
         >
           {
             page.data.map((group: Group) => (
-              <a href={l(`/groups/${group.attributes.slug}`)} class="w-full">
+              <a href={l(`/gruppen/${group.attributes.slug}`)} class="w-full">
                 <div
                   style={`background-image: url(${group.attributes.featuredImage.data.attributes.url});`}
                   class="bg-no-repeat bg-cover bg-center flex justify-center w-full lg:p-36 p-24 rounded-lg bg-white-100 dark:bg-base-100 hover:shadow-xl border border-box-border shadow-lg shadow-box-shadow hover:scale-[102%]"
