@@ -111,6 +111,10 @@ export default defineAstroI18nConfig({
 					"description": "Hier findest du unsere Gruppen, die sich mit verschiedenen Themen beschäftigen, die uns junge Generation am meisten beschäftigen. Finde heraus was wir zu den Themen sagen und teile deine Meinung mit uns! Wir freuen uns auf den Diskurs mit dir!",
 					"our_authors": "Unsere Autorinnen und Autoren",
 					"our_posts": "Unsere Beiträge",
+					"seo": {
+						"title": "Was uns wichtig ist",
+						"description": "Die Themen, die uns am meisten beschäftigen. Finde heraus was wir zu den Themen sagen und teile deine Meinung mit uns! Wir freuen uns auf den Diskurs mit dir!",
+					}
 				}
 			},
 			en: {
@@ -211,6 +215,10 @@ export default defineAstroI18nConfig({
 					"description": "Here you can find our groups that deal with different topics that concern us young generation the most. Find out what we say about the topics and share your opinion with us! We are looking forward to the discourse with you!",
 					"our_authors": "Our authors",
 					"our_posts": "Our posts",
+					"seo": {
+						"title": "What is important to us",
+						"description": "The topics that concern us the most. Find out what we say about the topics and share your opinion with us! We are looking forward to the discourse with you!",
+					}
 				}
 			},
 			it: {
@@ -313,6 +321,10 @@ export default defineAstroI18nConfig({
 					"description": "Qui puoi trovare i nostri gruppi che affrontano diversi argomenti che interessano noi giovani. Scopri cosa diciamo sugli argomenti e condividi la tua opinione con noi! Non vediamo l'ora di confrontarci con te!",
 					"our_authors": "Le nostre autrici e autori",
 					"our_posts": "I nostri post",
+					"seo": {
+						"title": "Cosa è importante per noi",
+						"description": "I temi che ci interessano di più. Scopri cosa diciamo sugli argomenti e condividi la tua opinione con noi! Non vediamo l'ora di confrontarci con te!",
+					}
 				}
 			},
 		},

@@ -1,6 +1,6 @@
 ---
 import qs from "qs";
-import { createGetStaticPaths, l, t } from "astro-i18n";
+import { astroI18n, createGetStaticPaths, l, t } from "astro-i18n";
 import Container from "../../components/shared/Container.astro";
 import type SEOProps from "../../interfaces/seoProps";
 import BaseLayout from "../../layouts/BaseLayout.astro";
@@ -10,44 +10,33 @@ import fetchApi from "../../lib/strapi";
 import HeadTitle from "../../components/shared/HeadTitle.astro";
 import Paragraph from "../../components/shared/Paragraph.astro";
 import Icon from "astro-icon";
+import { SITE_URL } from "../../config";
 
 const seo: SEOProps = {
-  title: "",
-  description: "",
-  image: "",
+  title: t("groups.seo.title"),
+  description: t("groups.seo.description"),
+  image: SITE_URL + "/images/og_image.png",
   noindex: false,
   nofollow: false,
   ogBasic: {
-    title: "",
-    image: "",
-    type: "",
-    url: "",
+    title: t("groups.seo.title"),
+    image: SITE_URL + "/images/og_image.png",
+    type: "website",
+    url: SITE_URL + l("/gruppen"),
   },
   ogOptional: {
-    audio: undefined,
-    description: undefined,
-    determiner: undefined,
-    locale: undefined,
-    localeAlternate: undefined,
-    siteName: undefined,
-    video: undefined,
+    description: t("groups.seo.description"),
+    locale: astroI18n.locale,
+    siteName: "German-Italian Young Voices",
   },
-  ogArticle: {
-    publishedTime: undefined,
-    modifiedTime: undefined,
-    expirationTime: undefined,
-    author: undefined,
-    section: undefined,
-    tags: undefined,
-  },
+  ogArticle: {},
   twitter: {
-    card: undefined,
-    site: undefined,
-    creator: undefined,
-    title: undefined,
-    image: undefined,
-    imageAlt: undefined,
-    description: undefined,
+    card: "summary_large_image",
+    site: "@giyv_eu",
+    title: t("groups.seo.title"),
+    image: SITE_URL + "/images/og_image.png",
+    imageAlt: "GIYV Logo",
+    description: t("groups.seo.description"),
   },
 };
 

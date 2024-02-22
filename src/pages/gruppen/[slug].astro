@@ -68,30 +68,26 @@ export function getStaticPathsWithI18n(locale: string) {
           }),
         },
         ogOptional: {
-          audio: undefined,
-          description: undefined,
-          determiner: undefined,
-          locale: undefined,
-          localeAlternate: undefined,
-          siteName: undefined,
-          video: undefined,
+          description: group.attributes.Description
+            ? group.attributes.Description.substring(0, 160)
+            : "",
+          locale: group.attributes.locale,
+          siteName: "German Italian Young Voices",
         },
-        ogArticle: {
-          publishedTime: undefined,
-          modifiedTime: undefined,
-          expirationTime: undefined,
-          author: undefined,
-          section: undefined,
-          tags: undefined,
-        },
+        ogArticle: {},
         twitter: {
-          card: undefined,
-          site: undefined,
-          creator: undefined,
-          title: undefined,
-          image: undefined,
-          imageAlt: undefined,
-          description: undefined,
+          card: "summary_large_image",
+          site: "@giyv_eu",
+          title: group.attributes.Name,
+          image: group.attributes.featuredImage.data
+            ? group.attributes.featuredImage.data.attributes.url
+            : undefined,
+          imageAlt: group.attributes.featuredImage.data
+            ? group.attributes.featuredImage.data.attributes.alternativeText
+            : undefined,
+          description: group.attributes.Description
+            ? group.attributes.Description.substring(0, 160)
+            : "",
         },
       };
     });
@@ -101,7 +97,7 @@ export function getStaticPathsWithI18n(locale: string) {
       props: {
         group: group,
         content_rehyped: group.attributes.Description,
-        seo: seos[0],
+        seo: seos[data.indexOf(group)],
       },
     }));
 
