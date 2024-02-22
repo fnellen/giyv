@@ -1,10 +1,41 @@
 ---
-import { t } from "astro-i18n";
-import Service from "../cards/Service.astro";
-import Container from "../shared/Container.astro";
-import Paragraph from "../shared/Paragraph.astro";
+import qs from "qs";
 
-import { Icon } from "astro-icon";
+import Container from "../shared/Container.astro";
+import type Group from "../../interfaces/group";
+import fetchApi from "../../lib/strapi";
+import { astroI18n, l, t } from "astro-i18n";
+import Paragraph from "../shared/Paragraph.astro";
+const query = qs.stringify({
+  populate: {
+    featuredImage: {
+      fields: ["name", "width", "height", "url", "alternativeText"],
+    },
+    instagramPost: {
+      populate: {
+        images: {
+          fields: ["url", "name", "width", "height", "alternativeText"],
+        },
+      },
+    },
+    authors: {
+      populate: {
+        bioImage: {
+          fields: ["url", "name", "width", "height", "alternativeText"],
+        },
+      },
+    },
+    localizations: {
+      populate: "*",
+    },
+  },
+});
+const groups: Group[] = await fetchApi({
+  endpoint:
+    "groups?locale=" + astroI18n.locale + "&filters[Name][$ne]=Villa Vigoni&",
+  wrappedByKey: "data",
+  query: query,
+});
 ---
 
 <section id="contenuti">
@@ -17,123 +48,25 @@ import { Icon } from "astro-icon";
         {t("categories.description")}
       </Paragraph>
     </div>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-      <Service
-        title="Sostenibilità"
-        description="Un tema che nei prossimi anni diventerà ancora più presente e prevalente."
-      >
-        <span slot="icon">
-          <Icon
-            name="mdi:leaf-circle-outline"
-            className="w-6 h-6 fill-gray-600"
-          />
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
-          ></path>
-        </span>
-      </Service>
-      <Service
-        title="Digitalizzazione"
-        description="Con l'intelligenza artificale alla porta, la digitalizzazione è un tema che ci riguarda tutti."
-      >
-        <span slot="icon">
-          <Icon name="mdi:xml" className="w-6 h-6 fill-gray-600" />
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
-          ></path>
-        </span>
-      </Service>
-      <Service
-        title="Mercato del lavoro"
-        description="Giovani europeei, si trovano a dover affrontare un mercato del lavoro in continua evoluzione."
-      >
-        <span slot="icon">
-          <Icon
-            name="mdi:briefcase-outline"
-            className="w-6 h-6 fill-gray-600"
-          />
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
-          ></path>
-        </span>
-      </Service>
-      <Service
-        title="Coesione e inclusione sociale"
-        description="La coesione e l'inclusione sociale sono fondamentali per i giovani europei. Garantiscono che tutti abbiano opportunità educative e lavorative, contribuendo alla stabilità e prosperità dell'UE."
-      >
-        <span slot="icon">
-          <Icon name="mdi:hand-heart" className="w-6 h-6 fill-gray-600" />
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
-          ></path>
-        </span>
-      </Service>
-      <Service
-        title="Rapporto EU e stati membri"
-        description="Sunt, ipsam, necessitatibus sint fugit officia laboriosam minima ab ullam at magni et. Quaerat, sint!"
-      >
-        <span slot="icon">
-          <Icon
-            name="mdi:account-group-outline"
-            className="w-6 h-6 fill-gray-600"
-          />
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
-          ></path>
-        </span>
-      </Service>
-      <Service
-        title="Mobilità internazionale"
-        description="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti qui soluta cupiditate"
-      >
-        <span slot="icon">
-          <Icon name="mdi:passport" className="w-6 h-6 fill-gray-600" />
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
-          ></path>
-        </span>
-      </Service>
-      <Service
-        title="Politica Estera e Cooperazione Internazionale"
-        description="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti qui soluta cupiditate"
-      >
-        <span slot="icon">
-          <Icon
-            name="mdi:handshake-outline"
-            className="w-6 h-6 fill-gray-600"
-          />
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
-          ></path>
-        </span>
-      </Service>
-      <Service
-        title="Goivani e l'Europa"
-        description="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti qui soluta cupiditate"
-      >
-        <span slot="icon">
-          <Icon name="mdi:world" className="w-6 h-6 " />
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
-          ></path>
-        </span>
-      </Service>
+    <div
+      class="grid lg:grid-cols-2 gap-12 grid-cols-1 justify-center justify-items-center mb-4"
+    >
+      {
+        groups.map((group: Group) => (
+          <a href={l(`/gruppen/${group.attributes.slug}`)} class="w-full">
+            <div
+              style={`background-image: url(${group.attributes.featuredImage.data && group.attributes.featuredImage.data.attributes.url});`}
+              class="bg-no-repeat bg-cover bg-center flex justify-center w-full lg:p-36 p-24 rounded-lg bg-white-100 dark:bg-base-100 hover:shadow-xl border border-box-border shadow-lg shadow-box-shadow hover:scale-[102%]"
+            >
+              <div class="text-center">
+                <h2 class="text-2xl lg:text-3xl font-bold text-white dark:text-base-100 [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]">
+                  {group.attributes.Name}
+                </h2>
+              </div>
+            </div>
+          </a>
+        ))
+      }
     </div>
   </Container>
 </section>
