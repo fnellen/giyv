@@ -52,12 +52,16 @@ export function getStaticPathsWithI18n(locale: string) {
         description: group.attributes.Description
           ? group.attributes.Description.substring(0, 160)
           : "",
-        image: group.attributes.featuredImage.data.attributes.url,
+        image:
+          group.attributes.featuredImage.data &&
+          group.attributes.featuredImage.data.attributes.url,
         noindex: false,
         nofollow: false,
         ogBasic: {
           title: group.attributes.Name,
-          image: group.attributes.featuredImage.data.attributes.url,
+          image:
+            group.attributes.featuredImage.data &&
+            group.attributes.featuredImage.data.attributes.url,
           type: "article",
           url: l(SITE_URL + "/gruppen/" + group.attributes.slug, {
             targetLocale: locale,
@@ -181,20 +185,20 @@ posts.sort((a, b) => {
 
 <BaseLayout seo={seo}>
   <div class="pt-8 md:pt-16 flex flex-col gap-12">
-    <Container className="flex flex-col gap-4">
+    <Container className="flex flex-col gap-12">
       <ul class="flex flex-row gap-2 text-gray-600">
         <li class="inline-flex items-center">
-          <a href={l("/")}>Home</a>
+          <a href={l("/")}>{t("nav.home")}</a>
           <Icon name="mdi:chevron-right" class="w-4 h-4 fill-gray-600" />
         </li>
         <li class="inline-flex items-center">
-          <a href={l("/gruppen")}>Groups</a>
+          <a href={l("/gruppen")}>{t("nav.groups")}</a>
           <Icon name="mdi:chevron-right" class="w-4 h-4 fill-gray-600" />
         </li>
         <li>
           <a href={l("/gruppen/" + group.attributes.slug)} class="">
-            <p class="font-bold text-ellipsis overflow-hidden">
-              {group.attributes.Name}
+            <p class="font-bold overflow-hidden">
+              {group.attributes.Name.substring(0, 20)} ...
             </p>
           </a>
         </li>
@@ -217,100 +221,112 @@ posts.sort((a, b) => {
         <div
           class="flex flex-1 lg:w-1/2 lg:h-auto lg:max-w-none lg:mx-0 mx-auto max-w-3xl"
         >
-          <Image
-            src={group.attributes.featuredImage.data.attributes.url}
-            alt={group.attributes.featuredImage.data.attributes
-              .alternativeText || "No alt provided"}
-            width={720}
-            height={480}
-            class={"lg:w-full lg:h-full rounded-3xl object-cover aspect-ratio-3/2"}
-            title={group.attributes.featuredImage.data.attributes.name ||
-              "No title provided"}
-          />
+          {
+            group.attributes.featuredImage.data && (
+              <Image
+                src={group.attributes.featuredImage.data.attributes.url}
+                alt={
+                  group.attributes.featuredImage.data.attributes
+                    .alternativeText || "No alt provided"
+                }
+                width={720}
+                height={480}
+                class={
+                  "lg:w-full lg:h-full rounded-3xl object-cover aspect-ratio-3/2"
+                }
+                title={
+                  group.attributes.featuredImage.data.attributes.name ||
+                  "No title provided"
+                }
+              />
+            )
+          }
         </div>
       </div>
-    </Container>
-    <Container
-      className="sm:grid lg:grid-cols-3 md:grid-cols-2 gap-8 lg:gap-12 justify-center justify-items-center "
-    >
-      <div class="lg:col-span-3 md:col-span-2">
-        <Title>Unsere Autorinnen und Autoren</Title>
-      </div>
-      {
-        group.attributes.authors.data.map((author) => {
-          return (
-            <div class="flex flex-col items-center gap-4">
-              {author.attributes.bioImage.data ? (
-                <Image
-                  src={author.attributes.bioImage.data.attributes.url}
-                  alt={
-                    author.attributes.bioImage.data.attributes
-                      .alternativeText || "No alt provided"
-                  }
-                  width={200}
-                  height={200}
-                  class={"rounded-full"}
-                  title={
-                    author.attributes.bioImage.data.attributes.name ||
-                    "No title provided"
-                  }
-                />
-              ) : (
-                <Icon
-                  name="mdi:person"
-                  class="w-[200px] h-[200px] rounded-full bg-gray-200 p-2"
-                  role="img"
-                  aria-label="Avatar Icon"
-                />
-              )}
-              <div class="flex flex-col items-center gap-2">
-                <h3 class="text-2xl font-bold text-heading-1">
-                  {author.attributes.name}
-                </h3>
-                <Paragraph className="hyphens-auto text-center">
-                  {author.attributes.bio}
-                </Paragraph>
-                <div class="flex flex-row gap-2">
-                  {author.attributes.socials &&
-                    author.attributes.socials.map((social) => {
-                      return (
-                        <a
-                          href={social.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          class="flex items-center gap-2 text-gray-600 hover:text-blue-600"
-                        >
-                          <Icon
-                            name={
-                              socials.find((s) => s.name === social.platform)
-                                ?.icon || "mdi:link"
-                            }
-                            class="w-6 h-6 fill-gray-600 hover:fill-blue-600"
-                            aria-hidden="true"
-                          />
-                        </a>
-                      );
-                    })}
+
+      <div
+        class="sm:grid lg:grid-cols-3 md:grid-cols-2 sm:gap-16 gap-8 lg:gap-12 justify-center justify-items-center"
+      >
+        <div class="lg:col-span-3 md:col-span-2 sm:col-span-1">
+          <Title>{t("groups.our_authors")}</Title>
+        </div>
+        {
+          group.attributes.authors.data.map((author) => {
+            return (
+              <div class="flex flex-col items-center gap-4">
+                {author.attributes.bioImage.data ? (
+                  <Image
+                    src={author.attributes.bioImage.data.attributes.url}
+                    alt={
+                      author.attributes.bioImage.data.attributes
+                        .alternativeText || "No alt provided"
+                    }
+                    width={200}
+                    height={200}
+                    class={"rounded-full"}
+                    title={
+                      author.attributes.bioImage.data.attributes.name ||
+                      "No title provided"
+                    }
+                  />
+                ) : (
+                  <Icon
+                    name="mdi:person"
+                    class="w-[200px] h-[200px] rounded-full bg-gray-200 p-2"
+                    role="img"
+                    aria-label="Avatar Icon"
+                  />
+                )}
+                <div class="flex flex-col items-center gap-2">
+                  <h3 class="text-2xl font-bold text-heading-1">
+                    {author.attributes.name}
+                  </h3>
+                  <Paragraph className="hyphens-auto text-center">
+                    {author.attributes.bio}
+                  </Paragraph>
+                  <div class="flex flex-row gap-2">
+                    {author.attributes.socials &&
+                      author.attributes.socials.map((social) => {
+                        return (
+                          <a
+                            href={social.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="flex items-center gap-2 text-gray-600 hover:text-blue-600"
+                          >
+                            <Icon
+                              name={
+                                socials.find((s) => s.name === social.platform)
+                                  ?.icon || "mdi:link"
+                              }
+                              class="w-6 h-6 fill-gray-600 hover:fill-blue-600"
+                              aria-hidden="true"
+                            />
+                            <span class="sr-only">{social.platform}</span>
+                          </a>
+                        );
+                      })}
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })
-      }
-    </Container>
-    <Container className="flex flex-col gap-12">
-      <div>
-        <Title>Unsere Beiträge</Title>
+            );
+          })
+        }
       </div>
-      {
-        posts.map((article: Article) => (
-          <BlogCard
-            article={article}
-            className="w-full"
-            orientation="horizontal"
-          />
-        ))
-      }
+      <div class="flex flex-col gap-12 justify-center items-center">
+        <div>
+          <Title>{t("groups.our_posts")}</Title>
+        </div>
+        {
+          posts.map((article: Article) => (
+            <BlogCard
+              article={article}
+              className="w-full"
+              orientation="horizontal"
+            />
+          ))
+        }
+      </div>
     </Container>
   </div>
 </BaseLayout>

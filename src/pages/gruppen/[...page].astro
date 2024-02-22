@@ -1,6 +1,6 @@
 ---
 import qs from "qs";
-import { createGetStaticPaths, l } from "astro-i18n";
+import { createGetStaticPaths, l, t } from "astro-i18n";
 import Container from "../../components/shared/Container.astro";
 import type SEOProps from "../../interfaces/seoProps";
 import BaseLayout from "../../layouts/BaseLayout.astro";
@@ -9,6 +9,7 @@ import type Group from "../../interfaces/group";
 import fetchApi from "../../lib/strapi";
 import HeadTitle from "../../components/shared/HeadTitle.astro";
 import Paragraph from "../../components/shared/Paragraph.astro";
+import Icon from "astro-icon";
 
 const seo: SEOProps = {
   title: "",
@@ -98,14 +99,18 @@ const { page } = Astro.props;
   >
     <section class="pt-12 lg:pt-16">
       <Container className="flex flex-col gap-12">
-        <HeadTitle>Was uns wichtig ist</HeadTitle>
+        <ul class="flex flex-row gap-2 text-gray-600">
+          <li class="inline-flex items-center">
+            <a href={l("/")}>{t("nav.home")}</a>
+            <Icon name="mdi:chevron-right" class="w-4 h-4 fill-gray-600" />
+          </li>
+          <li class="inline-flex items-center">
+            <a href={l("/gruppen")} class="font-bold">{t("nav.groups")}</a>
+          </li>
+        </ul>
+        <HeadTitle>{t("groups.title")}</HeadTitle>
         <Paragraph>
-          Wir sind ein Ort der Begegnung und des Austauschs. Unsere
-          Veranstaltungen und Projekte sind interdisziplinär und international
-          ausgerichtet. Wir bieten Raum für Diskussionen und Debatten, für
-          künstlerische und wissenschaftliche Projekte, für Workshops und
-          Seminare. Unsere Veranstaltungen sind offen für alle, die sich für
-          deutsch-italienische Beziehungen und europäische Themen interessieren.
+          {t("groups.description")}
         </Paragraph>
         <div
           class="grid lg:grid-cols-2 gap-12 grid-cols-1 justify-center justify-items-center mb-4"
@@ -114,7 +119,7 @@ const { page } = Astro.props;
             page.data.map((group: Group) => (
               <a href={l(`/gruppen/${group.attributes.slug}`)} class="w-full">
                 <div
-                  style={`background-image: url(${group.attributes.featuredImage.data.attributes.url});`}
+                  style={`background-image: url(${group.attributes.featuredImage.data && group.attributes.featuredImage.data.attributes.url});`}
                   class="bg-no-repeat bg-cover bg-center flex justify-center w-full lg:p-36 p-24 rounded-lg bg-white-100 dark:bg-base-100 hover:shadow-xl border border-box-border shadow-lg shadow-box-shadow hover:scale-[102%]"
                 >
                   <div class="text-center">
