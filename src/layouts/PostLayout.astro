@@ -445,29 +445,35 @@ const seo: SEOProps = {
               {t("article.written_by")}
             </Paragraph>
             <Paragraph className="underline">
-              {article.attributes.group.data.attributes.Name}
+              <a
+                href={l(
+                  `/gruppen/${article.attributes.group.data.attributes.slug}`,
+                )}
+              >
+                {article.attributes.group.data.attributes.Name}
+              </a>
+              <Paragraph>
+                {article.attributes.group.data.attributes.Description}
+              </Paragraph>
+              <Paragraph
+                className="font-bold uppercase text-gray-600 dark:text-white"
+              >
+                {t("article.authors")}
+              </Paragraph>
+              {
+                article.attributes.group.data.attributes.authors.data
+                  .sort((a, b) =>
+                    a.attributes.name.localeCompare(b.attributes.name),
+                  )
+                  .map((author) => {
+                    return (
+                      <>
+                        <Paragraph>{author.attributes.name}</Paragraph>
+                      </>
+                    );
+                  })
+              }
             </Paragraph>
-            <Paragraph>
-              {article.attributes.group.data.attributes.Description}
-            </Paragraph>
-            <Paragraph
-              className="font-bold uppercase text-gray-600 dark:text-white"
-            >
-              {t("article.authors")}
-            </Paragraph>
-            {
-              article.attributes.group.data.attributes.authors.data
-                .sort((a, b) =>
-                  a.attributes.name.localeCompare(b.attributes.name),
-                )
-                .map((author) => {
-                  return (
-                    <>
-                      <Paragraph>{author.attributes.name}</Paragraph>
-                    </>
-                  );
-                })
-            }
           </div>
         </div>
       </div>
