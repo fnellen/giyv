@@ -1,0 +1,9 @@
+---
+import Page from "../../../gruppen/[slug].astro";
+import { getStaticPathsWithI18n } from "../../../gruppen/[slug].astro";
+export const getStaticPaths = getStaticPathsWithI18n("en");
+export const prerender = false;
+const { props } = Astro;
+---
+
+<Page {...props} />
