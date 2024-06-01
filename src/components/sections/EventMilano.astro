@@ -1,0 +1,42 @@
+---
+import Container from "../shared/Container.astro";
+import Paragraph from "../shared/Paragraph.astro";
+---
+
+<Container className={"flex flex-col gap-10 lg:gap-12"}>
+  <div class="text-center space-y-4">
+    <h2 class="text-heading-1 font-semibold text-2xl sm:text-3xl md:text-4xl">
+      Ultimo evento a Milano
+    </h2>
+    <Paragraph className={"mb-12"}>
+      Per sensibilizzare i giovani a esprimere il proprio voto, lo scorso 24
+      maggio 2024, presso la sede del Parlamento Europeo a Milano, è stato
+      organizzato, con il sostegno di <a
+        href="https:www.villavigoni.eu"
+        target="_blank"
+        class="text-primary-500 underline after:content-['_↗']"
+      >
+        Villa Vigoni</a
+      >, il dibattito dal titolo “𝐄𝐮𝐫𝐨𝐩𝐚. 𝐒𝐟𝐢𝐝𝐚 𝐞 𝐨𝐩𝐩𝐨𝐫𝐭𝐮𝐧𝐢𝐭𝐚̀ 𝐩𝐞𝐫 𝐢𝐥 𝐝𝐢𝐚𝐥𝐨𝐠𝐨 𝐭𝐫𝐚
+      𝐠𝐞𝐧𝐞𝐫𝐚𝐳𝐢𝐨𝐧𝐢: 𝐜𝐨𝐬𝐚 𝐬𝐢 𝐚𝐬𝐩𝐞𝐭𝐭𝐚𝐧𝐨 𝐢 𝐠𝐢𝐨𝐯𝐚𝐧𝐢 𝐝𝐚𝐥𝐥’𝐔𝐄” a cura del progetto
+      Erasmus+ “German Italian Young Voices”.
+      <a
+        href="https://www.linkedin.com/posts/villa-vigoni_elezionieuropee2024-unioneeuropea-voto-activity-7202564530143399936-ZKFp?utm_source=share&utm_medium=member_desktop"
+        target="_blank"
+        class="text-primary-500 underline after:content-['_↗']"
+      >
+        Leggi di più
+      </a>
+    </Paragraph>
+    <iframe
+      width="1920"
+      height="1080"
+      src="https://www.youtube-nocookie.com/embed/92Ho_3XM0mg?si=9HS_bDSt93dxSZpb"
+      title="YouTube video player"
+      frameborder="0"
+      style="aspect-ratio: 16/9; width: 100%; height: 100%;"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen></iframe>
+  </div>
+</Container>

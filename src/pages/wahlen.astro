@@ -1,0 +1,129 @@
+---
+import { t, astroI18n, l } from "astro-i18n";
+import Container from "../components/shared/Container.astro";
+import type SEOProps from "../interfaces/seoProps";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Paragraph from "../components/shared/Paragraph.astro";
+import { SITE_URL } from "../config";
+import Image from "astro/components/Image.astro";
+
+const seo: SEOProps = {
+  title: t("wahlen.seo.title"),
+  description: t("wahlen.seo.description"),
+  image: "/images/og_image.png",
+  noindex: false,
+  nofollow: false,
+  localizations: [
+    {
+      href:
+        SITE_URL +
+        l("wahlen", undefined, {
+          targetLocale: "en",
+        }),
+      hrefLang: "en",
+    },
+    {
+      href:
+        SITE_URL +
+        l("wahlen", undefined, {
+          targetLocale: "it",
+        }),
+      hrefLang: "it",
+    },
+    {
+      href:
+        SITE_URL +
+        l("wahlen", undefined, {
+          targetLocale: "de",
+        }),
+      hrefLang: "de",
+    },
+  ],
+  ogBasic: {
+    title: t("wahlen.seo.title"),
+    image: "/images/og_image.png",
+    type: "website",
+    url: SITE_URL + l("wahlen"),
+  },
+  ogOptional: {
+    audio: undefined,
+    description: undefined,
+    determiner: undefined,
+    locale: astroI18n.locale,
+    localeAlternate: astroI18n.locales,
+    siteName: undefined,
+    video: undefined,
+  },
+  ogArticle: {
+    publishedTime: undefined,
+    modifiedTime: undefined,
+    expirationTime: undefined,
+    author: undefined,
+    section: undefined,
+    tags: undefined,
+  },
+  twitter: {
+    card: undefined,
+    site: undefined,
+    creator: undefined,
+    title: undefined,
+    image: undefined,
+    imageAlt: undefined,
+    description: undefined,
+  },
+};
+const structured_data = {
+  "@context": "http://schema.org",
+  "@type": "WebPage",
+  url: SITE_URL + l("wahlen"),
+  name: t("wahlen.seo.title"),
+  description: t("wahlen.seo.description"),
+};
+const srcs = {
+  de: {
+    results:
+      "https://results.elections.europa.eu/de/Tools/widget-land/deutschland/2019-2024/scheidendes-parlament/",
+    reminder: "https://elections.europa.eu/de/use-your-vote/",
+  },
+  en: {
+    results:
+      "https://results.elections.europa.eu/en/tools/widget-europe/2019-2024/outgoing-parliament/",
+    reminder: "https://elections.europa.eu/en/use-your-vote/",
+  },
+  it: {
+    results:
+      "https://results.elections.europa.eu/it/strumenti/widget-europa/2019-2024/parlamento-uscente/",
+    reminder: "https://elections.europa.eu/it/use-your-vote/",
+  },
+};
+---
+
+<BaseLayout seo={seo} structured_data={structured_data}>
+  <Container className="grid grid-col cols-1 gap-12 ">
+    <a
+      href={srcs[astroI18n.locale].reminder}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <Image
+        src=`/images/remind_banner_${astroI18n.locale}.jpg`
+        width={968}
+        height={250}
+        alt={t("wahlen.title")}
+      />
+    </a>
+    <h1
+      class="text-3xl/tight sm:text-4xl/tight md:text-5xl/tight xl:text-6xl/tight
+             font-bold text-heading-1"
+    >
+      {t("wahlen.title")}
+    </h1>
+
+    <Paragraph>
+      {t("wahlen.description")}
+    </Paragraph>
+    <iframe
+      class="w-full h-[500px] sm:h-[650px] md:h-[600px] lg:h-[450px] xl:h-[600px]"
+      src={srcs[astroI18n.locale].results}></iframe>
+  </Container>
+</BaseLayout>

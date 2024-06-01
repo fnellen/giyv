@@ -29,6 +29,7 @@ export default defineAstroI18nConfig({
 					"contact": "Kontakt",
 					"participate": "Mach mit",
 					"groups": "Gruppen",
+					"wahlen": "Wahlen",
 				},
 				"latest_articles": {
 					"latest_articles": "Neueste Artikel",
@@ -115,6 +116,14 @@ export default defineAstroI18nConfig({
 						"title": "Was uns wichtig ist",
 						"description": "Die Themen, die uns am meisten beschäftigen. Finde heraus was wir zu den Themen sagen und teile deine Meinung mit uns! Wir freuen uns auf den Diskurs mit dir!",
 					}
+				},
+				"wahlen": {
+					"title": "Wahlen",
+					"description": "Hier findest du die Daten zur letzten Europawahl in 2019.",
+					"seo": {
+						"title": "Europa Wahlen",
+						"description": "Hier findest du die Daten zur letzten Europawahl in 2019. Informiere dich über die Ergebnisse und vergleiche die Ergebnisse zwischen Deutschland und Italien.",
+					}
 				}
 			},
 			en: {
@@ -133,6 +142,7 @@ export default defineAstroI18nConfig({
 					"contact": "Contact",
 					"participate": "Participate with us",
 					"groups": "Groups",
+					"wahlen": "Elections",
 				},
 				"latest_articles": {
 					"latest_articles": "Latest articles",
@@ -219,6 +229,14 @@ export default defineAstroI18nConfig({
 						"title": "What is important to us",
 						"description": "The topics that concern us the most. Find out what we say about the topics and share your opinion with us! We are looking forward to the discourse with you!",
 					}
+				},
+				"wahlen": {
+					"title": "Elections",
+					"description": "Here you can find the data from the last European elections in 2019.",
+					"seo": {
+						"title": "Elections",
+						"description": "Here you can find the data from the last European elections in 2019. Information about the results and comparison between Germany and Italy.",
+					}
 				}
 			},
 			it: {
@@ -239,6 +257,7 @@ export default defineAstroI18nConfig({
 					"contact": "Contatto",
 					"participate": "Partecipa con noi",
 					"groups": "Gruppi",
+					"wahlen": "Elezioni",
 				},
 				"latest_articles": {
 					"latest_articles": "Ultimi articoli",
@@ -325,6 +344,14 @@ export default defineAstroI18nConfig({
 						"title": "Cosa è importante per noi",
 						"description": "I temi che ci interessano di più. Scopri cosa diciamo sugli argomenti e condividi la tua opinione con noi! Non vediamo l'ora di confrontarci con te!",
 					}
+				},
+				"wahlen": {
+					"title": "Elezioni",
+					"description": "Qui puoi trovare i dati delle ultime elezioni europee del 2019.",
+					"seo": {
+						"title": "Elezioni",
+						"description": "Qui puoi trovare i dati delle ultime elezioni europee del 2019. Informazioni sui risultati e confronto tra Germania e Italia.",
+					}
 				}
 			},
 		},
@@ -337,6 +364,7 @@ export default defineAstroI18nConfig({
 			"privacy-policy": "privacy-policy",
 			"kontakt": "contact",
 			gruppen: "groups",
+			wahlen: "elections",
 		},
 		it: {
 			"ueber-uns": "su-di-noi",
@@ -345,6 +373,7 @@ export default defineAstroI18nConfig({
 			"privacy-policy": "privacy-policy",
 			"kontakt": "contatto",
 			gruppen: "gruppi",
+			wahlen: "elezioni",
 		},
 	}, // { [secondary_locale1]: { about: "about-translated", ... } }
 })
