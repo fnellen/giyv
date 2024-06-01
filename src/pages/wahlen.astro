@@ -122,13 +122,15 @@ const srcs = {
     <Paragraph>
       {t("wahlen.description")}
     </Paragraph>
-    <div class="relative" style="padding-top: 56.25%">
+    <div class="relative h-[1000px]" style="padding-top: 56.25%">
       <iframe
         width="100%"
-        height="100%"
-        class="absolute inset-0 w-full h-full"
+        height="1000px"
+        class="absolute inset-0 w-full lg:h-[1000px]"
         frameborder="0"
-        src={srcs[astroI18n.locale].results}></iframe>
+        src={srcs[astroI18n.locale].results}
+      >
+      </iframe>
     </div>
   </Container>
 </BaseLayout>
